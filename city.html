@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose a City</title>
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #fff7e6, #f5e6c8);
+            font-family: "Playfair Display", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #000;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(212, 167, 98, 0.4);
+        }
+
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .city-card {
+            background: rgba(255, 255, 255, 0.5);
+            border: 2px solid #d4a762;
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: 0.3s;
+            backdrop-filter: blur(6px);
+        }
+
+        .city-card:hover {
+            background: linear-gradient(90deg, #d4a762, #f7d9a6, #d4a762);
+            color: white;
+            box-shadow: 0 0 15px rgba(212, 167, 98, 0.8);
+            transform: translateY(-4px);
+        }
+    </style>
+
+    <script>
+        function selectCity(city) {
+            localStorage.setItem("selectedCity", city);
+            window.location.href = "mirror.html";
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Choose Your City</h1>
+
+    <div class="city-grid">
+        <div class="city-card" onclick="selectCity('Paris')">Paris</div>
+        <div class="city-card" onclick="selectCity('London')">London</div>
+        <div class="city-card" onclick="selectCity('Dubai')">Dubai</div>
+        <div class="city-card" onclick="selectCity('New York')">New York</div>
+        <div class="city-card" onclick="selectCity('Santorini')">Santorini</div>
+        <div class="city-card" onclick="selectCity('Milan')">Milan</div>
+        <div class="city-card" onclick="selectCity('Barcelona')">Barcelona</div>
+        <div class="city-card" onclick="selectCity('Tokyo')">Tokyo</div>
+        <div class="city-card" onclick="selectCity('Seoul')">Seoul</div>
+        <div class="city-card" onclick="selectCity('Moscow')">Moscow</div>
+        <div class="city-card" onclick="selectCity('Munich')">Munich</div>
+        <div class="city-card" onclick="selectCity('Prague')">Prague</div>
+    </div>
+
+</body>
+</html>
