@@ -5,25 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atelier Etternelle – Mirror Room</title>
 
-    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             height: 100vh;
             width: 100vw;
             overflow: hidden;
             font-family: "Playfair Display", serif;
-            color: #000;
         }
 
-        /* BACKGROUND WRAPPER */
+        /* CITY-INSPIRED GRADIENT BACKGROUNDS */
+        .city-paris     { background: linear-gradient(135deg, #f8c8d8, #f7e7c9); }
+        .city-london    { background: linear-gradient(135deg, #b0c4de, #708090); }
+        .city-dubai     { background: linear-gradient(135deg, #f7d9a6, #d4a762); }
+        .city-newyork   { background: linear-gradient(135deg, #1c1f26, #4a5568); }
+        .city-santorini { background: linear-gradient(135deg, #e3f2fd, #90caf9); }
+        .city-milan     { background: linear-gradient(135deg, #f3e5ab, #d4a762); }
+        .city-barcelona { background: linear-gradient(135deg, #ffcc80, #ff8a65); }
+        .city-tokyo     { background: linear-gradient(135deg, #8e24aa, #3949ab); }
+        .city-seoul     { background: linear-gradient(135deg, #b2ebf2, #f8bbd0); }
+        .city-moscow    { background: linear-gradient(135deg, #bbdefb, #ef9a9a); }
+        .city-munich    { background: linear-gradient(135deg, #a5d6a7, #81c784); }
+        .city-prague    { background: linear-gradient(135deg, #ffe0b2, #bcaaa4); }
+
         .mirror-room {
             position: relative;
             height: 100%;
@@ -33,31 +39,14 @@
             align-items: center;
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
         }
 
-        /* SIMPLE CITY BACKGROUND VARIANTS (YOU CAN REPLACE WITH REAL IMAGES) */
-        .city-paris     { background: linear-gradient(135deg, #fbe9e7, #f8bbd0); }
-        .city-london    { background: linear-gradient(135deg, #e0f7fa, #b3e5fc); }
-        .city-dubai     { background: linear-gradient(135deg, #fff3e0, #ffe0b2); }
-        .city-newyork   { background: linear-gradient(135deg, #e8eaf6, #c5cae9); }
-        .city-santorini { background: linear-gradient(135deg, #e3f2fd, #bbdefb); }
-        .city-milan     { background: linear-gradient(135deg, #f3e5f5, #e1bee7); }
-        .city-barcelona { background: linear-gradient(135deg, #fff8e1, #ffe082); }
-        .city-tokyo     { background: linear-gradient(135deg, #fce4ec, #f8bbd0); }
-        .city-seoul     { background: linear-gradient(135deg, #e0f2f1, #b2dfdb); }
-        .city-moscow    { background: linear-gradient(135deg, #ede7f6, #d1c4e9); }
-        .city-munich    { background: linear-gradient(135deg, #e8f5e9, #c8e6c9); }
-        .city-prague    { background: linear-gradient(135deg, #fff3e0, #ffcc80); }
-
-        /* OVERLAY TO SOFTEN BACKGROUND */
         .overlay {
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at center, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
         }
 
-        /* CONTENT LAYER */
         .content {
             position: relative;
             z-index: 2;
@@ -68,18 +57,17 @@
             align-items: center;
         }
 
-        /* MOTTO */
+        /* FIXED MOTTO POSITION + SIZE */
         .motto {
             position: absolute;
-            top: 40px;
+            top: 10px;
             width: 100%;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             letter-spacing: 1px;
             text-shadow: 0 0 10px rgba(0,0,0,0.15);
         }
 
-        /* MIRROR + BUTTON LAYOUT */
         .mirror-layout {
             position: relative;
             width: 80%;
@@ -90,9 +78,7 @@
             align-items: center;
         }
 
-        /* SIDE BUTTON COLUMNS */
         .side-column {
-            position: relative;
             width: 20%;
             height: 100%;
             display: flex;
@@ -101,9 +87,9 @@
         }
 
         .side-buttons {
-            position: relative;
             width: 100%;
             height: 80%;
+            position: relative;
         }
 
         .service-button {
@@ -119,24 +105,6 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0,0,0,0.25);
-            transition: 0.3s;
-        }
-
-        .service-button:hover {
-            box-shadow: 0 0 18px rgba(212,167,98,0.9);
-            transform: translateX(-50%) translateY(-2px);
-        }
-
-        .service-icon {
-            width: 60%;
-            height: 60%;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            background-image: linear-gradient(#000, #000),
-                              linear-gradient(135deg, #d4a762, #f7d9a6);
-            background-origin: border-box;
-            background-clip: content-box, border-box;
         }
 
         .service-label {
@@ -149,20 +117,16 @@
             margin-top: 4px;
         }
 
-        /* LEFT COLUMN POSITIONS (CURVED) */
         .left-1 { top: 5%; }
         .left-2 { top: 25%; }
         .left-3 { top: 50%; }
         .left-4 { top: 75%; }
 
-        /* RIGHT COLUMN POSITIONS (CURVED) */
         .right-1 { top: 10%; }
         .right-2 { top: 40%; }
         .right-3 { top: 70%; }
 
-        /* MIRROR WRAPPER */
         .mirror-wrapper {
-            position: relative;
             width: 60%;
             height: 100%;
             display: flex;
@@ -170,34 +134,15 @@
             align-items: center;
         }
 
-        /* MIRROR FRAME */
         .mirror-frame {
-            position: relative;
             width: 100%;
             height: 100%;
             border-radius: 45px;
             background: #000;
-            box-shadow:
-                0 0 20px rgba(0,0,0,0.6),
-                0 0 0 3px rgba(212,167,98,0.6);
             padding: 10px;
         }
 
-        /* GOLD GLITTER EFFECT (FAKE WITH GRADIENT + NOISE-LIKE OVERLAY) */
-        .mirror-frame::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 45px;
-            background: radial-gradient(circle at 10% 0%, rgba(247,217,166,0.6), transparent 55%),
-                        radial-gradient(circle at 90% 100%, rgba(212,167,98,0.7), transparent 55%);
-            mix-blend-mode: screen;
-            pointer-events: none;
-        }
-
-        /* MIRROR SURFACE */
         .mirror-surface {
-            position: relative;
             width: 100%;
             height: 100%;
             border-radius: 35px;
@@ -208,7 +153,6 @@
             align-items: center;
         }
 
-        /* CAMERA OR PLACEHOLDER */
         .mirror-video {
             width: 100%;
             height: 100%;
@@ -219,10 +163,8 @@
             font-size: 1.1rem;
             color: rgba(0,0,0,0.6);
             text-align: center;
-            padding: 20px;
         }
 
-        /* BOTTOM CONTROLS */
         .bottom-controls {
             position: absolute;
             bottom: 30px;
@@ -238,82 +180,17 @@
             border-radius: 50%;
             background: #000;
             border: 2px solid #d4a762;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(0,0,0,0.25);
-            transition: 0.3s;
-        }
-
-        .control-button:hover {
-            box-shadow: 0 0 16px rgba(212,167,98,0.9);
-            transform: translateY(-2px);
-        }
-
-        .control-icon {
-            width: 60%;
-            height: 60%;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            background-image: linear-gradient(#000, #000),
-                              linear-gradient(135deg, #d4a762, #f7d9a6);
-            background-origin: border-box;
-            background-clip: content-box, border-box;
-        }
-
-        /* SIMPLE PANEL FOR SERVICE FEEDBACK */
-        .service-panel {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            width: 260px;
-            padding: 16px;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.85);
-            border: 1px solid #d4a762;
-            box-shadow: 0 0 12px rgba(0,0,0,0.2);
-            font-size: 0.9rem;
-            display: none;
-        }
-
-        .service-panel h2 {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        .service-panel p {
-            margin-bottom: 6px;
-        }
-
-        .service-panel small {
-            display: block;
-            margin-top: 8px;
-            font-size: 0.75rem;
-            color: #555;
-        }
-
-        @media (max-width: 900px) {
-            .mirror-layout {
-                width: 95%;
-                height: 80%;
-            }
-            .side-column {
-                display: none; /* mobile: focus on mirror only */
-            }
-            .mirror-wrapper {
-                width: 90%;
-            }
         }
     </style>
 </head>
+
 <body>
 
 <div id="mirrorRoom" class="mirror-room">
     <div class="overlay"></div>
 
     <div class="content">
-        <!-- MOTTO -->
         <div id="motto" class="motto"></div>
 
         <div class="mirror-layout">
@@ -321,22 +198,23 @@
             <!-- LEFT SIDE BUTTONS -->
             <div class="side-column">
                 <div class="side-buttons">
-                    <div class="service-button left-1" data-service="Colour Analysis">
-                        <div class="service-icon"></div>
+
+                    <div class="service-button left-1" onclick="window.location.href='colour.html'">
                         <div class="service-label">Colour Analysis</div>
                     </div>
-                    <div class="service-button left-2" data-service="Style Helper">
-                        <div class="service-icon"></div>
+
+                    <div class="service-button left-2" onclick="window.location.href='style.html'">
                         <div class="service-label">Style Helper</div>
                     </div>
-                    <div class="service-button left-3" data-service="Photo Ideas">
-                        <div class="service-icon"></div>
+
+                    <div class="service-button left-3" onclick="window.location.href='photo.html'">
                         <div class="service-label">Photo Ideas</div>
                     </div>
-                    <div class="service-button left-4" data-service="Beauty Guide">
-                        <div class="service-icon"></div>
+
+                    <div class="service-button left-4" onclick="window.location.href='beauty.html'">
                         <div class="service-label">Beauty Guide</div>
                     </div>
+
                 </div>
             </div>
 
@@ -344,63 +222,40 @@
             <div class="mirror-wrapper">
                 <div class="mirror-frame">
                     <div class="mirror-surface">
-                        <!-- Camera video element -->
                         <video id="cameraFeed" class="mirror-video" autoplay playsinline style="display:none;"></video>
-                        <!-- Placeholder text before camera starts -->
                         <div id="mirrorPlaceholder" class="mirror-placeholder">
-                            Welcome to Atelier Etternelle.<br>
-                            Your city glow is ready.<br><br>
-                            Click any service or use the controls below.
+                            Welcome to Atelier Etternelle.<br>Click any service.
                         </div>
                     </div>
                 </div>
 
                 <!-- BOTTOM CONTROLS -->
                 <div class="bottom-controls">
-                    <div class="control-button" data-control="lighting">
-                        <div class="control-icon"></div>
-                    </div>
-                    <div class="control-button" data-control="filters">
-                        <div class="control-icon"></div>
-                    </div>
-                    <div class="control-button" data-control="sparkle">
-                        <div class="control-icon"></div>
-                    </div>
-                    <div class="control-button" data-control="capture">
-                        <div class="control-icon"></div>
-                    </div>
-                    <div class="control-button" data-control="save">
-                        <div class="control-icon"></div>
-                    </div>
-                    <div class="control-button" data-control="share">
-                        <div class="control-icon"></div>
-                    </div>
+                    <div class="control-button" onclick="window.location.href='filters.html'"></div>
+                    <div class="control-button" onclick="window.location.href='sparkle.html'"></div>
+                    <div class="control-button" onclick="window.location.href='capture.html'"></div>
+                    <div class="control-button" onclick="window.location.href='save.html'"></div>
+                    <div class="control-button" onclick="window.location.href='share.html'"></div>
                 </div>
             </div>
 
             <!-- RIGHT SIDE BUTTONS -->
             <div class="side-column">
                 <div class="side-buttons">
-                    <div class="service-button right-1" data-service="Habit Tracker">
-                        <div class="service-icon"></div>
+
+                    <div class="service-button right-1" onclick="window.location.href='habit.html'">
                         <div class="service-label">Habit Tracker</div>
                     </div>
-                    <div class="service-button right-2" data-service="Workout Box">
-                        <div class="service-icon"></div>
+
+                    <div class="service-button right-2" onclick="window.location.href='workout.html'">
                         <div class="service-label">Workout Box</div>
                     </div>
-                    <div class="service-button right-3" data-service="City Music">
-                        <div class="service-icon"></div>
+
+                    <div class="service-button right-3" onclick="window.location.href='music.html'">
                         <div class="service-label">City Music</div>
                     </div>
-                </div>
-            </div>
 
-            <!-- SIMPLE SERVICE PANEL -->
-            <div id="servicePanel" class="service-panel">
-                <h2 id="serviceTitle"></h2>
-                <p id="serviceText"></p>
-                <small>Everything you do here is saved automatically ✦</small>
+                </div>
             </div>
 
         </div>
@@ -408,164 +263,36 @@
 </div>
 
 <script>
-    // --- CITY BACKGROUND ---
-    (function setCityBackground() {
-        const room = document.getElementById("mirrorRoom");
-        const city = (localStorage.getItem("selectedCity") || "").toLowerCase().replace(" ", "");
-        const map = {
-            paris: "city-paris",
-            london: "city-london",
-            dubai: "city-dubai",
-            "newyork": "city-newyork",
-            santorini: "city-santorini",
-            milan: "city-milan",
-            barcelona: "city-barcelona",
-            tokyo: "city-tokyo",
-            seoul: "city-seoul",
-            moscow: "city-moscow",
-            munich: "city-munich",
-            prague: "city-prague"
-        };
-        const cls = map[city] || "city-paris";
-        room.classList.add(cls);
-    })();
+    /* CITY BACKGROUND */
+    const room = document.getElementById("mirrorRoom");
+    const city = (localStorage.getItem("selectedCity") || "").toLowerCase().replace(" ", "");
+    room.classList.add("city-" + city);
 
-    // --- MOTTO ROTATION ---
+    /* MOTTO ROTATION — SLOWER (10 SECONDS) */
     const mottos = [
         "Glow like it’s golden hour in every city.",
-        "Elegance is a habit, not an accident.",
-        "You are the main character in every skyline.",
-        "Soft glam, strong energy.",
-        "Couture begins in the mirror.",
-        "Romance your own reflection."
+        "Elegance is a habit.",
+        "You are the main character.",
+        "Soft glam, strong energy."
     ];
+    let i = 0;
+    document.getElementById("motto").textContent = mottos[0];
+    setInterval(() => {
+        i = (i + 1) % mottos.length;
+        document.getElementById("motto").textContent = mottos[i];
+    }, 10000);
 
-    (function rotateMottos() {
-        const el = document.getElementById("motto");
-        let index = 0;
-        function showNext() {
-            el.textContent = mottos[index];
-            index = (index + 1) % mottos.length;
-        }
-        showNext();
-        setInterval(showNext, 6000);
-    })();
+    /* CAMERA */
+    const video = document.getElementById("cameraFeed");
+    const placeholder = document.getElementById("mirrorPlaceholder");
 
-    // --- CAMERA (OPTIONAL, SAFE FALLBACK) ---
-    (function initCamera() {
-        const video = document.getElementById("cameraFeed");
-        const placeholder = document.getElementById("mirrorPlaceholder");
-
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            return; // leave placeholder
-        }
-
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => {
-                video.srcObject = stream;
-                video.style.display = "block";
-                placeholder.style.display = "none";
-            })
-            .catch(() => {
-                // if user denies camera, keep placeholder
-            });
-    })();
-
-    // --- SIMPLE AUTO-SAVE MOCK (LOCALSTORAGE) ---
-    function autoSave(key, value) {
-        const existing = JSON.parse(localStorage.getItem("atelierData") || "{}");
-        existing[key] = value;
-        localStorage.setItem("atelierData", JSON.stringify(existing));
-    }
-
-    // --- SERVICE PANEL LOGIC ---
-    const servicePanel = document.getElementById("servicePanel");
-    const serviceTitle = document.getElementById("serviceTitle");
-    const serviceText = document.getElementById("serviceText");
-
-    function openService(name) {
-        serviceTitle.textContent = name;
-
-        let text = "";
-        switch (name) {
-            case "Colour Analysis":
-                text = "Upload or imagine your outfit and nails. We’ll match tones and save your favorite combos automatically.";
-                break;
-            case "Style Helper":
-                text = "Tell us where you’re going. We’ll suggest outfits, hair, makeup and accessories—saved for future looks.";
-                break;
-            case "Photo Ideas":
-                text = "Get pose, angle and location ideas based on your city and vibe. Your favorites are remembered.";
-                break;
-            case "Beauty Guide":
-                text = "Discover your best colors, styles and beauty habits. Your profile grows with every session.";
-                break;
-            case "Habit Tracker":
-                text = "Track water, sleep, workouts, mood and skincare with soft, aesthetic logs.";
-                break;
-            case "Workout Box":
-                text = "See simple, effective full-body moves. Your progress is quietly saved.";
-                break;
-            case "City Music":
-                text = "Play getting-ready music that matches your chosen city’s energy.";
-                break;
-            default:
-                text = "This service is part of your Atelier Etternelle ritual.";
-        }
-
-        serviceText.textContent = text;
-        servicePanel.style.display = "block";
-
-        autoSave("lastService", name);
-    }
-
-    // Close panel on click outside (simple)
-    document.addEventListener("click", (e) => {
-        if (!servicePanel.contains(e.target) && !e.target.classList.contains("service-button") && !e.target.closest(".service-button")) {
-            servicePanel.style.display = "none";
-        }
-    });
-
-    // --- ATTACH SERVICE BUTTON HANDLERS ---
-    document.querySelectorAll(".service-button").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const name = btn.getAttribute("data-service");
-            openService(name);
-        });
-    });
-
-    // --- BOTTOM CONTROLS (SIMPLE MOCKS + AUTOSAVE) ---
-    document.querySelectorAll(".control-button").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const control = btn.getAttribute("data-control");
-            autoSave("lastControl", control);
-
-            if (control === "lighting") {
-                document.querySelector(".mirror-surface").style.background =
-                    "radial-gradient(circle at top, #ffffff, #cfcfcf)";
-            }
-            if (control === "filters") {
-                document.querySelector(".mirror-surface").style.filter =
-                    "contrast(1.05) saturate(1.05)";
-            }
-            if (control === "sparkle") {
-                document.querySelector(".mirror-frame").style.boxShadow =
-                    "0 0 26px rgba(212,167,98,0.9), 0 0 0 3px rgba(212,167,98,0.6)";
-            }
-            if (control === "capture") {
-                // Placeholder: mark a "photo" taken
-                autoSave("lastCaptureTime", new Date().toISOString());
-                alert("Photo captured ✦ (mock). In a real build, this would save to your gallery.");
-            }
-            if (control === "save") {
-                alert("Everything is already saved automatically ✦");
-            }
-            if (control === "share") {
-                alert("Share coming soon ✦");
-            }
-        });
-    });
+    navigator.mediaDevices?.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+            video.style.display = "block";
+            placeholder.style.display = "none";
+        })
+        .catch(() => {});
 </script>
 
 </body>
