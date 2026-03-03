@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta-name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier Etternelle – Mirror</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atelier Etternelle – Mirror Room</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
@@ -39,7 +39,7 @@
             align-items: center;
         }
 
-        /* Removed blur from overlay so camera is NOT blurry */
+        /* NO BLUR — camera stays clear */
         .overlay {
             position: absolute;
             inset: 0;
@@ -47,7 +47,7 @@
             z-index: 1;
         }
 
-        /* Motto */
+        /* MOTTO — higher + slower */
         .motto {
             position: absolute;
             top: 20px;
@@ -119,17 +119,15 @@
 </div>
 
 <script>
-    /* CITY BACKGROUND FIX */
+    /* CITY BACKGROUND */
     const room = document.getElementById("mirrorRoom");
     let city = localStorage.getItem("selectedCity");
 
-    if (!city) {
-        city = "paris"; // fallback so colours ALWAYS show
-    }
+    if (!city) city = "paris"; // fallback so colours always show
 
     room.classList.add("city-" + city.toLowerCase().replace(" ", ""));
 
-    /* MOTTO ROTATION */
+    /* MOTTO ROTATION — 12 seconds */
     const mottos = [
         "Glow like it’s golden hour.",
         "Elegance is a habit.",
@@ -145,7 +143,7 @@
         mottoEl.textContent = mottos[i];
     }, 12000);
 
-    /* CAMERA FIX */
+    /* CAMERA */
     const video = document.getElementById("cameraFeed");
     const placeholder = document.getElementById("mirrorPlaceholder");
 
@@ -155,7 +153,7 @@
             video.style.display = "block";
             placeholder.style.display = "none";
         })
-        .catch(err => {
+        .catch(() => {
             placeholder.textContent = "Camera unavailable.";
         });
 </script>
