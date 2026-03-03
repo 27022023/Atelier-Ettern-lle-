@@ -39,15 +39,15 @@
             align-items: center;
         }
 
-        /* Soft dreamy overlay */
+        /* Removed blur from overlay so camera is NOT blurry */
         .overlay {
             position: absolute;
             inset: 0;
-            backdrop-filter: blur(4px);
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.10);
+            z-index: 1;
         }
 
-        /* Motto – higher + softer + slower */
+        /* Motto */
         .motto {
             position: absolute;
             top: 20px;
@@ -61,7 +61,7 @@
             z-index: 10;
         }
 
-        /* Mirror frame – more chicky, soft, rounded, glowing */
+        /* Mirror frame */
         .mirror-frame {
             width: 70%;
             max-width: 900px;
@@ -73,6 +73,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 5;
         }
 
         .mirror-surface {
@@ -80,7 +81,7 @@
             height: 100%;
             border-radius: 45px;
             overflow: hidden;
-            background: radial-gradient(circle at top, #ffffff, #d7d7d7);
+            background: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -118,21 +119,22 @@
 </div>
 
 <script>
-    /* CITY BACKGROUND */
+    /* CITY BACKGROUND FIX */
     const room = document.getElementById("mirrorRoom");
-    const city = (localStorage.getItem("selectedCity") || "").toLowerCase().replace(" ", "");
-    room.classList.add("city-" + city);
+    let city = localStorage.getItem("selectedCity");
 
-    /* MOTTO ROTATION – slower + softer */
+    if (!city) {
+        city = "paris"; // fallback so colours ALWAYS show
+    }
+
+    room.classList.add("city-" + city.toLowerCase().replace(" ", ""));
+
+    /* MOTTO ROTATION */
     const mottos = [
         "Glow like it’s golden hour.",
         "Elegance is a habit.",
         "You are the main character.",
         "Soft glam, strong energy."
-        "Elegance is when the outside is as beautiful as the inside"
-        " After women, flowers are the most delicate creations"
-        " If you want to be an original be ready to be copied"
-        "Beauty means that you are yourself"
     ];
     let i = 0;
     const mottoEl = document.getElementById("motto");
@@ -141,19 +143,21 @@
     setInterval(() => {
         i = (i + 1) % mottos.length;
         mottoEl.textContent = mottos[i];
-    }, 12000); // 12 seconds
+    }, 12000);
 
-    /* CAMERA */
+    /* CAMERA FIX */
     const video = document.getElementById("cameraFeed");
     const placeholder = document.getElementById("mirrorPlaceholder");
 
-    navigator.mediaDevices?.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
             video.srcObject = stream;
             video.style.display = "block";
             placeholder.style.display = "none";
         })
-        .catch(() => {});
+        .catch(err => {
+            placeholder.textContent = "Camera unavailable.";
+        });
 </script>
 
 </body>
