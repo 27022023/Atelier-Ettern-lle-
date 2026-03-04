@@ -13,7 +13,7 @@
         body {
             min-height: 100vh;
             width: 100vw;
-            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            background: linear-gradient(135deg, #f3d9ff, #f7e7ff);
             font-family: "Playfair Display", serif;
             display: flex;
             flex-direction: column;
@@ -22,26 +22,23 @@
             padding-bottom: 40px;
         }
 
-        /* Back arrow */
         .back-arrow {
             position: fixed;
             top: 20px;
             left: 20px;
             font-size: 2.2rem;
             cursor: pointer;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+            color: #d8b4fe;
+            text-shadow: 0 0 10px rgba(216,180,254,0.7);
         }
 
-        /* Title */
         h1 {
             font-size: 2.2rem;
             margin-bottom: 25px;
-            color: gold;
-            text-shadow: 0 0 12px rgba(255,215,0,0.6);
+            color: #d8b4fe;
+            text-shadow: 0 0 12px rgba(216,180,254,0.6);
         }
 
-        /* Routine buttons */
         .routine-container {
             width: 85%;
             max-width: 600px;
@@ -52,7 +49,7 @@
 
         .routine-btn {
             flex: 1;
-            background: gold;
+            background: #d8b4fe;
             color: black;
             padding: 12px;
             border-radius: 14px;
@@ -65,10 +62,9 @@
 
         .routine-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            box-shadow: 0 0 20px rgba(216,180,254,0.6);
         }
 
-        /* Exercise cards */
         .exercise-container {
             width: 85%;
             max-width: 600px;
@@ -79,10 +75,10 @@
 
         .exercise-card {
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 18px;
             padding: 20px;
-            color: gold;
+            color: #d8b4fe;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -100,10 +96,9 @@
             opacity: 0.9;
         }
 
-        /* Start workout button */
         .start-btn {
             margin-top: 30px;
-            background: gold;
+            background: #d8b4fe;
             color: black;
             padding: 14px 20px;
             border-radius: 14px;
@@ -116,7 +111,7 @@
 
         .start-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            box-shadow: 0 0 20px rgba(216,180,254,0.6);
         }
     </style>
 </head>
@@ -133,27 +128,25 @@
         <button class="routine-btn" onclick="loadRoutine('advanced')">Advanced</button>
     </div>
 
-    <div id="exerciseList" class="exercise-container">
-        <!-- Exercises will load here -->
-    </div>
+    <div id="exerciseList" class="exercise-container"></div>
 
-    <button class="start-btn" onclick="alert('Workout starting soon!')">Start Workout</button>
+    <button class="start-btn" onclick="alert('Your workout is starting! 💜')">Start Workout</button>
 
 <script>
     const routines = {
         beginner: [
-            { icon: "🏋️‍♀️", title: "Squats", desc: "Great for legs and glutes. 12 reps." },
-            { icon: "🤸‍♀️", title: "Plank", desc: "Core strength builder. 20 seconds." },
-            { icon: "🚶‍♀️", title: "March in Place", desc: "Warm-up cardio. 30 seconds." }
+            { icon: "🏋️‍♀️", title: "Bodyweight Squats", desc: "Strengthens legs + glutes. 12 reps." },
+            { icon: "🤸‍♀️", title: "Plank", desc: "Core stability. Hold for 20 seconds." },
+            { icon: "🚶‍♀️", title: "March in Place", desc: "Light cardio warm-up. 30 seconds." }
         ],
         intermediate: [
-            { icon: "🏋️‍♂️", title: "Lunges", desc: "Strengthens legs and balance. 10 reps each side." },
+            { icon: "🦵", title: "Lunges", desc: "Targets legs + balance. 10 reps each side." },
             { icon: "💪", title: "Push-ups", desc: "Upper body strength. 10 reps." },
             { icon: "🔥", title: "Mountain Climbers", desc: "Cardio + core. 25 seconds." }
         ],
         advanced: [
             { icon: "🏃‍♀️", title: "Burpees", desc: "Full-body explosive movement. 12 reps." },
-            { icon: "🦵", title: "Jump Squats", desc: "Power legs workout. 15 reps." },
+            { icon: "🦿", title: "Jump Squats", desc: "Power legs workout. 15 reps." },
             { icon: "⏱️", title: "Plank to Push-up", desc: "Core + arms. 12 reps." }
         ]
     };
