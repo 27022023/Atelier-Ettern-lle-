@@ -13,7 +13,7 @@
         body {
             min-height: 100vh;
             width: 100vw;
-            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            background: linear-gradient(135deg, #f3d9ff, #f7e7ff);
             font-family: "Playfair Display", serif;
             display: flex;
             flex-direction: column;
@@ -22,26 +22,23 @@
             padding-bottom: 40px;
         }
 
-        /* Back arrow */
         .back-arrow {
             position: fixed;
             top: 20px;
             left: 20px;
             font-size: 2.2rem;
             cursor: pointer;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+            color: #d8b4fe;
+            text-shadow: 0 0 10px rgba(216,180,254,0.7);
         }
 
-        /* Title */
         h1 {
             font-size: 2.2rem;
             margin-bottom: 25px;
-            color: gold;
-            text-shadow: 0 0 12px rgba(255,215,0,0.6);
+            color: #d8b4fe;
+            text-shadow: 0 0 12px rgba(216,180,254,0.6);
         }
 
-        /* Form container */
         .form-container {
             width: 85%;
             max-width: 600px;
@@ -50,41 +47,38 @@
             gap: 20px;
         }
 
-        /* Input fields */
         .input-field {
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 14px;
             padding: 12px;
-            color: gold;
+            color: #d8b4fe;
             font-size: 1.2rem;
         }
 
-        .input-field input,
         .input-field select {
             width: 100%;
             background: transparent;
             border: none;
-            color: gold;
+            color: #d8b4fe;
             font-size: 1.2rem;
             outline: none;
         }
 
-        /* Upload box */
         .upload-box {
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 18px;
             padding: 20px;
             text-align: center;
-            color: gold;
+            color: #d8b4fe;
             font-size: 1.2rem;
             cursor: pointer;
             transition: 0.2s ease;
         }
 
         .upload-box:hover {
-            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            box-shadow: 0 0 20px rgba(216,180,254,0.5);
             transform: scale(1.02);
         }
 
@@ -92,10 +86,9 @@
             display: none;
         }
 
-        /* Button */
         .analyze-btn {
             margin-top: 10px;
-            background: gold;
+            background: #d8b4fe;
             color: black;
             padding: 14px 20px;
             border-radius: 14px;
@@ -108,21 +101,37 @@
 
         .analyze-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            box-shadow: 0 0 20px rgba(216,180,254,0.6);
         }
 
-        /* Results box */
         .results {
             margin-top: 30px;
             width: 85%;
             max-width: 600px;
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 18px;
             padding: 20px;
-            color: gold;
-            text-align: center;
+            color: #d8b4fe;
+            text-align: left;
             display: none;
+        }
+
+        .results h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #e9d5ff;
+        }
+
+        .bullet {
+            margin-left: 15px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -188,21 +197,92 @@
     </div>
 
     <div id="resultsBox" class="results">
-        <h2 style="margin-bottom: 10px;">Your Beauty Profile</h2>
-        <p id="resultsText">
-            Your personalized makeup, colors, hairstyles, jewelry tones, and beauty tips will appear here!
-        </p>
+        <h2>Your Beauty Profile</h2>
+        <div id="makeup"></div>
+        <div id="colors"></div>
+        <div id="hair"></div>
+        <div id="jewelry"></div>
+        <div id="tips"></div>
     </div>
 
 <script>
     function showResults() {
+        const skinTone = document.getElementById("skinTone").value;
+        const hairColor = document.getElementById("hairColor").value;
+        const eyeColor = document.getElementById("eyeColor").value;
+
         const resultsBox = document.getElementById("resultsBox");
-        const resultsText = document.getElementById("resultsText");
-
-        resultsText.textContent =
-            "Your personalized beauty suggestions will appear here based on your inputs!";
-
         resultsBox.style.display = "block";
+
+        // Makeup suggestions
+        const makeup = {
+            Fair: ["Soft pink blush", "Light brown eyeshadow", "Rose gloss"],
+            Light: ["Peach blush", "Champagne shimmer", "Nude gloss"],
+            Medium: ["Warm bronzer", "Gold shimmer", "Mauve lipstick"],
+            Tan: ["Terracotta blush", "Bronze eyeshadow", "Brown gloss"],
+            Deep: ["Berry blush", "Purple shimmer", "Deep plum lipstick"]
+        };
+
+        // Clothing colors
+        const colors = {
+            Blonde: ["Lavender", "Soft blue", "White", "Pastel pink"],
+            Brown: ["Lilac", "Emerald", "Cream", "Warm neutrals"],
+            Black: ["Lavender", "Silver", "Hot pink", "White"],
+            Red: ["Soft purple", "Black", "Cream", "Gold"],
+            "Dyed / Fashion Color": ["Monochrome fits", "Pastels", "Black basics"]
+        };
+
+        // Hair suggestions
+        const hair = {
+            Blue: ["Soft curls", "Curtain bangs", "Half-up styles"],
+            Green: ["Sleek ponytail", "Loose waves", "Braided crown"],
+            Brown: ["Face-framing layers", "Glossy straight hair", "Low bun"],
+            Hazel: ["Beach waves", "Soft curls", "Half-up bow"],
+            Grey: ["Voluminous curls", "Sleek bob", "Layered cut"]
+        };
+
+        // Jewelry tones
+        const jewelry = {
+            Fair: ["Silver", "Rose gold"],
+            Light: ["Rose gold", "White gold"],
+            Medium: ["Gold", "Rose gold"],
+            Tan: ["Gold", "Bronze"],
+            Deep: ["Gold", "Deep bronze"]
+        };
+
+        // Beauty tips
+        const tips = [
+            "Hydrate your skin daily.",
+            "Use sunscreen every morning.",
+            "Match your blush to your lip color.",
+            "Brush your brows upward for a lifted look.",
+            "Use highlighter on cheekbones + nose bridge."
+        ];
+
+        document.getElementById("makeup").innerHTML = `
+            <div class="section-title">💄 Makeup Colors</div>
+            ${makeup[skinTone]?.map(m => `<div class="bullet">• ${m}</div>`).join("") || "<div class='bullet'>• Select your skin tone</div>"}
+        `;
+
+        document.getElementById("colors").innerHTML = `
+            <div class="section-title">🎨 Clothing Colors</div>
+            ${colors[hairColor]?.map(c => `<div class="bullet">• ${c}</div>`).join("") || "<div class='bullet'>• Select your hair color</div>"}
+        `;
+
+        document.getElementById("hair").innerHTML = `
+            <div class="section-title">💇 Hairstyle Suggestions</div>
+            ${hair[eyeColor]?.map(h => `<div class="bullet">• ${h}</div>`).join("") || "<div class='bullet'>• Select your eye color</div>"}
+        `;
+
+        document.getElementById("jewelry").innerHTML = `
+            <div class="section-title">💍 Best Jewelry Tones</div>
+            ${jewelry[skinTone]?.map(j => `<div class="bullet">• ${j}</div>`).join("") || "<div class='bullet'>• Select your skin tone</div>"}
+        `;
+
+        document.getElementById("tips").innerHTML = `
+            <div class="section-title">✨ Beauty Tips</div>
+            ${tips.map(t => `<div class="bullet">• ${t}</div>`).join("")}
+        `;
     }
 </script>
 
