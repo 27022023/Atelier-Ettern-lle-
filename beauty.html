@@ -1,135 +1,267 @@
-<!DOCTYPE html><html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beauty Guide</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{min-height:100vh;width:100vw;background:linear-gradient(135deg,#f7e7c9,#f8dcb8);font-family:"Playfair Display",serif;display:flex;flex-direction:column;align-items:center;padding:32px 0 40px;}
-.back-arrow{position:fixed;top:18px;left:18px;font-size:2.1rem;cursor:pointer;color:#f5d487;text-shadow:0 0 10px rgba(247,231,201,0.6);z-index:10;}
-h1{font-size:2rem;margin-bottom:18px;color:#f5d487;text-shadow:0 0 12px rgba(247,231,201,0.6);}
-.form-container{width:90%;max-width:700px;display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
-.input-field{background:black;border:2px solid #f7e7c9;border-radius:18px;padding:8px 12px;color:#f7e7c9;font-size:1rem;}
-.input-field select{width:100%;background:transparent;border:none;color:#f7e7c9;font-size:1rem;outline:none;}
-.upload-box{background:black;border:2px solid #f7e7c9;border-radius:18px;padding:10px 12px;text-align:center;color:#f7e7c9;font-size:.95rem;cursor:pointer;transition:.2s;}
-.upload-box:hover{box-shadow:0 0 18px rgba(247,231,201,0.6);transform:scale(1.02);}
-input[type=file]{display:none;}
-.analyze-btn{margin-top:6px;background:#f5d487;color:black;padding:10px 16px;border-radius:16px;font-size:1.05rem;font-weight:600;cursor:pointer;border:none;transition:.2s;box-shadow:0 0 10px rgba(247,231,201,0.6);align-self:center;}
-.analyze-btn:hover{transform:scale(1.05);box-shadow:0 0 20px rgba(247,231,201,0.8);}
-.results{margin-top:22px;width:94%;max-width:1100px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-.result-card{background:black;border:2px solid #f7e7c9;border-radius:18px;padding:12px 14px;color:#f7e7c9;font-size:.95rem;}
-.result-card h2{font-size:1.15rem;margin-bottom:6px;color:#f5d487;}
-.section-title{font-size:1rem;margin-top:8px;margin-bottom:3px;color:#f7e7c9;}
-.bullet{margin-left:14px;margin-bottom:3px;font-size:.9rem;}
-.tag-row{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}
-.tag{border-radius:999px;border:1px solid #f7e7c9;padding:3px 9px;font-size:.8rem;opacity:.9;}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Guide</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            background: linear-gradient(135deg, #f7e7c9, #f8dcb8);
+            font-family: "Playfair Display", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 0 40px;
+        }
+
+        .back-arrow {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            font-size: 2.1rem;
+            cursor: pointer;
+            color: #f5d487;
+            text-shadow: 0 0 10px rgba(247,231,201,0.6);
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 18px;
+            color: #f5d487;
+            text-shadow: 0 0 12px rgba(247,231,201,0.6);
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .input-field {
+            background: black;
+            border: 2px solid #f7e7c9;
+            border-radius: 18px;
+            padding: 8px 12px;
+            color: #f7e7c9;
+            font-size: 1rem;
+        }
+
+        .input-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #f7e7c9;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .upload-box {
+            background: black;
+            border: 2px solid #f7e7c9;
+            border-radius: 18px;
+            padding: 10px 12px;
+            text-align: center;
+            color: #f7e7c9;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .upload-box:hover {
+            box-shadow: 0 0 18px rgba(247,231,201,0.6);
+            transform: scale(1.02);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .analyze-btn {
+            margin-top: 6px;
+            background: #f5d487;
+            color: black;
+            padding: 10px 16px;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
+            box-shadow: 0 0 10px rgba(247,231,201,0.6);
+            align-self: center;
+        }
+
+        .analyze-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(247,231,201,0.8);
+        }
+
+        .results {
+            margin-top: 22px;
+            width: 94%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+        }
+
+        .result-card {
+            background: black;
+            border: 2px solid #f7e7c9;
+            border-radius: 18px;
+            padding: 12px 14px;
+            color: #f7e7c9;
+            font-size: 0.95rem;
+        }
+
+        .result-card h2 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+            color: #f5d487;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            margin-top: 8px;
+            margin-bottom: 3px;
+            color: #f7e7c9;
+        }
+
+        .bullet {
+            margin-left: 14px;
+            margin-bottom: 3px;
+            font-size: 0.9rem;
+        }
+
+        .tag-row {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            border-radius: 999px;
+            border: 1px solid #f7e7c9;
+            padding: 3px 9px;
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+    </style>
 </head>
 
 <body>
-<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
-<h1>Beauty Guide</h1>
 
-<div class="form-container">
-<div class="input-field"><select id="skinType"><option disabled selected>Skin Type</option><option>Dry</option><option>Oily</option><option>Combination</option><option>Normal</option><option>Sensitive</option></select></div>
-<div class="input-field"><select id="skinTone"><option disabled selected>Skin Tone</option><option>Fair</option><option>Light</option><option>Medium</option><option>Tan</option><option>Deep</option></select></div>
-<div class="input-field"><select id="undertone"><option disabled selected>Undertone</option><option>Cool</option><option>Neutral</option><option>Warm</option></select></div>
-<div class="input-field"><select id="hairColor"><option disabled selected>Hair Color</option><option>Blonde</option><option>Brown</option><option>Black</option><option>Red</option><option>Dyed / Fashion Color</option></select></div>
-<div class="input-field"><select id="eyeColor"><option disabled selected>Eye Color</option><option>Blue</option><option>Green</option><option>Brown</option><option>Hazel</option><option>Grey</option></select></div>
-<div class="input-field"><select id="faceShape"><option disabled selected>Face Shape</option><option>Oval</option><option>Round</option><option>Square</option><option>Heart</option><option>Diamond</option><option>Long</option></select></div>
-<div class="input-field"><select id="aesthetic"><option disabled selected>Preferred Aesthetic</option><option>Clean girl</option><option>Soft girl</option><option>Coquette</option><option>Classy</option><option>Glam</option><option>Minimalist</option><option>Y2K</option><option>Baddie</option></select></div>
-<label class="upload-box">Upload your photo (optional)<input type="file" id="photoInput" accept="image/*"></label>
-<button class="analyze-btn" onclick="showResults()">Show my beauty profile</button>
-</div>
+    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
-<div id="resultsWrapper" class="results">
-<div class="result-card" id="makeupCard"></div>
-<div class="result-card" id="colorsCard"></div>
-<div class="result-card" id="hairCard"></div>
-<div class="result-card" id="jewelryCard"></div>
-<div class="result-card" id="skincareCard"></div>
-<div class="result-card" id="aestheticCard"></div>
-<div class="result-card" id="photoCard"></div>
-</div>
+    <h1>Beauty Guide</h1>
 
-<script>
-function showResults(){
-let skinType=skinType.value,skinTone=skinTone.value,undertone=undertone.value,hairColor=hairColor.value,eyeColor=eyeColor.value,faceShape=faceShape.value,aesthetic=aesthetic.value;
+    <div class="form-container">
 
-let makeupBase={Fair:["Light coverage foundation","Soft pink blush","Rose or nude lips"],Light:["Natural finish foundation","Peach blush","Peachy nude lips"],Medium:["Medium coverage foundation","Warm bronzer + mauve blush","Mauve or berry lips"],Tan:["Warm-toned foundation","Terracotta blush","Caramel or brown nude lips"],Deep:["Rich coverage foundation","Berry or brick blush","Deep plum or wine lips"]};
-let undertoneEyeshadow={Cool:["Taupe","Mauve","Soft plum","Cool browns"],Neutral:["Champagne","Rose gold","Neutral browns"],Warm:["Bronze","Gold","Copper","Warm browns"]};
-let eyelinerShape={Oval:"Classic wing",Round:"Elongated wing",Square:"Smudged liner",Heart:"Soft wing outer corner",Diamond:"Balanced top+bottom",Long:"Short wing + volume"};
-let browShape={Oval:"Soft angled",Round:"Slight arch",Square:"Rounded arch",Heart:"Straighter brow",Diamond:"Curved arch",Long:"Defined arch"};
-let mascaraStyle={Blue:"Lengthening outer lashes",Green:"Volume + length",Brown:"Full fluffy",Hazel:"Wispy doll-like",Grey:"Defined length"};
+        <div class="input-field">
+            <select id="skinType">
+                <option disabled selected>Skin Type</option>
+                <option>Dry</option>
+                <option>Oily</option>
+                <option>Combination</option>
+                <option>Normal</option>
+                <option>Sensitive</option>
+            </select>
+        </div>
 
-makeupCard.innerHTML=`<h2>Makeup</h2><div class=section-title>Base & Cheeks</div>${(makeupBase[skinTone]||["Select skin tone"]).map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Eyes</div><div class=bullet>• Eyeshadow: ${(undertoneEyeshadow[undertone]||["Select undertone"]).join(", ")}</div>
-<div class=bullet>• Eyeliner: ${eyelinerShape[faceShape]||"Soft thin line"}</div>
-<div class=section-title>Lashes & Brows</div><div class=bullet>• Mascara: ${mascaraStyle[eyeColor]||"Length + volume"}</div>
-<div class=bullet>• Brows: ${browShape[faceShape]||"Natural arch"}</div>`;
+        <div class="input-field">
+            <select id="skinTone">
+                <option disabled selected>Skin Tone</option>
+                <option>Fair</option>
+                <option>Light</option>
+                <option>Medium</option>
+                <option>Tan</option>
+                <option>Deep</option>
+            </select>
+        </div>
 
-let hairColorsClothes={Blonde:["Lavender","Soft blue","White","Pastel pink","Light grey"],Brown:["Lilac","Emerald","Cream","Warm neutrals","Chocolate brown"],Black:["Ivory","Hot pink","Silver","Red","Pastel purple"],Red:["Soft purple","Black","Cream","Forest green"],"Dyed / Fashion Color":["Monochrome","Black basics","Matching pastels"]};
-let seasonalPalette={Fair:"Light Spring/Summer",Light:"Soft Summer/Autumn",Medium:"True Autumn/Spring",Tan:"Deep Autumn/Spring",Deep:"Deep Winter/Autumn"};
+        <div class="input-field">
+            <select id="undertone">
+                <option disabled selected>Undertone</option>
+                <option>Cool</option>
+                <option>Neutral</option>
+                <option>Warm</option>
+            </select>
+        </div>
 
-colorsCard.innerHTML=`<h2>Clothing Colors</h2><div class=section-title>Best Colors</div>${(hairColorsClothes[hairColor]||["Select hair color"]).map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Seasonal Palette</div><div class=bullet>• ${seasonalPalette[skinTone]||"Select skin tone"}</div>`;
+        <div class="input-field">
+            <select id="hairColor">
+                <option disabled selected>Hair Color</option>
+                <option>Blonde</option>
+                <option>Brown</option>
+                <option>Black</option>
+                <option>Red</option>
+                <option>Dyed / Fashion Color</option>
+            </select>
+        </div>
 
-let hairByFace={Oval:["Any style","Soft layers","Curtain bangs"],Round:["Long layers","Face-framing","Volume at crown"],Square:["Soft waves","Side part","Curtain bangs"],Heart:["Chin-length layers","Side-swept bangs","Soft curls"],Diamond:["Chin bobs","Fringe","Soft waves"],Long:["Long layers","Side part","Soft waves"]};
-let hairTextureTips={Blonde:"Glossy waves",Brown:"Waves or sleek",Black:"Sleek or big curls",Red:"Romantic waves","Dyed / Fashion Color":"Layers show color best"};
+        <div class="input-field">
+            <select id="eyeColor">
+                <option disabled selected>Eye Color</option>
+                <option>Blue</option>
+                <option>Green</option>
+                <option>Brown</option>
+                <option>Hazel</option>
+                <option>Grey</option>
+            </select>
+        </div>
 
-hairCard.innerHTML=`<h2>Hair</h2><div class=section-title>Cuts</div>${(hairByFace[faceShape]||["Select face shape"]).map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Texture Tips</div><div class=bullet>• ${hairTextureTips[hairColor]||"Select hair color"}</div>`;
+        <div class="input-field">
+            <select id="faceShape">
+                <option disabled selected>Face Shape</option>
+                <option>Oval</option>
+                <option>Round</option>
+                <option>Square</option>
+                <option>Heart</option>
+                <option>Diamond</option>
+                <option>Long</option>
+            </select>
+        </div>
 
-let jewelryByUndertone={Cool:["Silver","White gold","Platinum"],Neutral:["Rose gold","Silver","Soft gold"],Warm:["Gold","Bronze","Warm rose gold"]};
-let jewelryBySkinTone={Fair:["Delicate pieces","Small studs","Thin chains"],Light:["Minimal hoops","Layered necklaces"],Medium:["Chunky gold","Statement earrings"],Tan:["Bold hoops","Layered chains"],Deep:["Large pieces","Bold gold"]};
+        <div class="input-field">
+            <select id="aesthetic">
+                <option disabled selected>Preferred Aesthetic</option>
+                <option>Clean girl</option>
+                <option>Soft girl</option>
+                <option>Coquette</option>
+                <option>Classy</option>
+                <option>Glam</option>
+                <option>Minimalist</option>
+                <option>Y2K</option>
+                <option>Baddie</option>
+            </select>
+        </div>
 
-jewelryCard.innerHTML=`<h2>Jewelry</h2><div class=section-title>Metals</div>${(jewelryByUndertone[undertone]||["Select undertone"]).map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Style</div>${(jewelryBySkinTone[skinTone]||["Select skin tone"]).map(x=>`<div class=bullet>• ${x}</div>`).join("")}`;
+        <label class="upload-box">
+            Upload your photo (optional)
+            <input type="file" id="photoInput" accept="image/*">
+        </label>
 
-let skincareByType={
-Dry:{am:["Hydrating cleanser","Essence","Rich moisturizer","SPF"],pm:["Cream cleanser","HA serum","Ceramide cream"],weekly:["Hydrating mask","Avoid harsh exfoliants"]},
-Oily:{am:["Gel cleanser","Gel moisturizer","Matte SPF"],pm:["Gel cleanser","Niacinamide","Light moisturizer"],weekly:["Clay mask","BHA exfoliant"]},
-Combination:{am:["Gentle cleanser","Mixed moisturizers","SPF"],pm:["Gentle cleanser","Hydrating serum","Balanced moisturizer"],weekly:["Clay T-zone","Hydrating mask"]},
-Normal:{am:["Gentle cleanser","Light moisturizer","SPF"],pm:["Cleanser","Glow serum","Moisturizer"],weekly:["Gentle exfoliation","Hydrating mask"]},
-Sensitive:{am:["Gentle cleanser","Soothing moisturizer","Mineral SPF"],pm:["Gentle cleanser","Calming serum","Barrier cream"],weekly:["Avoid strong exfoliants","Calming masks"]}
-};
+        <button class="analyze-btn" onclick="showResults()">Show my beauty profile</button>
+    </div>
 
-let r=skincareByType[skinType]||{am:["Select skin type"],pm:["Select skin type"],weekly:["Select skin type"]};
-
-skincareCard.innerHTML=`<h2>Skincare</h2><div class=section-title>Morning</div>${r.am.map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Night</div>${r.pm.map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Weekly</div>${r.weekly.map(x=>`<div class=bullet>• ${x}</div>`).join("")}`;
-
-let aestheticProfiles={
-"Clean girl":{makeup:["Glowy skin","Fluffy brows","Brown mascara","Nude gloss"],hair:["Sleek bun","Low pony","Straight middle part"],outfit:["Neutrals","Simple silhouettes","Gold jewelry"],nails:["Short nude","Milky white","Soft pink"],accessories:["Small hoops","Minimal rings","Studs"]},
-"Soft girl":{makeup:["Blush-heavy","Soft pink lips","Shimmer lids"],hair:["Loose waves","Half-up bow","Braids"],outfit:["Pastels","Skirts","Cardigans"],nails:["Pastels","Cute designs","Hearts"],accessories:["Pearls","Bows","Clips"]},
-"Coquette":{makeup:["Flushed cheeks","Glossy lips","Soft liner"],hair:["Curls","Half-up ribbons","Romantic styles"],outfit:["Lace","Ruffles","Mini skirts"],nails:["French","Soft pink","Bows"],accessories:["Ribbons","Pearls","Hearts"]},
-"Classy":{makeup:["Neutral glam","Defined liner","Red/nude lips"],hair:["Blowout","Chignon","Smooth waves"],outfit:["Blazers","Trousers","LBD"],nails:["Red","Nude","French"],accessories:["Pearls","Structured bags","Gold"]},
-"Glam":{makeup:["Full coverage","Smokey eyes","Bold lashes","Contour"],hair:["Big curls","Hollywood waves","High pony"],outfit:["Sparkle","Bodycon","Heels"],nails:["Chrome","Glitter","Coffin"],accessories:["Statement earrings","Clutch","Rhinestones"]},
-
-"Minimalist":{makeup:["Barely-there base","Tinted balm","Clear mascara"],hair:["Straight hair","Simple bun","Low pony"],outfit:["Monochrome","Simple lines","Basics"],nails:["Clear","Sheer nude","Short"],accessories:["Studs","Thin rings","Watch"]},
-
-"Y2K":{makeup:["Glossy lips","Shimmer lids","Thin liner"],hair:["Space buns","Butterfly clips","High pony"],outfit:["Low-rise jeans","Baby tees","Mini skirts"],nails:["Bright","Stickers","French twist"],accessories:["Butterfly clips","Chunky rings","Tiny bags"]},
-
-"Baddie":{makeup:["Snatched contour","Full lashes","Overlined gloss"],hair:["Sleek middle part","Long straight","High pony"],outfit:["Bodycon","Cargo + crop","Oversized jackets"],nails:["Long acrylics","Bold colors","Sharp"],accessories:["Big hoops","Chains","Sunglasses"]}
-};
-
-let a=aestheticProfiles[aesthetic];
-aestheticCard.innerHTML=a?`<h2>${aesthetic}</h2><div class=section-title>Makeup</div>${a.makeup.map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Hair</div>${a.hair.map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Outfit</div>${a.outfit.map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Nails</div>${a.nails.map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=section-title>Accessories</div>${a.accessories.map(x=>`<div class=bullet>• ${x}</div>`).join("")}
-<div class=tag-row><div class=tag>Skin: ${skinTone||"?"}</div><div class=tag>Undertone: ${undertone||"?"}</div><div class=tag>Face: ${faceShape||"?"}</div></div>`
-:`<h2>Aesthetic</h2><div class=bullet>• Choose an aesthetic.</div>`;
-
-photoCard.innerHTML=`<h2>Photo Tips</h2><div class=section-title>Lighting</div><div class=bullet>• Face a window.</div><div class=bullet>• Avoid overhead light.</div>
-<div class=section-title>Angles</div><div class=bullet>• Chin slightly down.</div><div class=bullet>• Camera above eye level.</div>
-<div class=section-title>Makeup</div><div class=bullet>• More blush/bronzer.</div><div class=bullet>• Powder T-zone.</div>
-<div class=section-title>Hair & Outfit</div><div class=bullet>• Add volume.</div><div class=bullet>• Contrast background.</div>`;
-}
-
-document.addEventListener("DOMContentLoaded",()=>showResults());
-</script>
-
-</body></html>
-            
+    <div id="resultsWrapper" class="results">
+        <div class="result-card" id="makeupCard"></div>
+        <div class="result-card" id="colorsCard"></div>
+        <div class="result-card" id="hairCard"></div>
+        <div class="result-card" id="jewelryCard"></div>
+        <div class="result-card" id="skincareCard"></div>
+        <div class="result-card" id="aestheticCard"></div>
+        <div class="result-card" id="photoCard"></div>
+    </div>
