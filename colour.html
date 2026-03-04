@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colour Analysis</title>
+    <title>Color Analysis</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
@@ -11,113 +11,133 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
-            background: linear-gradient(135deg, #f3d9ff, #f7e7ff);
+            background: linear-gradient(135deg, #f7e7c9, #f8dcb8);
             font-family: "Playfair Display", serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 40px;
+            padding: 32px 0 40px;
         }
 
-        /* Back arrow */
         .back-arrow {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 2.2rem;
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            font-size: 2.1rem;
             cursor: pointer;
-            color: #d8b4fe;
-            text-shadow: 0 0 10px rgba(216,180,254,0.7);
+            color: #f5d487;
+            text-shadow: 0 0 10px rgba(247,231,201,0.6);
+            z-index: 10;
         }
 
-        /* Title */
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 25px;
-            color: #d8b4fe;
-            text-shadow: 0 0 12px rgba(216,180,254,0.6);
+            font-size: 2rem;
+            margin-bottom: 18px;
+            color: #f5d487;
+            text-shadow: 0 0 12px rgba(247,231,201,0.6);
         }
 
-        /* Upload boxes */
-        .upload-container {
-            width: 85%;
-            max-width: 600px;
+        .form-container {
+            width: 90%;
+            max-width: 700px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 12px;
+            margin-bottom: 22px;
         }
 
-        .upload-box {
+        .input-field {
             background: black;
-            border: 2px solid #d8b4fe;
+            border: 2px solid #f7e7c9;
             border-radius: 18px;
-            padding: 20px;
-            text-align: center;
-            color: #d8b4fe;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: 0.2s ease;
+            padding: 10px 14px;
+            color: #f7e7c9;
+            font-size: 1rem;
         }
 
-        .upload-box:hover {
-            box-shadow: 0 0 20px rgba(216,180,254,0.5);
-            transform: scale(1.02);
+        .input-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #f7e7c9;
+            font-size: 1rem;
+            outline: none;
         }
 
-        input[type="file"] {
-            display: none;
-        }
-
-        /* Button */
         .analyze-btn {
-            margin-top: 20px;
-            background: #d8b4fe;
+            margin-top: 10px;
+            background: #f5d487;
             color: black;
-            padding: 14px 20px;
-            border-radius: 14px;
-            font-size: 1.2rem;
+            padding: 12px 18px;
+            border-radius: 16px;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
             transition: 0.2s ease;
+            box-shadow: 0 0 10px rgba(247,231,201,0.6);
+            align-self: center;
         }
 
         .analyze-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(216,180,254,0.6);
+            box-shadow: 0 0 20px rgba(247,231,201,0.8);
         }
 
-        /* Results */
         .results {
-            margin-top: 30px;
-            width: 85%;
-            max-width: 600px;
-            background: black;
-            border: 2px solid #d8b4fe;
-            border-radius: 18px;
-            padding: 20px;
-            color: #d8b4fe;
-            text-align: left;
-            display: none;
+            margin-top: 22px;
+            width: 94%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
         }
 
-        .results h2 {
-            text-align: center;
-            margin-bottom: 15px;
+        .result-card {
+            background: black;
+            border: 2px solid #f7e7c9;
+            border-radius: 18px;
+            padding: 14px 16px;
+            color: #f7e7c9;
+            font-size: 1rem;
+        }
+
+        .result-card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #f5d487;
         }
 
         .section-title {
-            font-size: 1.3rem;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            color: #e9d5ff;
+            font-size: 1.05rem;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            color: #f7e7c9;
         }
 
         .bullet {
-            margin-left: 15px;
-            margin-bottom: 5px;
+            margin-left: 14px;
+            margin-bottom: 4px;
+            font-size: 0.95rem;
+        }
+
+        /* Silvery-blue palette boxes */
+        .palette-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .swatch {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            border: 2px solid #dbe7f5;
+            background: #c9d9f2;
+            box-shadow: 0 0 8px rgba(200,220,255,0.4);
         }
     </style>
 </head>
@@ -126,67 +146,53 @@
 
     <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
-    <h1>Colour Analysis</h1>
+    <h1>Color Analysis</h1>
 
-    <div class="upload-container">
+    <div class="form-container">
 
-        <label class="upload-box">
-            Upload your nails
-            <input type="file" id="nailsInput" accept="image/*">
-        </label>
+        <div class="input-field">
+            <select id="skinTone">
+                <option disabled selected>Skin Tone Depth</option>
+                <option>Fair</option>
+                <option>Light</option>
+                <option>Medium</option>
+                <option>Tan</option>
+                <option>Deep</option>
+            </select>
+        </div>
 
-        <label class="upload-box">
-            Upload your outfit
-            <input type="file" id="outfitInput" accept="image/*">
-        </label>
+        <div class="input-field">
+            <select id="undertone">
+                <option disabled selected>Undertone</option>
+                <option>Cool</option>
+                <option>Neutral</option>
+                <option>Warm</option>
+            </select>
+        </div>
 
-        <button class="analyze-btn" onclick="showResults()">Show matching combos</button>
+        <div class="input-field">
+            <select id="hairDepth">
+                <option disabled selected>Hair Depth</option>
+                <option>Light</option>
+                <option>Medium</option>
+                <option>Dark</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="eyeClarity">
+                <option disabled selected>Eye Clarity</option>
+                <option>Soft</option>
+                <option>Muted</option>
+                <option>Bright</option>
+                <option>Deep</option>
+            </select>
+        </div>
+
+        <button class="analyze-btn" onclick="showSeason()">Show my season</button>
     </div>
 
-    <div id="resultsBox" class="results">
-        <h2>Your Matching Combos</h2>
-
-        <div id="paletteSection"></div>
-        <div id="nailIdeas"></div>
-        <div id="outfitIdeas"></div>
-        <div id="aestheticCombos"></div>
+    <div id="resultsWrapper" class="results">
+        <div class="result-card" id="seasonCard"></div>
+        <div class="result-card" id="paletteCard"></div>
     </div>
-
-<script>
-    function showResults() {
-        const resultsBox = document.getElementById("resultsBox");
-        resultsBox.style.display = "block";
-
-        // Real recommendations
-        document.getElementById("paletteSection").innerHTML = `
-            <div class="section-title">🎨 Color Palette</div>
-            <div class="bullet">• Soft lilac + white + silver</div>
-            <div class="bullet">• Nude beige + pastel purple</div>
-            <div class="bullet">• Black + lavender accents</div>
-        `;
-
-        document.getElementById("nailIdeas").innerHTML = `
-            <div class="section-title">💅 Nail Ideas That Match Your Outfit</div>
-            <div class="bullet">• Pastel purple French tips</div>
-            <div class="bullet">• Nude nails with lilac chrome</div>
-            <div class="bullet">• White nails with lavender flowers</div>
-        `;
-
-        document.getElementById("outfitIdeas").innerHTML = `
-            <div class="section-title">👗 Outfit Ideas That Match Your Nails</div>
-            <div class="bullet">• White top + lilac skirt</div>
-            <div class="bullet">• Black dress + pastel purple bag</div>
-            <div class="bullet">• Beige sweater + lavender accessories</div>
-        `;
-
-        document.getElementById("aestheticCombos").innerHTML = `
-            <div class="section-title">✨ Aesthetic Combos</div>
-            <div class="bullet">• Soft girl: lilac cardigan + white pleated skirt</div>
-            <div class="bullet">• Clean girl: beige outfit + lavender nails</div>
-            <div class="bullet">• Coquette: lace top + pastel purple bow</div>
-        `;
-    }
-</script>
-
-</body>
-</html>
