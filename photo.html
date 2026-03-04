@@ -1,229 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Ideas</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Ideas</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            height: 100vh;
-            width: 100vw;
-            background: linear-gradient(135deg, #f3d9ff, #f7e7ff);
-            font-family: "Playfair Display", serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 40px;
-        }
+    body {
+        min-height: 100vh;
+        width: 100vw;
+        background: linear-gradient(135deg, #dfe3ea, #c9ced8, #e8ecf2);
+        font-family: "Playfair Display", serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 0 40px;
+    }
 
-        .back-arrow {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 2.2rem;
-            cursor: pointer;
-            color: #d8b4fe;
-            text-shadow: 0 0 10px rgba(216,180,254,0.7);
-        }
+    .back-arrow {
+        position: fixed;
+        top: 18px;
+        left: 18px;
+        font-size: 2.1rem;
+        cursor: pointer;
+        color: #ffffff;
+        text-shadow: 0 0 12px rgba(255,255,255,0.7);
+        z-index: 10;
+    }
 
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 25px;
-            color: #d8b4fe;
-            text-shadow: 0 0 12px rgba(216,180,254,0.6);
-        }
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 18px;
+        color: #ffffff;
+        text-shadow: 0 0 14px rgba(255,255,255,0.8);
+    }
 
-        .input-box {
-            width: 85%;
-            max-width: 600px;
-            background: black;
-            border: 2px solid #d8b4fe;
-            border-radius: 14px;
-            padding: 12px;
-            color: #d8b4fe;
-            font-size: 1.2rem;
-            margin-bottom: 25px;
-        }
+    /* Aesthetic selector */
+    .aesthetic-grid {
+        width: 92%;
+        max-width: 900px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 14px;
+        margin-bottom: 20px;
+    }
 
-        .input-box input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: #d8b4fe;
-            font-size: 1.2rem;
-            outline: none;
-        }
+    .aesthetic-card {
+        background: rgba(255,255,255,0.25);
+        backdrop-filter: blur(8px);
+        border: 2px solid rgba(255,255,255,0.4);
+        border-radius: 16px;
+        padding: 12px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
 
-        .idea-btn {
-            background: #d8b4fe;
-            color: black;
-            padding: 14px 20px;
-            border-radius: 14px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s ease;
-        }
+    .aesthetic-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 14px rgba(255,255,255,0.6);
+    }
 
-        .idea-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(216,180,254,0.6);
-        }
+    .icon {
+        font-size: 1.8rem;
+        margin-bottom: 6px;
+        display: inline-block;
+        filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
+    }
 
-        .results {
-            margin-top: 30px;
-            width: 85%;
-            max-width: 600px;
-            background: black;
-            border: 2px solid #d8b4fe;
-            border-radius: 18px;
-            padding: 20px;
-            color: #d8b4fe;
-            text-align: left;
-            display: none;
-        }
+    /* Glossy gold heart */
+    .heart {
+        color: #f5d487;
+        text-shadow: 0 0 6px rgba(245,212,135,0.8);
+    }
 
-        .results h2 {
-            text-align: center;
-            margin-bottom: 15px;
-        }
+    /* Glossy blue star */
+    .star {
+        color: #7ab4ff;
+        text-shadow: 0 0 6px rgba(122,180,255,0.8);
+    }
 
-        .section-title {
-            font-size: 1.3rem;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            color: #e9d5ff;
-        }
+    .aesthetic-name {
+        color: #ffffff;
+        font-size: 1rem;
+        text-shadow: 0 0 8px rgba(255,255,255,0.7);
+    }
 
-        .bullet {
-            margin-left: 15px;
-            margin-bottom: 5px;
-        }
-    </style>
+    /* Pose type dropdown */
+    .pose-select {
+        width: 90%;
+        max-width: 700px;
+        background: rgba(255,255,255,0.25);
+        border: 2px solid rgba(255,255,255,0.4);
+        border-radius: 16px;
+        padding: 10px 14px;
+        color: #ffffff;
+        margin-bottom: 16px;
+        font-size: 1rem;
+        backdrop-filter: blur(8px);
+    }
+
+    .pose-select select {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: #ffffff;
+        font-size: 1rem;
+        outline: none;
+    }
+
+    /* Button */
+    .show-btn {
+        background: #ffffff;
+        color: #4a4a4a;
+        padding: 12px 18px;
+        border-radius: 16px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s ease;
+        box-shadow: 0 0 12px rgba(255,255,255,0.7);
+        margin-bottom: 20px;
+    }
+
+    .show-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255,255,255,0.9);
+    }
+
+    /* Results */
+    .results {
+        width: 94%;
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+    }
+
+    .result-card {
+        background: rgba(255,255,255,0.25);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255,255,255,0.4);
+        border-radius: 18px;
+        padding: 14px 16px;
+        color: #ffffff;
+        font-size: 1rem;
+        text-shadow: 0 0 6px rgba(255,255,255,0.6);
+    }
+
+    .result-card h2 {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(255,255,255,0.9);
+    }
+
+    .bullet {
+        margin-left: 14px;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
+    }
+</style>
 </head>
 
 <body>
 
-    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
-    <h1>Photo Ideas</h1>
+<h1>Photo Ideas</h1>
 
-    <div class="input-box">
-        <input id="vibeInput" type="text" placeholder="What’s your vibe today? (e.g. soft girl, classy, sporty)">
-    </div>
+<!-- Aesthetic selector -->
+<div class="aesthetic-grid" id="aestheticGrid">
+    <!-- JS will fill this -->
+</div>
 
-    <button class="idea-btn" onclick="showIdeas()">Show photo ideas</button>
+<!-- Pose type -->
+<div class="pose-select">
+    <select id="poseType">
+        <option disabled selected>Select Pose Type</option>
+        <option>Face Poses</option>
+        <option>Full Body</option>
+        <option>Sitting</option>
+        <option>Mirror</option>
+        <option>Editorial</option>
+    </select>
+</div>
 
-    <div id="resultsBox" class="results">
-        <h2>Your Photo Inspiration</h2>
-        <div id="poseIdeas"></div>
-        <div id="locationIdeas"></div>
-        <div id="conceptIdeas"></div>
-    </div>
-
-<script>
-    const ideas = {
-        "soft girl": {
-            poses: [
-                "• Sitting on the ground with knees up and hands around them",
-                "• Holding your hair with both hands and looking sideways",
-                "• Twirling your skirt or cardigan"
-            ],
-            locations: [
-                "• Flower fields",
-                "• Pastel walls",
-                "• Cute cafés"
-            ],
-            concepts: [
-                "• Soft lighting + blush tones",
-                "• Holding a book or flowers",
-                "• Cozy cardigan aesthetic"
-            ]
-        },
-
-        "classy": {
-            poses: [
-                "• One hand on hip, one holding a bag",
-                "• Leaning slightly forward with a confident gaze",
-                "• Walking pose with long strides"
-            ],
-            locations: [
-                "• Marble staircases",
-                "• Hotel lobbies",
-                "• Minimalist walls"
-            ],
-            concepts: [
-                "• Black & white aesthetic",
-                "• Structured outfits + clean lines",
-                "• Jewelry close-ups"
-            ]
-        },
-
-        "sporty": {
-            poses: [
-                "• Sitting on a bench tying your shoes",
-                "• Stretching pose with arms overhead",
-                "• Walking or jogging action shot"
-            ],
-            locations: [
-                "• Track field",
-                "• Gym mirrors",
-                "• Outdoor paths"
-            ],
-            concepts: [
-                "• Motion blur shots",
-                "• Water bottle aesthetic",
-                "• High ponytail + activewear"
-            ]
-        }
-    };
-
-    function showIdeas() {
-        const vibe = document.getElementById("vibeInput").value.toLowerCase();
-        const resultsBox = document.getElementById("resultsBox");
-
-        const poseBox = document.getElementById("poseIdeas");
-        const locationBox = document.getElementById("locationIdeas");
-        const conceptBox = document.getElementById("conceptIdeas");
-
-        if (!vibe) {
-            poseBox.innerHTML = "<p>Please enter your vibe first!</p>";
-            locationBox.innerHTML = "";
-            conceptBox.innerHTML = "";
-            resultsBox.style.display = "block";
-            return;
-        }
-
-        const data = ideas[vibe] || {
-            poses: ["• No specific poses yet, but try natural candid shots!"],
-            locations: ["• Any clean background works well!"],
-            concepts: ["• Use soft lighting and your outfit’s colors for inspiration."]
-        };
-
-        poseBox.innerHTML = `
-            <div class="section-title">📸 Pose Ideas</div>
-            ${data.poses.map(p => `<div class="bullet">${p}</div>`).join("")}
-        `;
-
-        locationBox.innerHTML = `
-            <div class="section-title">📍 Location Ideas</div>
-            ${data.locations.map(l => `<div class="bullet">${l}</div>`).join("")}
-        `;
-
-        conceptBox.innerHTML = `
-            <div class="section-title">✨ Photo Concepts</div>
-            ${data.concepts.map(c => `<div class="bullet">${c}</div>`).join("")}
-        `;
-
-        resultsBox.style.display = "block";
-    }
-</script>
-
-</body>
-</html>
+            
