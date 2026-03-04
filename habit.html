@@ -13,7 +13,7 @@
         body {
             min-height: 100vh;
             width: 100vw;
-            background: linear-gradient(135deg, #f3d9ff, #f7e7ff);
+            background: linear-gradient(135deg, #f7e7c9, #f8dcb8);
             font-family: "Playfair Display", serif;
             display: flex;
             flex-direction: column;
@@ -28,15 +28,29 @@
             left: 20px;
             font-size: 2.2rem;
             cursor: pointer;
-            color: #d8b4fe;
-            text-shadow: 0 0 10px rgba(216,180,254,0.7);
+            color: #f5d487;
+            text-shadow: 0 0 10px rgba(247,231,201,0.6);
         }
 
         h1 {
             font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #f5d487;
+            text-shadow: 0 0 12px rgba(247,231,201,0.6);
+        }
+
+        .streak {
+            font-size: 1.2rem;
+            color: #f5d487;
             margin-bottom: 25px;
-            color: #d8b4fe;
-            text-shadow: 0 0 12px rgba(216,180,254,0.6);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flame {
+            font-size: 1.5rem;
+            transition: 0.3s ease;
         }
 
         .habit-container {
@@ -49,10 +63,10 @@
 
         .habit-card {
             background: black;
-            border: 2px solid #d8b4fe;
+            border: 2px solid #f7e7c9;
             border-radius: 18px;
             padding: 20px;
-            color: #d8b4fe;
+            color: #f7e7c9;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -71,18 +85,18 @@
             background: #333;
             border-radius: 10px;
             overflow: hidden;
-            border: 1px solid #d8b4fe;
+            border: 1px solid #f7e7c9;
         }
 
         .progress-fill {
             height: 100%;
             width: 0%;
-            background: #d8b4fe;
+            background: #f5d487;
             transition: width 0.3s ease;
         }
 
         .habit-btn {
-            background: #d8b4fe;
+            background: #f5d487;
             color: black;
             padding: 10px;
             border-radius: 12px;
@@ -91,17 +105,67 @@
             cursor: pointer;
             border: none;
             transition: 0.2s ease;
+            box-shadow: 0 0 10px rgba(247,231,201,0.6);
         }
 
         .habit-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(216,180,254,0.6);
+            box-shadow: 0 0 20px rgba(247,231,201,0.8);
         }
 
         .message {
             font-size: 1rem;
             opacity: 0.9;
             margin-top: 5px;
+        }
+
+        /* Weekly Summary */
+        .summary-card {
+            margin-top: 40px;
+            width: 85%;
+            max-width: 600px;
+            background: black;
+            border: 2px solid #f7e7c9;
+            border-radius: 18px;
+            padding: 20px;
+            color: #f7e7c9;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #f5d487;
+        }
+
+        /* Custom Habit Input */
+        .custom-input {
+            width: 85%;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .custom-input input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #f7e7c9;
+            background: black;
+            color: #f7e7c9;
+            font-size: 1.1rem;
+        }
+
+        .add-btn {
+            background: #f5d487;
+            color: black;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(247,231,201,0.6);
         }
     </style>
 </head>
@@ -112,80 +176,132 @@
 
     <h1>Habit Tracker</h1>
 
-    <div class="habit-container">
+    <div class="streak">
+        <span id="flame" class="flame">🔥</span>
+        <span id="streakText">Day 1 streak</span>
+    </div>
 
-        <!-- Water -->
-        <div class="habit-card">
-            <div class="habit-title">💧 Water Intake</div>
-            <div class="progress-bar"><div id="waterFill" class="progress-fill"></div></div>
-            <button class="habit-btn" onclick="increase('waterFill', 'waterMsg')">Add a glass</button>
-            <div id="waterMsg" class="message"></div>
-        </div>
+    <div class="habit-container" id="habitContainer"></div>
 
-        <!-- Sleep -->
-        <div class="habit-card">
-            <div class="habit-title">😴 Sleep Hours</div>
-            <div class="progress-bar"><div id="sleepFill" class="progress-fill"></div></div>
-            <button class="habit-btn" onclick="increase('sleepFill', 'sleepMsg')">Add 1 hour</button>
-            <div id="sleepMsg" class="message"></div>
-        </div>
+    <div class="custom-input">
+        <input id="customHabitInput" type="text" placeholder="Add your own habit...">
+        <button class="add-btn" onclick="addCustomHabit()">Add</button>
+    </div>
 
-        <!-- Workout -->
-        <div class="habit-card">
-            <div class="habit-title">🏋️‍♀️ Workout</div>
-            <div class="progress-bar"><div id="workoutFill" class="progress-fill"></div></div>
-            <button class="habit-btn" onclick="increase('workoutFill', 'workoutMsg')">Add 10 min</button>
-            <div id="workoutMsg" class="message"></div>
-        </div>
-
-        <!-- Mood -->
-        <div class="habit-card">
-            <div class="habit-title">🌈 Mood</div>
-            <div class="progress-bar"><div id="moodFill" class="progress-fill"></div></div>
-            <button class="habit-btn" onclick="increase('moodFill', 'moodMsg')">Feeling good</button>
-            <div id="moodMsg" class="message"></div>
-        </div>
-
-        <!-- To-do -->
-        <div class="habit-card">
-            <div class="habit-title">✨ To‑Do Progress</div>
-            <div class="progress-bar"><div id="todoFill" class="progress-fill"></div></div>
-            <button class="habit-btn" onclick="increase('todoFill', 'todoMsg')">Complete task</button>
-            <div id="todoMsg" class="message"></div>
-        </div>
-
-        <!-- Daily Goals -->
-        <div class="habit-card">
-            <div class="habit-title">⭐ Daily Goals</div>
-            <div class="progress-bar"><div id="goalsFill" class="progress-fill"></div></div>
-            <button class="habit-btn" onclick="increase('goalsFill', 'goalsMsg')">Goal achieved</button>
-            <div id="goalsMsg" class="message"></div>
-        </div>
-
+    <div class="summary-card">
+        <div class="summary-title">Weekly Summary</div>
+        <div id="weeklySummary"></div>
     </div>
 
 <script>
-    function increase(id, msgId) {
-        const bar = document.getElementById(id);
-        const msg = document.getElementById(msgId);
+    const defaultHabits = [
+        { id: "water", title: "💧 Water Intake" },
+        { id: "sleep", title: "😴 Sleep Hours" },
+        { id: "workout", title: "🏋️‍♀️ Workout" },
+        { id: "mood", title: "🌈 Mood" },
+        { id: "todo", title: "✨ To‑Do Progress" },
+        { id: "goals", title: "⭐ Daily Goals" }
+    ];
 
-        let current = parseInt(bar.style.width) || 0;
+    let habits = JSON.parse(localStorage.getItem("habits")) || defaultHabits;
+    let progress = JSON.parse(localStorage.getItem("progress")) || {};
+    let streak = JSON.parse(localStorage.getItem("streak")) || 1;
+    let lastDate = localStorage.getItem("lastDate") || "";
+    let weekly = JSON.parse(localStorage.getItem("weekly")) || {};
 
-        if (current < 100) {
-            bar.style.width = (current + 10) + "%";
+    const today = new Date().toDateString();
+
+    if (lastDate !== today) {
+        if (lastDate && new Date(lastDate) < new Date(today)) {
+            streak++;
         }
+        progress = {};
+        lastDate = today;
+        localStorage.setItem("lastDate", today);
+    }
 
-        // Motivational messages
+    localStorage.setItem("streak", streak);
+
+    function updateStreakDisplay() {
+        document.getElementById("streakText").textContent = `Day ${streak} streak`;
+
+        const flame = document.getElementById("flame");
+        if (streak <= 2) flame.style.color = "#f7e7c9";
+        else if (streak <= 5) flame.style.color = "#f5d487";
+        else flame.style.color = "#f4c76c";
+    }
+
+    function renderHabits() {
+        const container = document.getElementById("habitContainer");
+        container.innerHTML = "";
+
+        habits.forEach(habit => {
+            const value = progress[habit.id] || 0;
+
+            container.innerHTML += `
+                <div class="habit-card">
+                    <div class="habit-title">${habit.title}</div>
+                    <div class="progress-bar"><div id="${habit.id}Fill" class="progress-fill" style="width:${value}%"></div></div>
+                    <button class="habit-btn" onclick="increase('${habit.id}')">Add progress</button>
+                    <div id="${habit.id}Msg" class="message"></div>
+                </div>
+            `;
+        });
+    }
+
+    function increase(id) {
+        progress[id] = (progress[id] || 0) + 10;
+        if (progress[id] > 100) progress[id] = 100;
+
+        document.getElementById(id + "Fill").style.width = progress[id] + "%";
+
         const messages = [
-            "You're doing amazing 💜",
-            "Keep going, you're glowing ✨",
-            "Small steps = big progress 🌸",
-            "Proud of you already 💫",
+            "You're doing amazing ✨",
+            "Keep going, you're glowing 💛",
+            "Small steps = big progress 🌼",
+            "Proud of you already 🌟",
             "You're building healthy habits 💕"
         ];
 
-        msg.textContent = messages[Math.floor(Math.random() * messages.length)];
+        document.getElementById(id + "Msg").textContent =
+            messages[Math.floor(Math.random() * messages.length)];
+
+        localStorage.setItem("progress", JSON.stringify(progress));
     }
+
+    function addCustomHabit() {
+        const input = document.getElementById("customHabitInput");
+        const name = input.value.trim();
+        if (!name) return;
+
+        const id = name.toLowerCase().replace(/ /g, "_");
+
+        habits.push({ id, title: "✨ " + name });
+        localStorage.setItem("habits", JSON.stringify(habits));
+
+        input.value = "";
+        renderHabits();
+    }
+
+    function updateWeeklySummary() {
+        weekly[today] = Object.values(progress).reduce((a, b) => a + b, 0) / habits.length;
+        localStorage.setItem("weekly", JSON.stringify(weekly));
+
+        const summary = document.getElementById("weeklySummary");
+        const values = Object.values(weekly);
+
+        const avg = values.length ? (values.reduce((a, b) => a + b, 0) / values.length).toFixed(1) : 0;
+
+        summary.innerHTML = `
+            <div>Average completion: ${avg}%</div>
+            <div>Best day: ${Object.keys(weekly).sort((a, b) => weekly[b] - weekly[a])[0] || "N/A"}</div>
+            <div>Total habits completed: ${values.reduce((a, b) => a + b, 0).toFixed(0)}</div>
+        `;
+    }
+
+    updateStreakDisplay();
+    renderHabits();
+    updateWeeklySummary();
 </script>
 
 </body>
