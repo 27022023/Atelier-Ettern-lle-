@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick a Service</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            font-family: "Playfair Display", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        /* Back arrow */
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: #000;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #000;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .menu-container {
+            width: 85%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .service-box {
+            width: 100%;
+            padding: 18px;
+            border-radius: 18px;
+            font-size: 1.3rem;
+            text-align: center;
+            color: #000;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .service-box:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+        }
+
+        /* Pastel colors */
+        .color-analysis { background: #ffe0e9; }
+        .style-helper   { background: #fff2cc; }
+        .photo-ideas    { background: #e0f7fa; }
+        .beauty-guide   { background: #e8e0ff; }
+        .habit-tracker  { background: #e0ffe4; }
+        .workout-box    { background: #ffe8cc; }
+        .city-music     { background: #ffd6f2; }
+    </style>
+</head>
+
+<body>
+
+    <!-- Back arrow -->
+    <div class="back-arrow" onclick="window.location.href='mirror.html'">←</div>
+
+    <h1>Pick a service!!</h1>
+
+    <div class="menu-container">
+
+        <div class="service-box color-analysis" onclick="window.location.href='colour.html'">
+            Colour Analysis
+        </div>
+
+        <div class="service-box style-helper" onclick="window.location.href='style.html'">
+            Style Helper
+        </div>
+
+        <div class="service-box photo-ideas" onclick="window.location.href='photo.html'">
+            Photo Ideas
+        </div>
+
+        <div class="service-box beauty-guide" onclick="window.location.href='beauty.html'">
+            Beauty Guide
+        </div>
+
+        <div class="service-box habit-tracker" onclick="window.location.href='habit.html'">
+            Habit Tracker
+        </div>
+
+        <div class="service-box workout-box" onclick="window.location.href='workout.html'">
+            Workout Box
+        </div>
+
+        <div class="service-box city-music" onclick="window.location.href='music.html'">
+            City Music
+        </div>
+
+    </div>
+
+</body>
+</html>
