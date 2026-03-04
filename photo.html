@@ -175,9 +175,7 @@
 <h1>Photo Ideas</h1>
 
 <!-- Aesthetic selector -->
-<div class="aesthetic-grid" id="aestheticGrid">
-    <!-- JS will fill this -->
-</div>
+<div class="aesthetic-grid" id="aestheticGrid"></div>
 
 <!-- Pose type -->
 <div class="pose-select">
@@ -190,11 +188,16 @@
         <option>Editorial</option>
     </select>
 </div>
+
+<button class="show-btn" onclick="showPhotoIdeas()">Show Ideas</button>
+
+<div class="results">
+    <div class="result-card" id="poseCard"></div>
+    <div class="result-card" id="tipsCard"></div>
+</div>
+
 <script>
 /* ------------------ AESTHETICS ------------------ */
-/* Gold heart = soft aesthetics */
-/* Blue star = bold aesthetics */
-
 const aesthetics = [
     { name: "Coquette", icon: "❤️", type: "soft" },
     { name: "Soft Girl", icon: "❤️", type: "soft" },
@@ -212,7 +215,6 @@ const aesthetics = [
 let selectedAesthetic = null;
 
 /* ------------------ LOAD AESTHETIC CARDS ------------------ */
-
 function loadAestheticCards() {
     const grid = document.getElementById("aestheticGrid");
     grid.innerHTML = "";
@@ -247,7 +249,6 @@ function loadAestheticCards() {
 loadAestheticCards();
 
 /* ------------------ POSE DATABASE (10 EACH) ------------------ */
-
 const poseIdeas = {
     "Coquette": [
         "Soft smile with chin slightly down",
@@ -381,7 +382,6 @@ const poseIdeas = {
 };
 
 /* ------------------ LIGHTING + BACKGROUND ------------------ */
-
 const lightingIdeas = {
     soft: [
         "Soft window light",
@@ -417,7 +417,6 @@ const backgroundIdeas = {
 };
 
 /* ------------------ SHOW IDEAS ------------------ */
-
 function showPhotoIdeas() {
     const poseType = document.getElementById("poseType").value;
     const poseCard = document.getElementById("poseCard");
@@ -450,5 +449,3 @@ function showPhotoIdeas() {
 
 </body>
 </html>
-
-            
