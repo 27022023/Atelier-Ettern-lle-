@@ -13,7 +13,7 @@
         body {
             height: 100vh;
             width: 100vw;
-            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            background: linear-gradient(135deg, #f3d9ff, #f7e7ff);
             font-family: "Playfair Display", serif;
             display: flex;
             flex-direction: column;
@@ -28,16 +28,16 @@
             left: 20px;
             font-size: 2.2rem;
             cursor: pointer;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+            color: #d8b4fe;
+            text-shadow: 0 0 10px rgba(216,180,254,0.7);
         }
 
         /* Title */
         h1 {
             font-size: 2.2rem;
             margin-bottom: 25px;
-            color: gold;
-            text-shadow: 0 0 12px rgba(255,215,0,0.6);
+            color: #d8b4fe;
+            text-shadow: 0 0 12px rgba(216,180,254,0.6);
         }
 
         /* Upload boxes */
@@ -51,18 +51,18 @@
 
         .upload-box {
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 18px;
             padding: 20px;
             text-align: center;
-            color: gold;
+            color: #d8b4fe;
             font-size: 1.2rem;
             cursor: pointer;
             transition: 0.2s ease;
         }
 
         .upload-box:hover {
-            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            box-shadow: 0 0 20px rgba(216,180,254,0.5);
             transform: scale(1.02);
         }
 
@@ -73,7 +73,7 @@
         /* Button */
         .analyze-btn {
             margin-top: 20px;
-            background: gold;
+            background: #d8b4fe;
             color: black;
             padding: 14px 20px;
             border-radius: 14px;
@@ -86,7 +86,7 @@
 
         .analyze-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            box-shadow: 0 0 20px rgba(216,180,254,0.6);
         }
 
         /* Results */
@@ -95,12 +95,29 @@
             width: 85%;
             max-width: 600px;
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 18px;
             padding: 20px;
-            color: gold;
-            text-align: center;
+            color: #d8b4fe;
+            text-align: left;
             display: none;
+        }
+
+        .results h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #e9d5ff;
+        }
+
+        .bullet {
+            margin-left: 15px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -127,17 +144,47 @@
     </div>
 
     <div id="resultsBox" class="results">
-        <h2 style="margin-bottom: 10px;">Your Matching Combos</h2>
-        <p>Here you will see:</p>
-        <p>• Nail + outfit color palettes</p>
-        <p>• Matching outfit ideas</p>
-        <p>• Matching nail designs</p>
-        <p>• Aesthetic combos (clean girl, coquette, classy, etc.)</p>
+        <h2>Your Matching Combos</h2>
+
+        <div id="paletteSection"></div>
+        <div id="nailIdeas"></div>
+        <div id="outfitIdeas"></div>
+        <div id="aestheticCombos"></div>
     </div>
 
 <script>
     function showResults() {
-        document.getElementById("resultsBox").style.display = "block";
+        const resultsBox = document.getElementById("resultsBox");
+        resultsBox.style.display = "block";
+
+        // Real recommendations
+        document.getElementById("paletteSection").innerHTML = `
+            <div class="section-title">🎨 Color Palette</div>
+            <div class="bullet">• Soft lilac + white + silver</div>
+            <div class="bullet">• Nude beige + pastel purple</div>
+            <div class="bullet">• Black + lavender accents</div>
+        `;
+
+        document.getElementById("nailIdeas").innerHTML = `
+            <div class="section-title">💅 Nail Ideas That Match Your Outfit</div>
+            <div class="bullet">• Pastel purple French tips</div>
+            <div class="bullet">• Nude nails with lilac chrome</div>
+            <div class="bullet">• White nails with lavender flowers</div>
+        `;
+
+        document.getElementById("outfitIdeas").innerHTML = `
+            <div class="section-title">👗 Outfit Ideas That Match Your Nails</div>
+            <div class="bullet">• White top + lilac skirt</div>
+            <div class="bullet">• Black dress + pastel purple bag</div>
+            <div class="bullet">• Beige sweater + lavender accessories</div>
+        `;
+
+        document.getElementById("aestheticCombos").innerHTML = `
+            <div class="section-title">✨ Aesthetic Combos</div>
+            <div class="bullet">• Soft girl: lilac cardigan + white pleated skirt</div>
+            <div class="bullet">• Clean girl: beige outfit + lavender nails</div>
+            <div class="bullet">• Coquette: lace top + pastel purple bow</div>
+        `;
     }
 </script>
 
