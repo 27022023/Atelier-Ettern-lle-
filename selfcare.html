@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Self‑Care Planner 🫧</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height:100vh;
+  background:radial-gradient(circle at top,#f5ecff,#d4cffc,#a9afff);
+  color:#1b1630;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+h1{
+  font-size:1.9rem;
+  margin-bottom:6px;
+  text-align:center;
+}
+.subtitle{
+  font-size:.9rem;
+  opacity:.8;
+  margin-bottom:18px;
+  text-align:center;
+}
+.container{
+  width:100%;
+  max-width:900px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+/* glass cards */
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(230,230,255,.8));
+  border-radius:18px;
+  padding:14px 16px;
+  box-shadow:0 0 18px rgba(255,255,255,.9);
+  border:1px solid rgba(255,255,255,.9);
+}
+
+/* mood bubbles */
+.moods{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.mood{
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.9);
+  border:1px solid rgba(210,210,255,.9);
+  cursor:pointer;
+  font-size:.9rem;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  box-shadow:0 0 10px rgba(255,255,255,.9);
+  transition:.15s;
+}
+.mood span.emoji{font-size:1.1rem}
+.mood:hover{
+  transform:translateY(-1px);
+  box-shadow:0 0 14px rgba(255,255,255,1);
+}
+.mood.active{
+  background:linear-gradient(135deg,#fdfbff,#dcd8ff);
+}
+
+/* suggestions */
+.suggestions-list{
+  margin-top:8px;
+  padding-left:18px;
+  font-size:.9rem;
+}
+.suggestions-list li{margin-bottom:4px}
+
+/* weekly planner */
+.week-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+  margin-top:8px;
+}
+.day{
+  background:rgba(255,255,255,.95);
+  border-radius:12px;
+  padding:6px;
+  font-size:.8rem;
+  cursor:pointer;
+  min-height:54px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:.15s;
+}
+.day:hover{
+  box-shadow:0 0 10px rgba(255,255,255,1);
+  transform:translateY(-1px);
+}
+.day-name{font-weight:600;margin-bottom:4px}
+.day-plan{font-size:.75rem;opacity:.8}
+
+/* reflection */
+textarea{
+  width:100%;
+  min-height:120px;
+  border-radius:14px;
+  border:1px solid rgba(210,210,255,.9);
+  padding:10px 12px;
+  font-family:inherit;
+  font-size:.9rem;
+  resize:vertical;
+  background:rgba(255,255,255,.9);
+  box-shadow:0 0 10px rgba(255,255,255,.9);
+}
+.ref-note{
+  font-size:.8rem;
+  opacity:.7;
+  margin-top:4px;
+}
+
+/* modal */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(10,10,40,.45);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+}
+.modal{
+  background:#fdfdff;
+  border-radius:16px;
+  padding:14px 16px 12px;
+  width:90%;
+  max-width:320px;
+  box-shadow:0 0 20px rgba(0,0,0,.3);
+}
+.modal h3{margin-bottom:6px;font-size:1rem}
+.modal label{font-size:.8rem;display:block;margin:4px 0 2px}
+.modal select{
+  width:100%;
+  padding:6px 8px;
+  border-radius:10px;
+  border:1px solid rgba(210,210,255,.9);
+  margin-bottom:8px;
+}
+.modal-buttons{
+  display:flex;
+  justify-content:flex-end;
+  gap:6px;
+  margin-top:6px;
+}
+.modal-buttons button{
+  border:none;
+  border-radius:10px;
+  padding:5px 10px;
+  font-size:.8rem;
+  cursor:pointer;
+}
+.modal-buttons .save{
+  background:linear-gradient(135deg,#e7e4ff,#cbc7ff);
+}
+.modal-buttons .cancel{
+  background:#f2f2f7;
+}
+
+@media(max-width:720px){
+  .week-grid{grid-template-columns:repeat(4,1fr);}
+}
+</style>
+</head>
+<body>
+
+<h1>Self‑Care Planner 🫧</h1>
+<div class="subtitle">Soft spa‑day energy, tiny rituals, and a place to pour your thoughts.</div>
+
+<div class="container">
+
+  <!-- Moods + suggestions -->
+  <div class="card">
+    <h2 style="font-size:1.1rem;margin-bottom:6px;">Choose your self‑care mood</h2>
+    <div class="moods" id="moodRow"></div>
+    <ul class="suggestions-list" id="suggestionsList"></ul>
+  </div>
+
+  <!-- Weekly planner -->
+  <div class="card">
+    <h2 style="font-size:1.1rem;">This week’s self‑care</h2>
+    <p style="font-size:.85rem;opacity:.8;margin-top:2px;">Tap a day to assign one of your self‑care ideas.</p>
+    <div class="week-grid" id="weekGrid"></div>
+  </div>
+
+  <!-- Reflection -->
+  <div class="card">
+    <h2 style="font-size:1.1rem;">Self‑reflection</h2>
+    <p style="font-size:.85rem;opacity:.8;margin:2px 0 6px;">How are you really feeling today?</p>
+    <textarea id="reflectionBox" placeholder="Write about your emotions, thoughts, or what you need right now..."></textarea>
+    <div class="ref-note" id="refStatus">Autosaving…</div>
+  </div>
+
+</div>
+
+<!-- Modal for assigning self‑care to a day -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">Self‑care for Monday</h3>
+    <label for="modalSelect">Pick a self‑care idea</label>
+    <select id="modalSelect"></select>
+    <div class="modal-buttons">
+      <button class="cancel" id="cancelModal">Cancel</button>
+      <button class="save" id="saveModal">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// moods + suggestions
+const moodsData = [
+  { id:"calm", label:"Calm", emoji:"🫧", ideas:[
+    "Warm bath with lavender oil",
+    "10 minutes of slow breathing",
+    "Listening to soft piano music",
+    "Lighting a candle and doing nothing"
+  ]},
+  { id:"glow", label:"Glow", emoji:"✨", ideas:[
+    "Full skincare routine with extra care",
+    "Face mask + hair mask combo",
+    "Gua sha or gentle facial massage",
+    "Body lotion with slow, mindful application"
+  ]},
+  { id:"rest", label:"Rest", emoji:"🌙", ideas:[
+    "Early night with no phone in bed",
+    "Reading a few pages of a cozy book",
+    "Stretching in dim light",
+    "Warm tea and quiet time"
+  ]},
+  { id:"soft", label:"Soft", emoji:"🌸", ideas:[
+    "Listening to a soft playlist",
+    "Wearing your comfiest clothes",
+    "Drawing or doodling with no goal",
+    "Sitting by the window and daydreaming"
+  ]},
+  { id:"comfort", label:"Comfort", emoji:"💗", ideas:[
+    "Rewatching a comfort show",
+    "Texting someone safe",
+    "Wrapping in a blanket burrito",
+    "Ordering or making your favorite snack"
+  ]}
+];
+
+let currentMoodId = null;
+const moodRow = document.getElementById("moodRow");
+const suggestionsList = document.getElementById("suggestionsList");
+
+// build mood bubbles
+moodsData.forEach(m => {
+  const div = document.createElement("button");
+  div.type = "button";
+  div.className = "mood";
+  div.innerHTML = `<span class="emoji">${m.emoji}</span><span>${m.label}</span>`;
+  div.onclick = () => selectMood(m.id);
+  moodRow.appendChild(div);
+});
+
+function selectMood(id){
+  currentMoodId = id;
+  document.querySelectorAll(".mood").forEach((el,i)=>{
+    el.classList.toggle("active", moodsData[i].id === id);
+  });
+  const mood = moodsData.find(m=>m.id===id);
+  suggestionsList.innerHTML = "";
+  mood.ideas.forEach(text=>{
+    const li = document.createElement("li");
+    li.textContent = text;
+    suggestionsList.appendChild(li);
+  });
+}
+
+// weekly planner
+const weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const weekGrid = document.getElementById("weekGrid");
+let weekPlan = JSON.parse(localStorage.getItem("selfcare_weekPlan") || "{}");
+
+weekDays.forEach((name, index)=>{
+  const dayDiv = document.createElement("div");
+  dayDiv.className = "day";
+  dayDiv.dataset.dayIndex = index;
+  const title = document.createElement("div");
+  title.className = "day-name";
+  title.textContent = name;
+  const plan = document.createElement("div");
+  plan.className = "day-plan";
+  plan.textContent = weekPlan[index] || "Tap to add";
+  dayDiv.appendChild(title);
+  dayDiv.appendChild(plan);
+  dayDiv.onclick = () => openDayModal(index);
+  weekGrid.appendChild(dayDiv);
+});
+
+function refreshWeekGrid(){
+  document.querySelectorAll(".day").forEach(day=>{
+    const idx = day.dataset.dayIndex;
+    const planDiv = day.querySelector(".day-plan");
+    planDiv.textContent = weekPlan[idx] || "Tap to add";
+  });
+  localStorage.setItem("selfcare_weekPlan", JSON.stringify(weekPlan));
+}
+
+// modal
+const modalOverlay = document.getElementById("modalOverlay");
+const modalTitle = document.getElementById("modalTitle");
+const modalSelect = document.getElementById("modalSelect");
+const cancelModal = document.getElementById("cancelModal");
+const saveModal = document.getElementById("saveModal");
+let currentDayIndex = null;
+
+function openDayModal(dayIndex){
+  currentDayIndex = dayIndex;
+  modalTitle.textContent = `Self‑care for ${weekDays[dayIndex]}`;
+  modalSelect.innerHTML = "";
+
+  // collect all ideas from all moods
+  const allIdeas = moodsData.flatMap(m=>m.ideas);
+  allIdeas.forEach(text=>{
+    const opt = document.createElement("option");
+    opt.value = text;
+    opt.textContent = text;
+    modalSelect.appendChild(opt);
+  });
+
+  modalOverlay.style.display = "flex";
+}
+function closeModal(){
+  modalOverlay.style.display = "none";
+  currentDayIndex = null;
+}
+cancelModal.onclick = closeModal;
+modalOverlay.onclick = e => { if(e.target === modalOverlay) closeModal(); };
+saveModal.onclick = () => {
+  if(currentDayIndex == null) return;
+  const val = modalSelect.value;
+  weekPlan[currentDayIndex] = val;
+  refreshWeekGrid();
+  closeModal();
+};
+
+// reflection with autosave
+const reflectionBox = document.getElementById("reflectionBox");
+const refStatus = document.getElementById("refStatus");
+const REF_KEY = "selfcare_reflection";
+
+reflectionBox.value = localStorage.getItem(REF_KEY) || "";
+refStatus.textContent = "Autosaved.";
+
+let saveTimeout = null;
+reflectionBox.addEventListener("input", ()=>{
+  refStatus.textContent = "Saving…";
+  if(saveTimeout) clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(()=>{
+    localStorage.setItem(REF_KEY, reflectionBox.value);
+    refStatus.textContent = "Autosaved.";
+  }, 500);
+});
+
+// default mood
+selectMood("calm");
+</script>
+
+</body>
+</html>
