@@ -8,359 +8,197 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  min-height:100vh;width:100vw;
+  background:radial-gradient(circle at top,#f0e9ff,#c4c7ff,#9aa4ff);
+  font-family:"Playfair Display",serif;
+  display:flex;flex-direction:column;align-items:center;
+  padding:24px 0 40px;color:#15172a;
+}
+h1{
+  font-size:2rem;margin-bottom:16px;
+  color:#15172a;text-shadow:0 0 12px rgba(255,255,255,.8);
+}
+.section-label{
+  width:94%;max-width:1000px;
+  font-size:.95rem;font-weight:600;
+  margin:6px 0 8px;color:#22263a;
+}
+.hint{
+  width:94%;max-width:1000px;
+  font-size:.85rem;color:#4a4f6a;margin-bottom:10px;
+}
 
-    body {
-        min-height: 100vh;
-        width: 100vw;
-        background: linear-gradient(135deg, #dfe4ff, #c7c9f3, #b9c4ff);
-        font-family: "Playfair Display", serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 28px 0 40px;
-        color: #1f2433;
-    }
+/* cards / glass */
+.grid,.timer-container,.planner-container{
+  width:94%;max-width:1000px;
+}
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:12px;margin-bottom:18px;
+}
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,.35),rgba(210,210,255,.4));
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:14px;padding:10px;
+  text-align:center;cursor:pointer;
+  font-size:.9rem;font-weight:600;
+  color:#15172a;
+  box-shadow:0 0 10px rgba(255,255,255,.6);
+  transition:.15s;
+}
+.card:hover{
+  transform:translateY(-1px) scale(1.03);
+  box-shadow:0 0 16px rgba(255,255,255,.9);
+}
 
-    h1 {
-        font-size: 2rem;
-        margin-bottom: 16px;
-        color: #1f2433;
-        text-shadow: 0 0 10px rgba(255,255,255,0.7);
-    }
+/* timer */
+.timer-container{
+  display:flex;flex-wrap:wrap;gap:14px;margin-bottom:20px;
+}
+.timer-card{
+  flex:1 1 240px;min-width:240px;
+  background:linear-gradient(145deg,rgba(255,255,255,.4),rgba(210,215,255,.6));
+  border-radius:18px;padding:14px;
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 0 14px rgba(255,255,255,.8);
+}
+.timer-display{
+  font-size:2rem;font-weight:600;text-align:center;
+  margin-bottom:10px;color:#15172a;
+}
+.timer-buttons{
+  display:flex;justify-content:center;gap:8px;margin-bottom:8px;
+}
+.btn{
+  border:none;border-radius:14px;
+  padding:6px 12px;font-size:.85rem;font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(135deg,#fdfdff,#d9ddff);
+  color:#15172a;
+  box-shadow:0 0 10px rgba(255,255,255,.8);
+  transition:.15s;
+}
+.btn:hover{transform:scale(1.05)}
+.preset-buttons{
+  display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
+}
+.preset-btn{
+  border:none;border-radius:12px;padding:4px 10px;
+  font-size:.75rem;cursor:pointer;
+  background:rgba(255,255,255,.85);color:#15172a;
+  box-shadow:0 0 8px rgba(255,255,255,.7);
+}
 
-    .section-label {
-        width: 94%;
-        max-width: 1100px;
-        font-size: 1rem;
-        font-weight: 600;
-        margin: 6px 0 8px;
-        color: #252a3a;
-    }
+/* planner */
+.planner-container{
+  margin-top:4px;
+  background:linear-gradient(145deg,rgba(255,255,255,.4),rgba(210,215,255,.6));
+  border-radius:18px;padding:12px 14px 16px;
+  border:1px solid rgba(255,255,255,.85);
+  box-shadow:0 0 16px rgba(255,255,255,.9);
+}
+.planner-tabs{
+  display:flex;gap:8px;margin-bottom:8px;
+}
+.tab-btn{
+  border:none;border-radius:14px;padding:5px 12px;
+  font-size:.8rem;font-weight:600;cursor:pointer;
+  background:rgba(255,255,255,.8);color:#15172a;
+  border:1px solid rgba(210,215,255,.9);
+}
+.tab-btn.active{
+  background:linear-gradient(135deg,#eef0ff,#cfd4ff);
+  box-shadow:0 0 10px rgba(255,255,255,.9);
+}
+.week-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  gap:6px;font-size:.8rem;
+}
+.day-cell{
+  background:rgba(255,255,255,.9);
+  border-radius:10px;padding:5px;
+  min-height:56px;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:space-between;
+  transition:.15s;
+}
+.day-cell:hover{
+  box-shadow:0 0 10px rgba(255,255,255,.9);
+  transform:translateY(-1px);
+}
+.day-name{font-weight:600;margin-bottom:3px;color:#22263a}
+.day-workout{font-size:.75rem;color:#444a66}
 
-    .hint {
-        width: 94%;
-        max-width: 1100px;
-        font-size: 0.9rem;
-        color: #4b5166;
-        margin-bottom: 10px;
-    }
+/* monthly */
+.month-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:6px;font-size:.8rem;
+}
+.month-nav-btn{
+  border:none;border-radius:12px;padding:3px 8px;
+  background:rgba(255,255,255,.9);cursor:pointer;
+  box-shadow:0 0 8px rgba(255,255,255,.8);
+}
+.month-grid{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  gap:4px;font-size:.75rem;
+}
+.month-day-name{
+  text-align:center;font-weight:600;color:#22263a;margin-bottom:2px;
+}
+.month-cell{
+  background:rgba(255,255,255,.9);
+  border-radius:8px;min-height:50px;padding:4px;
+  cursor:pointer;display:flex;flex-direction:column;
+  transition:.15s;
+}
+.month-cell:hover{
+  box-shadow:0 0 10px rgba(255,255,255,.9);
+  transform:translateY(-1px);
+}
+.month-date{font-weight:600;margin-bottom:2px;color:#22263a}
+.month-workout{font-size:.7rem;color:#444a66}
 
-    /* Level grid */
-    .grid {
-        width: 94%;
-        max-width: 1100px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 14px;
-        margin-bottom: 18px;
-    }
+/* modal */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(10,10,30,.45);
+  display:none;align-items:center;justify-content:center;
+  z-index:50;
+}
+.modal{
+  background:#fdfdff;border-radius:16px;
+  padding:14px 16px 12px;max-width:320px;width:90%;
+  box-shadow:0 0 20px rgba(0,0,0,.3);color:#15172a;
+}
+.modal h2{font-size:1rem;margin-bottom:6px}
+.modal-label{font-size:.8rem;margin:4px 0 2px}
+.modal select,.modal input{
+  width:100%;padding:5px 7px;
+  border-radius:10px;border:1px solid #c5c9f0;
+  font-size:.8rem;margin-bottom:4px;
+}
+.modal-buttons{
+  display:flex;justify-content:flex-end;gap:6px;margin-top:6px;
+}
+.modal-btn{
+  border:none;border-radius:12px;padding:5px 10px;
+  font-size:.8rem;cursor:pointer;
+}
+.modal-btn.save{
+  background:linear-gradient(135deg,#e4e7ff,#c7ccff);color:#15172a;
+}
+.modal-btn.cancel{
+  background:#f2f2f7;color:#555a70;
+}
 
-    .card {
-        background: rgba(255,255,255,0.25);
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(210,215,255,0.9);
-        border-radius: 16px;
-        padding: 14px;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.2s ease;
-        color: #1f2433;
-        font-size: 0.95rem;
-        font-weight: 600;
-        box-shadow: 0 0 10px rgba(255,255,255,0.4);
-    }
-
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 16px rgba(255,255,255,0.8);
-    }
-
-    /* Timer */
-    .timer-container {
-        width: 94%;
-        max-width: 1100px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 20px;
-    }
-
-    .timer-card {
-        flex: 1 1 220px;
-        min-width: 220px;
-        background: rgba(255,255,255,0.25);
-        backdrop-filter: blur(10px);
-        border: 2px solid rgba(210,215,255,0.9);
-        border-radius: 18px;
-        padding: 16px;
-        box-shadow: 0 0 12px rgba(255,255,255,0.6);
-    }
-
-    .timer-display {
-        font-size: 2rem;
-        font-weight: 600;
-        text-align: center;
-        margin-bottom: 10px;
-        color: #1f2433;
-    }
-
-    .timer-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
-
-    .btn {
-        border: none;
-        border-radius: 16px;
-        padding: 8px 14px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        cursor: pointer;
-        background: linear-gradient(135deg, #f7f8ff, #d7ddff);
-        color: #1f2433;
-        box-shadow: 0 0 10px rgba(255,255,255,0.7);
-        transition: 0.15s ease;
-    }
-
-    .btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 16px rgba(255,255,255,0.9);
-    }
-
-    .preset-buttons {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        justify-content: center;
-        margin-top: 4px;
-    }
-
-    .preset-btn {
-        border-radius: 14px;
-        padding: 6px 10px;
-        font-size: 0.8rem;
-        border: none;
-        cursor: pointer;
-        background: rgba(255,255,255,0.7);
-        color: #1f2433;
-        box-shadow: 0 0 8px rgba(255,255,255,0.6);
-    }
-
-    /* Planner tabs */
-    .planner-container {
-        width: 94%;
-        max-width: 1100px;
-        background: rgba(255,255,255,0.25);
-        backdrop-filter: blur(12px);
-        border: 2px solid rgba(210,215,255,0.9);
-        border-radius: 18px;
-        padding: 14px 16px 18px;
-        box-shadow: 0 0 14px rgba(255,255,255,0.7);
-    }
-
-    .planner-tabs {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 10px;
-    }
-
-    .tab-btn {
-        flex: 0 0 auto;
-        padding: 6px 12px;
-        border-radius: 14px;
-        border: 1px solid rgba(210,215,255,0.9);
-        background: rgba(255,255,255,0.7);
-        cursor: pointer;
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: #1f2433;
-    }
-
-    .tab-btn.active {
-        background: linear-gradient(135deg, #eef0ff, #d0d6ff);
-        box-shadow: 0 0 10px rgba(255,255,255,0.9);
-    }
-
-    .planner-grid {
-        margin-top: 8px;
-    }
-
-    /* Weekly planner */
-    .week-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 6px;
-        font-size: 0.85rem;
-    }
-
-    .day-cell {
-        background: rgba(255,255,255,0.7);
-        border-radius: 10px;
-        padding: 6px;
-        cursor: pointer;
-        min-height: 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        transition: 0.15s ease;
-    }
-
-    .day-cell:hover {
-        box-shadow: 0 0 10px rgba(255,255,255,0.9);
-        transform: translateY(-1px);
-    }
-
-    .day-name {
-        font-weight: 600;
-        margin-bottom: 4px;
-        color: #252a3a;
-    }
-
-    .day-workout {
-        font-size: 0.8rem;
-        color: #3f4560;
-    }
-
-    /* Monthly calendar */
-    .month-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 6px;
-        font-size: 0.9rem;
-    }
-
-    .month-nav-btn {
-        border: none;
-        background: rgba(255,255,255,0.8);
-        border-radius: 12px;
-        padding: 4px 8px;
-        cursor: pointer;
-        font-size: 0.8rem;
-        box-shadow: 0 0 8px rgba(255,255,255,0.7);
-    }
-
-    .month-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
-        font-size: 0.8rem;
-    }
-
-    .month-day-name {
-        text-align: center;
-        font-weight: 600;
-        color: #252a3a;
-        margin-bottom: 2px;
-    }
-
-    .month-cell {
-        background: rgba(255,255,255,0.7);
-        border-radius: 8px;
-        min-height: 52px;
-        padding: 4px;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        transition: 0.15s ease;
-    }
-
-    .month-cell:hover {
-        box-shadow: 0 0 10px rgba(255,255,255,0.9);
-        transform: translateY(-1px);
-    }
-
-    .month-date {
-        font-weight: 600;
-        margin-bottom: 2px;
-        color: #252a3a;
-    }
-
-    .month-workout {
-        font-size: 0.75rem;
-        color: #3f4560;
-    }
-
-    /* Popup modal */
-    .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(10,10,30,0.45);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 50;
-    }
-
-    .modal {
-        background: rgba(255,255,255,0.95);
-        border-radius: 18px;
-        padding: 16px 18px 14px;
-        max-width: 320px;
-        width: 90%;
-        box-shadow: 0 0 20px rgba(0,0,0,0.25);
-        color: #1f2433;
-    }
-
-    .modal h2 {
-        font-size: 1.1rem;
-        margin-bottom: 8px;
-    }
-
-    .modal-label {
-        font-size: 0.85rem;
-        margin-top: 6px;
-        margin-bottom: 2px;
-    }
-
-    .modal select,
-    .modal input {
-        width: 100%;
-        padding: 6px 8px;
-        border-radius: 10px;
-        border: 1px solid #c5c9e8;
-        font-size: 0.85rem;
-        margin-bottom: 4px;
-    }
-
-    .modal-buttons {
-        display: flex;
-        justify-content: flex-end;
-        gap: 8px;
-        margin-top: 6px;
-    }
-
-    .modal-btn {
-        border: none;
-        border-radius: 12px;
-        padding: 6px 10px;
-        font-size: 0.85rem;
-        cursor: pointer;
-    }
-
-    .modal-btn.save {
-        background: linear-gradient(135deg, #e4e7ff, #c7ccff);
-        color: #1f2433;
-    }
-
-    .modal-btn.cancel {
-        background: #f2f2f7;
-        color: #555a70;
-    }
-
-    @media (max-width: 700px) {
-        .week-grid {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
+@media(max-width:720px){
+  .week-grid{grid-template-columns:repeat(4,1fr)}
+}
 </style>
 </head>
-
 <body>
 
 <h1>Workout Area</h1>
@@ -370,464 +208,269 @@
 
 <div class="section-label">2. Workout timer</div>
 <div class="timer-container">
-    <div class="timer-card">
-        <div class="timer-display" id="timerDisplay">00:00</div>
-        <div class="timer-buttons">
-            <button class="btn" id="startBtn">Start</button>
-            <button class="btn" id="pauseBtn">Pause</button>
-            <button class="btn" id="resetBtn">Reset</button>
-        </div>
-        <div class="preset-buttons">
-            <button class="preset-btn" data-min="10">10 min</button>
-            <button class="preset-btn" data-min="20">20 min</button>
-            <button class="preset-btn" data-min="30">30 min</button>
-            <button class="preset-btn" data-min="45">45 min</button>
-        </div>
+  <div class="timer-card">
+    <div class="timer-display" id="timerDisplay">00:00</div>
+    <div class="timer-buttons">
+      <button class="btn" id="startBtn">Start</button>
+      <button class="btn" id="pauseBtn">Pause</button>
+      <button class="btn" id="resetBtn">Reset</button>
     </div>
+    <div class="preset-buttons">
+      <button class="preset-btn" data-min="10">10 min</button>
+      <button class="preset-btn" data-min="20">20 min</button>
+      <button class="preset-btn" data-min="30">30 min</button>
+      <button class="preset-btn" data-min="45">45 min</button>
+    </div>
+  </div>
 </div>
 
 <div class="section-label">3. Workout planner & calendar</div>
-<p class="hint">Click a day to add a workout. Weekly and monthly views are both available.</p>
+<p class="hint">Click a day to add a workout. Switch between weekly and monthly views.</p>
 
 <div class="planner-container">
-    <div class="planner-tabs">
-        <button class="tab-btn active" data-tab="weekly">Weekly</button>
-        <button class="tab-btn" data-tab="monthly">Monthly</button>
-    </div>
+  <div class="planner-tabs">
+    <button class="tab-btn active" data-tab="weekly">Weekly</button>
+    <button class="tab-btn" data-tab="monthly">Monthly</button>
+  </div>
 
-    <div class="planner-grid" id="weeklyView">
-        <div class="week-grid" id="weekGrid"></div>
-    </div>
+  <div id="weeklyView">
+    <div class="week-grid" id="weekGrid"></div>
+  </div>
 
-    <div class="planner-grid" id="monthlyView" style="display:none;">
-        <div class="month-header">
-            <button class="month-nav-btn" id="prevMonthBtn">◀</button>
-            <div id="monthLabel"></div>
-            <button class="month-nav-btn" id="nextMonthBtn">▶</button>
-        </div>
-        <div class="month-grid" id="monthGrid"></div>
+  <div id="monthlyView" style="display:none;">
+    <div class="month-header">
+      <button class="month-nav-btn" id="prevMonthBtn">◀</button>
+      <div id="monthLabel"></div>
+      <button class="month-nav-btn" id="nextMonthBtn">▶</button>
     </div>
+    <div class="month-grid" id="monthGrid"></div>
+  </div>
 </div>
 
-<!-- Modal for adding workout -->
 <div class="modal-overlay" id="modalOverlay">
-    <div class="modal">
-        <h2 id="modalTitle">Add Workout</h2>
-        <div class="modal-label">Exercise</div>
-        <select id="exerciseSelect"></select>
-
-        <div class="modal-label">Duration (minutes)</div>
-        <input type="number" id="durationInput" min="1" placeholder="e.g. 30">
-
-        <div class="modal-buttons">
-            <button class="modal-btn cancel" id="cancelModalBtn">Cancel</button>
-            <button class="modal-btn save" id="saveModalBtn">Save</button>
-        </div>
+  <div class="modal">
+    <h2 id="modalTitle">Add Workout</h2>
+    <div class="modal-label">Exercise</div>
+    <select id="exerciseSelect"></select>
+    <div class="modal-label">Duration (minutes)</div>
+    <input type="number" id="durationInput" min="1" placeholder="e.g. 30">
+    <div class="modal-buttons">
+      <button class="modal-btn cancel" id="cancelModalBtn">Cancel</button>
+      <button class="modal-btn save" id="saveModalBtn">Save</button>
     </div>
+  </div>
 </div>
 
 <script>
-/* ------------------ LEVELS & EXERCISES ------------------ */
-const levels = [
-    "Beginner", "Intermediate", "Advanced",
-    "Strength", "Cardio", "Flexibility",
-    "Quick 10-min", "Athlete"
-];
-
-const exercisesByLevel = {
-    "Beginner": [
-        "Bodyweight squats",
-        "Wall push-ups",
-        "Glute bridges",
-        "Marching in place",
-        "Standing crunches",
-        "Step-backs",
-        "Arm circles",
-        "Light stretching",
-        "Hip openers",
-        "Cat-cow"
-    ],
-    "Intermediate": [
-        "Lunges",
-        "Regular push-ups",
-        "Plank (30–45 sec)",
-        "Mountain climbers",
-        "Dead bugs",
-        "Tricep dips",
-        "Side leg lifts",
-        "Russian twists",
-        "Glute kickbacks",
-        "Jumping jacks"
-    ],
-    "Advanced": [
-        "Burpees",
-        "Jump squats",
-        "Decline push-ups",
-        "Side plank rotations",
-        "High knees",
-        "Bicycle crunches",
-        "Bulgarian split squats",
-        "Pike push-ups",
-        "Plank jacks",
-        "Single-leg glute bridges"
-    ],
-    "Strength": [
-        "Dumbbell squats",
-        "Dumbbell rows",
-        "Overhead press",
-        "Romanian deadlifts",
-        "Weighted lunges",
-        "Chest press",
-        "Hip thrusts",
-        "Farmer’s carry",
-        "Bicep curls",
-        "Tricep extensions"
-    ],
-    "Cardio": [
-        "Skaters",
-        "Jump rope",
-        "Fast feet",
-        "Butt kicks",
-        "Burpee variations",
-        "High-intensity mountain climbers",
-        "Running in place",
-        "Star jumps",
-        "Lateral shuffles",
-        "Knee drives"
-    ],
-    "Flexibility": [
-        "Hamstring stretch",
-        "Quad stretch",
-        "Chest opener",
-        "Child’s pose",
-        "Cobra stretch",
-        "Hip flexor stretch",
-        "Figure-4 stretch",
-        "Shoulder stretch",
-        "Side body stretch",
-        "Forward fold"
-    ],
-    "Quick 10-min": [
-        "Jumping jacks",
-        "Bodyweight squats",
-        "Push-ups",
-        "Mountain climbers",
-        "Plank",
-        "High knees",
-        "Lunges",
-        "Glute bridges",
-        "Russian twists",
-        "Stretching"
-    ],
-    "Athlete": [
-        "Sprint intervals",
-        "Plyometric lunges",
-        "Handstand holds (wall)",
-        "Weighted squats",
-        "Pull-ups or assisted pull-ups",
-        "Box jumps",
-        "Heavy deadlifts",
-        "Barbell hip thrusts",
-        "Battle ropes",
-        "Agility ladder drills"
-    ]
+// levels + simple exercise lists
+const levels=["Beginner","Intermediate","Advanced","Strength","Cardio","Flexibility","Quick 10-min","Athlete"];
+const exercisesByLevel={
+  "Beginner":["Bodyweight squats","Wall push-ups","Glute bridges","Marching in place"],
+  "Intermediate":["Lunges","Push-ups","Plank","Mountain climbers"],
+  "Advanced":["Burpees","Jump squats","Pike push-ups","Plank jacks"],
+  "Strength":["Dumbbell squats","Rows","Overhead press","Deadlifts"],
+  "Cardio":["Jump rope","High knees","Skaters","Butt kicks"],
+  "Flexibility":["Hamstring stretch","Quad stretch","Child’s pose","Cobra stretch"],
+  "Quick 10-min":["Squats","Push-ups","Plank","Stretching"],
+  "Athlete":["Sprints","Box jumps","Pull-ups","Heavy squats"]
 };
+let selectedLevel=null;
 
-let selectedLevel = null;
-
-/* ------------------ BUILD LEVEL GRID ------------------ */
-function loadLevelGrid() {
-    const grid = document.getElementById("levelGrid");
-    grid.innerHTML = "";
-    levels.forEach(level => {
-        const card = document.createElement("div");
-        card.classList.add("card");
-        card.textContent = level;
-
-        card.onclick = () => {
-            selectedLevel = level;
-            document.querySelectorAll("#levelGrid .card").forEach(c => {
-                c.style.borderColor = "rgba(210,215,255,0.9)";
-                c.style.boxShadow = "0 0 10px rgba(255,255,255,0.4)";
-            });
-            card.style.borderColor = "#ffffff";
-            card.style.boxShadow = "0 0 18px rgba(255,255,255,1)";
-            populateExerciseSelect();
-        };
-
-        grid.appendChild(card);
-    });
+// level grid
+function loadLevelGrid(){
+  const grid=document.getElementById("levelGrid");
+  grid.innerHTML="";
+  levels.forEach(level=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.textContent=level;
+    card.onclick=()=>{
+      selectedLevel=level;
+      document.querySelectorAll("#levelGrid .card").forEach(c=>{
+        c.style.borderColor="rgba(255,255,255,.7)";
+        c.style.boxShadow="0 0 10px rgba(255,255,255,.6)";
+      });
+      card.style.borderColor="#ffffff";
+      card.style.boxShadow="0 0 18px rgba(255,255,255,1)";
+      populateExerciseSelect();
+    };
+    grid.appendChild(card);
+  });
 }
 loadLevelGrid();
 
-/* ------------------ TIMER LOGIC ------------------ */
-let timerSeconds = 0;
-let timerInterval = null;
-
-const timerDisplay = document.getElementById("timerDisplay");
-const startBtn = document.getElementById("startBtn");
-const pauseBtn = document.getElementById("pauseBtn");
-const resetBtn = document.getElementById("resetBtn");
-
-function formatTime(sec) {
-    const m = String(Math.floor(sec / 60)).padStart(2, "0");
-    const s = String(sec % 60).padStart(2, "0");
-    return `${m}:${s}`;
+// timer
+let timerSeconds=0,timerInterval=null;
+const timerDisplay=document.getElementById("timerDisplay");
+function formatTime(sec){
+  const m=String(Math.floor(sec/60)).padStart(2,"0");
+  const s=String(sec%60).padStart(2,"0");
+  return `${m}:${s}`;
 }
-
-function updateTimerDisplay() {
-    timerDisplay.textContent = formatTime(timerSeconds);
-}
-
-startBtn.onclick = () => {
-    if (timerInterval) return;
-    timerInterval = setInterval(() => {
-        timerSeconds++;
-        updateTimerDisplay();
-    }, 1000);
+function updateTimerDisplay(){timerDisplay.textContent=formatTime(timerSeconds);}
+document.getElementById("startBtn").onclick=()=>{
+  if(timerInterval) return;
+  timerInterval=setInterval(()=>{timerSeconds++;updateTimerDisplay();},1000);
 };
-
-pauseBtn.onclick = () => {
-    clearInterval(timerInterval);
-    timerInterval = null;
+document.getElementById("pauseBtn").onclick=()=>{
+  clearInterval(timerInterval);timerInterval=null;
 };
-
-resetBtn.onclick = () => {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    timerSeconds = 0;
-    updateTimerDisplay();
+document.getElementById("resetBtn").onclick=()=>{
+  clearInterval(timerInterval);timerInterval=null;timerSeconds=0;updateTimerDisplay();
 };
-
-document.querySelectorAll(".preset-btn").forEach(btn => {
-    btn.onclick = () => {
-        const min = parseInt(btn.getAttribute("data-min"), 10);
-        timerSeconds = min * 60;
-        updateTimerDisplay();
-    };
+document.querySelectorAll(".preset-btn").forEach(btn=>{
+  btn.onclick=()=>{
+    const min=parseInt(btn.dataset.min,10)||0;
+    timerSeconds=min*60;updateTimerDisplay();
+  };
 });
-
 updateTimerDisplay();
 
-/* ------------------ PLANNER DATA ------------------ */
-const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-// Store workouts as { "YYYY-MM-DD": { exercise, duration } }
-let workoutPlan = {};
+// planner data
+const weekDays=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+let workoutPlan={}; // { "YYYY-MM-DD": {exercise,duration} }
 
-/* ------------------ WEEKLY VIEW ------------------ */
-function loadWeeklyView() {
-    const weekGrid = document.getElementById("weekGrid");
-    weekGrid.innerHTML = "";
-    const today = new Date();
-    const monday = new Date(today);
-    const day = monday.getDay();
-    const diff = (day === 0 ? -6 : 1) - day; // get Monday
-    monday.setDate(today.getDate() + diff);
-
-    for (let i = 0; i < 7; i++) {
-        const date = new Date(monday);
-        date.setDate(monday.getDate() + i);
-        const iso = date.toISOString().split("T")[0];
-
-        const cell = document.createElement("div");
-        cell.classList.add("day-cell");
-        cell.dataset.date = iso;
-
-        const name = document.createElement("div");
-        name.classList.add("day-name");
-        name.textContent = weekDays[i];
-
-        const workoutDiv = document.createElement("div");
-        workoutDiv.classList.add("day-workout");
-        if (workoutPlan[iso]) {
-            workoutDiv.textContent = `${workoutPlan[iso].exercise} • ${workoutPlan[iso].duration} min`;
-        } else {
-            workoutDiv.textContent = "Tap to add";
-        }
-
-        cell.appendChild(name);
-        cell.appendChild(workoutDiv);
-
-        cell.onclick = () => openModal(iso);
-
-        weekGrid.appendChild(cell);
-    }
+// weekly view
+function loadWeeklyView(){
+  const weekGrid=document.getElementById("weekGrid");
+  weekGrid.innerHTML="";
+  const today=new Date();
+  const monday=new Date(today);
+  const day=today.getDay(); // 0=Sun
+  const diff=(day===0?-6:1)-day;
+  monday.setDate(today.getDate()+diff);
+  for(let i=0;i<7;i++){
+    const d=new Date(monday);d.setDate(monday.getDate()+i);
+    const iso=d.toISOString().split("T")[0];
+    const cell=document.createElement("div");
+    cell.className="day-cell";cell.dataset.date=iso;
+    const name=document.createElement("div");
+    name.className="day-name";name.textContent=weekDays[i];
+    const w=document.createElement("div");
+    w.className="day-workout";
+    if(workoutPlan[iso]) w.textContent=`${workoutPlan[iso].exercise} • ${workoutPlan[iso].duration} min`;
+    else w.textContent="Tap to add";
+    cell.appendChild(name);cell.appendChild(w);
+    cell.onclick=()=>openModal(iso);
+    weekGrid.appendChild(cell);
+  }
 }
 
-/* ------------------ MONTHLY VIEW ------------------ */
-let currentMonth = new Date().getMonth();
-let currentYear = new Date().getFullYear();
+// monthly view
+let currentMonth=(new Date()).getMonth();
+let currentYear=(new Date()).getFullYear();
+const monthNames=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const monthLabel=document.getElementById("monthLabel");
+const monthGrid=document.getElementById("monthGrid");
 
-const monthLabel = document.getElementById("monthLabel");
-const monthGrid = document.getElementById("monthGrid");
-
-const monthNames = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December"
-];
-
-function loadMonthlyView() {
-    monthGrid.innerHTML = "";
-    monthLabel.textContent = `${monthNames[currentMonth]} ${currentYear}`;
-
-    const firstDay = new Date(currentYear, currentMonth, 1);
-    const startingDay = (firstDay.getDay() + 6) % 7; // Monday-based
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-    // Day names row
-    const dayNames = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-    dayNames.forEach(d => {
-        const dn = document.createElement("div");
-        dn.classList.add("month-day-name");
-        dn.textContent = d;
-        monthGrid.appendChild(dn);
-    });
-
-    // Empty cells before first day
-    for (let i = 0; i < startingDay; i++) {
-        const empty = document.createElement("div");
-        monthGrid.appendChild(empty);
-    }
-
-    for (let date = 1; date <= daysInMonth; date++) {
-        const cell = document.createElement("div");
-        cell.classList.add("month-cell");
-
-        const d = new Date(currentYear, currentMonth, date);
-        const iso = d.toISOString().split("T")[0];
-        cell.dataset.date = iso;
-
-        const dateDiv = document.createElement("div");
-        dateDiv.classList.add("month-date");
-        dateDiv.textContent = date;
-
-        const workoutDiv = document.createElement("div");
-        workoutDiv.classList.add("month-workout");
-        if (workoutPlan[iso]) {
-            workoutDiv.textContent = `${workoutPlan[iso].exercise} • ${workoutPlan[iso].duration} min`;
-        } else {
-            workoutDiv.textContent = "";
-        }
-
-        cell.appendChild(dateDiv);
-        cell.appendChild(workoutDiv);
-
-        cell.onclick = () => openModal(iso);
-
-        monthGrid.appendChild(cell);
-    }
+function loadMonthlyView(){
+  monthGrid.innerHTML="";
+  monthLabel.textContent=`${monthNames[currentMonth]} ${currentYear}`;
+  const firstDay=new Date(currentYear,currentMonth,1);
+  const startingDay=(firstDay.getDay()+6)%7; // Monday-based
+  const daysInMonth=new Date(currentYear,currentMonth+1,0).getDate();
+  const dayNames=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  dayNames.forEach(d=>{
+    const el=document.createElement("div");
+    el.className="month-day-name";el.textContent=d;
+    monthGrid.appendChild(el);
+  });
+  for(let i=0;i<startingDay;i++){
+    const empty=document.createElement("div");
+    monthGrid.appendChild(empty);
+  }
+  for(let date=1;date<=daysInMonth;date++){
+    const cell=document.createElement("div");
+    cell.className="month-cell";
+    const d=new Date(currentYear,currentMonth,date);
+    const iso=d.toISOString().split("T")[0];
+    cell.dataset.date=iso;
+    const dateDiv=document.createElement("div");
+    dateDiv.className="month-date";dateDiv.textContent=date;
+    const w=document.createElement("div");
+    w.className="month-workout";
+    if(workoutPlan[iso]) w.textContent=`${workoutPlan[iso].exercise} • ${workoutPlan[iso].duration} min`;
+    cell.appendChild(dateDiv);cell.appendChild(w);
+    cell.onclick=()=>openModal(iso);
+    monthGrid.appendChild(cell);
+  }
 }
-
-document.getElementById("prevMonthBtn").onclick = () => {
-    currentMonth--;
-    if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
-    }
-    loadMonthlyView();
+document.getElementById("prevMonthBtn").onclick=()=>{
+  currentMonth--;if(currentMonth<0){currentMonth=11;currentYear--;}
+  loadMonthlyView();
+};
+document.getElementById("nextMonthBtn").onclick=()=>{
+  currentMonth++;if(currentMonth>11){currentMonth=0;currentYear++;}
+  loadMonthlyView();
 };
 
-document.getElementById("nextMonthBtn").onclick = () => {
-    currentMonth++;
-    if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
-    }
-    loadMonthlyView();
-};
-
-/* ------------------ TABS ------------------ */
-const tabButtons = document.querySelectorAll(".tab-btn");
-const weeklyView = document.getElementById("weeklyView");
-const monthlyView = document.getElementById("monthlyView");
-
-tabButtons.forEach(btn => {
-    btn.onclick = () => {
-        tabButtons.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        const tab = btn.getAttribute("data-tab");
-        if (tab === "weekly") {
-            weeklyView.style.display = "block";
-            monthlyView.style.display = "none";
-        } else {
-            weeklyView.style.display = "none";
-            monthlyView.style.display = "block";
-        }
-    };
+// tabs
+const tabButtons=document.querySelectorAll(".tab-btn");
+const weeklyView=document.getElementById("weeklyView");
+const monthlyView=document.getElementById("monthlyView");
+tabButtons.forEach(btn=>{
+  btn.onclick=()=>{
+    tabButtons.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const tab=btn.dataset.tab;
+    weeklyView.style.display=tab==="weekly"?"block":"none";
+    monthlyView.style.display=tab==="monthly"?"block":"none";
+  };
 });
-   <!-- MODAL LOGIC -->
-<script>
-const modalOverlay = document.getElementById("modalOverlay");
-const modalTitle = document.getElementById("modalTitle");
-const exerciseSelect = document.getElementById("exerciseSelect");
-const durationInput = document.getElementById("durationInput");
-const cancelModalBtn = document.getElementById("cancelModalBtn");
-const saveModalBtn = document.getElementById("saveModalBtn");
 
-let modalDate = null;
+// modal
+const modalOverlay=document.getElementById("modalOverlay");
+const modalTitle=document.getElementById("modalTitle");
+const exerciseSelect=document.getElementById("exerciseSelect");
+const durationInput=document.getElementById("durationInput");
+const cancelModalBtn=document.getElementById("cancelModalBtn");
+const saveModalBtn=document.getElementById("saveModalBtn");
+let modalDate=null;
 
-/* Populate exercise dropdown */
-function populateExerciseSelect() {
-    exerciseSelect.innerHTML = "";
-    const list = selectedLevel ? exercisesByLevel[selectedLevel] : Object.values(exercisesByLevel).flat();
-    list.forEach(ex => {
-        const opt = document.createElement("option");
-        opt.value = ex;
-        opt.textContent = ex;
-        exerciseSelect.appendChild(opt);
-    });
+function populateExerciseSelect(){
+  exerciseSelect.innerHTML="";
+  const list=selectedLevel?exercisesByLevel[selectedLevel]:Object.values(exercisesByLevel).flat();
+  list.forEach(ex=>{
+    const opt=document.createElement("option");
+    opt.value=ex;opt.textContent=ex;
+    exerciseSelect.appendChild(opt);
+  });
 }
 
-/* Open modal */
-function openModal(dateIso) {
-    modalDate = dateIso;
-    modalTitle.textContent = `Add Workout – ${dateIso}`;
-
-    populateExerciseSelect();
-
-    if (workoutPlan[dateIso]) {
-        exerciseSelect.value = workoutPlan[dateIso].exercise;
-        durationInput.value = workoutPlan[dateIso].duration;
-    } else {
-        durationInput.value = "";
-    }
-
-    modalOverlay.style.display = "flex";
+function openModal(dateIso){
+  modalDate=dateIso;
+  modalTitle.textContent=`Add Workout – ${dateIso}`;
+  populateExerciseSelect();
+  if(workoutPlan[dateIso]){
+    exerciseSelect.value=workoutPlan[dateIso].exercise;
+    durationInput.value=workoutPlan[dateIso].duration;
+  }else{
+    durationInput.value="";
+  }
+  modalOverlay.style.display="flex";
 }
-
-/* Close modal */
-function closeModal() {
-    modalOverlay.style.display = "none";
-    modalDate = null;
+function closeModal(){
+  modalOverlay.style.display="none";
+  modalDate=null;
 }
+cancelModalBtn.onclick=closeModal;
+modalOverlay.onclick=e=>{if(e.target===modalOverlay) closeModal();};
 
-cancelModalBtn.onclick = closeModal;
-
-/* Save workout */
-saveModalBtn.onclick = () => {
-    if (!modalDate) return;
-
-    const exercise = exerciseSelect.value;
-    const duration = parseInt(durationInput.value, 10);
-
-    if (!exercise || !duration || duration <= 0) {
-        alert("Please select an exercise and enter a valid duration.");
-        return;
-    }
-
-    workoutPlan[modalDate] = { exercise, duration };
-
-    closeModal();
-    loadWeeklyView();
-    loadMonthlyView();
+saveModalBtn.onclick=()=>{
+  if(!modalDate) return;
+  const exercise=exerciseSelect.value;
+  const duration=parseInt(durationInput.value,10);
+  if(!exercise||!duration||duration<=0){
+    alert("Please choose an exercise and enter a valid duration.");
+    return;
+  }
+  workoutPlan[modalDate]={exercise,duration};
+  closeModal();
+  loadWeeklyView();
+  loadMonthlyView();
 };
 
-/* Close modal when clicking outside */
-modalOverlay.onclick = (e) => {
-    if (e.target === modalOverlay) closeModal();
-};
-
-/* Initialize planner */
+// init
 populateExerciseSelect();
 loadWeeklyView();
 loadMonthlyView();
@@ -835,4 +478,3 @@ loadMonthlyView();
 
 </body>
 </html>
-
