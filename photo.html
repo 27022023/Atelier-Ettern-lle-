@@ -13,7 +13,7 @@
         body {
             height: 100vh;
             width: 100vw;
-            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            background: linear-gradient(135deg, #f3d9ff, #f7e7ff);
             font-family: "Playfair Display", serif;
             display: flex;
             flex-direction: column;
@@ -21,34 +21,31 @@
             padding-top: 40px;
         }
 
-        /* Back arrow */
         .back-arrow {
             position: absolute;
             top: 20px;
             left: 20px;
             font-size: 2.2rem;
             cursor: pointer;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+            color: #d8b4fe;
+            text-shadow: 0 0 10px rgba(216,180,254,0.7);
         }
 
-        /* Title */
         h1 {
             font-size: 2.2rem;
             margin-bottom: 25px;
-            color: gold;
-            text-shadow: 0 0 12px rgba(255,215,0,0.6);
+            color: #d8b4fe;
+            text-shadow: 0 0 12px rgba(216,180,254,0.6);
         }
 
-        /* Input box */
         .input-box {
             width: 85%;
             max-width: 600px;
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 14px;
             padding: 12px;
-            color: gold;
+            color: #d8b4fe;
             font-size: 1.2rem;
             margin-bottom: 25px;
         }
@@ -57,14 +54,13 @@
             width: 100%;
             background: transparent;
             border: none;
-            color: gold;
+            color: #d8b4fe;
             font-size: 1.2rem;
             outline: none;
         }
 
-        /* Button */
         .idea-btn {
-            background: gold;
+            background: #d8b4fe;
             color: black;
             padding: 14px 20px;
             border-radius: 14px;
@@ -77,21 +73,37 @@
 
         .idea-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            box-shadow: 0 0 20px rgba(216,180,254,0.6);
         }
 
-        /* Results box */
         .results {
             margin-top: 30px;
             width: 85%;
             max-width: 600px;
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 18px;
             padding: 20px;
-            color: gold;
-            text-align: center;
+            color: #d8b4fe;
+            text-align: left;
             display: none;
+        }
+
+        .results h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #e9d5ff;
+        }
+
+        .bullet {
+            margin-left: 15px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -103,28 +115,111 @@
     <h1>Photo Ideas</h1>
 
     <div class="input-box">
-        <input id="vibeInput" type="text" placeholder="What’s your vibe today? (e.g. classy, soft girl, sporty)">
+        <input id="vibeInput" type="text" placeholder="What’s your vibe today? (e.g. soft girl, classy, sporty)">
     </div>
 
     <button class="idea-btn" onclick="showIdeas()">Show photo ideas</button>
 
     <div id="resultsBox" class="results">
-        <h2 style="margin-bottom: 10px;">Your Photo Inspiration</h2>
-        <p id="resultsText">Your pose ideas, locations, and concepts will appear here!</p>
+        <h2>Your Photo Inspiration</h2>
+        <div id="poseIdeas"></div>
+        <div id="locationIdeas"></div>
+        <div id="conceptIdeas"></div>
     </div>
 
 <script>
+    const ideas = {
+        "soft girl": {
+            poses: [
+                "• Sitting on the ground with knees up and hands around them",
+                "• Holding your hair with both hands and looking sideways",
+                "• Twirling your skirt or cardigan"
+            ],
+            locations: [
+                "• Flower fields",
+                "• Pastel walls",
+                "• Cute cafés"
+            ],
+            concepts: [
+                "• Soft lighting + blush tones",
+                "• Holding a book or flowers",
+                "• Cozy cardigan aesthetic"
+            ]
+        },
+
+        "classy": {
+            poses: [
+                "• One hand on hip, one holding a bag",
+                "• Leaning slightly forward with a confident gaze",
+                "• Walking pose with long strides"
+            ],
+            locations: [
+                "• Marble staircases",
+                "• Hotel lobbies",
+                "• Minimalist walls"
+            ],
+            concepts: [
+                "• Black & white aesthetic",
+                "• Structured outfits + clean lines",
+                "• Jewelry close-ups"
+            ]
+        },
+
+        "sporty": {
+            poses: [
+                "• Sitting on a bench tying your shoes",
+                "• Stretching pose with arms overhead",
+                "• Walking or jogging action shot"
+            ],
+            locations: [
+                "• Track field",
+                "• Gym mirrors",
+                "• Outdoor paths"
+            ],
+            concepts: [
+                "• Motion blur shots",
+                "• Water bottle aesthetic",
+                "• High ponytail + activewear"
+            ]
+        }
+    };
+
     function showIdeas() {
-        const vibe = document.getElementById("vibeInput").value;
+        const vibe = document.getElementById("vibeInput").value.toLowerCase();
         const resultsBox = document.getElementById("resultsBox");
-        const resultsText = document.getElementById("resultsText");
+
+        const poseBox = document.getElementById("poseIdeas");
+        const locationBox = document.getElementById("locationIdeas");
+        const conceptBox = document.getElementById("conceptIdeas");
 
         if (!vibe) {
-            resultsText.textContent = "Please enter your vibe first!";
-        } else {
-            resultsText.textContent = 
-                "Here are pose ideas, locations, and concepts for a " + vibe.toLowerCase() + " vibe! (Ideas will go here)";
+            poseBox.innerHTML = "<p>Please enter your vibe first!</p>";
+            locationBox.innerHTML = "";
+            conceptBox.innerHTML = "";
+            resultsBox.style.display = "block";
+            return;
         }
+
+        const data = ideas[vibe] || {
+            poses: ["• No specific poses yet, but try natural candid shots!"],
+            locations: ["• Any clean background works well!"],
+            concepts: ["• Use soft lighting and your outfit’s colors for inspiration."]
+        };
+
+        poseBox.innerHTML = `
+            <div class="section-title">📸 Pose Ideas</div>
+            ${data.poses.map(p => `<div class="bullet">${p}</div>`).join("")}
+        `;
+
+        locationBox.innerHTML = `
+            <div class="section-title">📍 Location Ideas</div>
+            ${data.locations.map(l => `<div class="bullet">${l}</div>`).join("")}
+        `;
+
+        conceptBox.innerHTML = `
+            <div class="section-title">✨ Photo Concepts</div>
+            ${data.concepts.map(c => `<div class="bullet">${c}</div>`).join("")}
+        `;
 
         resultsBox.style.display = "block";
     }
