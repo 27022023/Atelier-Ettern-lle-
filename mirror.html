@@ -20,7 +20,6 @@
             align-items: center;
         }
 
-        /* Quote */
         .motto {
             position: absolute;
             top: 30px;
@@ -31,7 +30,6 @@
             text-shadow: 0 0 10px rgba(255,255,255,0.6);
         }
 
-        /* Mirror wrapper */
         .mirror-wrapper {
             width: 75%;
             max-width: 900px;
@@ -42,7 +40,6 @@
             position: relative;
         }
 
-        /* Glowing mirror frame */
         .mirror-frame {
             width: 100%;
             height: 100%;
@@ -69,20 +66,24 @@
             align-items: center;
         }
 
-       .mirror-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: none; /* normal camera view */
-       }
-        
+        /* ⭐ FIXED: force normal camera view (not mirrored) */
+        .mirror-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(1) !important;
+        }
+
+        video {
+            transform: scaleX(1) !important;
+        }
+
         .mirror-placeholder {
             font-size: 1.2rem;
             color: rgba(0,0,0,0.6);
             text-align: center;
         }
 
-        /* Down arrow */
         .arrow {
             position: absolute;
             bottom: 20px;
@@ -114,12 +115,10 @@
         </div>
     </div>
 
-    <!-- Arrow to next page -->
     <div class="arrow" onclick="window.location.href='menu.html'">⬇</div>
 </div>
 
 <script>
-    /* Quote rotation */
     const mottos = [
         "Glow like it’s golden hour.",
         "Elegance is a habit.",
@@ -135,19 +134,21 @@
         mottoEl.textContent = mottos[i];
     }, 10000);
 
-    /* Camera */
+    /* ⭐ FIXED CAMERA: force normal (non‑mirrored) front camera */
     const video = document.getElementById("cameraFeed");
     const placeholder = document.getElementById("mirrorPlaceholder");
 
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(stream => {
-            video.srcObject = stream;
-            video.style.display = "block";
-            placeholder.style.display = "none";
-        })
-        .catch(() => {
-            placeholder.textContent = "Camera unavailable.";
-        });
+    navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" }  // front camera, not mirrored
+    })
+    .then(stream => {
+        video.srcObject = stream;
+        video.style.display = "block";
+        placeholder.style.display = "none";
+    })
+    .catch(() => {
+        placeholder.textContent = "Camera unavailable.";
+    });
 </script>
 
 </body>
