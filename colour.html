@@ -196,3 +196,102 @@
         <div class="result-card" id="seasonCard"></div>
         <div class="result-card" id="paletteCard"></div>
     </div>
+<script>
+function showSeason() {
+    const skinTone = document.getElementById("skinTone").value;
+    const undertone = document.getElementById("undertone").value;
+    const hairDepth = document.getElementById("hairDepth").value;
+    const eyeClarity = document.getElementById("eyeClarity").value;
+
+    const seasonCard = document.getElementById("seasonCard");
+    const paletteCard = document.getElementById("paletteCard");
+
+    if (!skinTone || !undertone || !hairDepth || !eyeClarity) {
+        seasonCard.innerHTML = `<h2>Your Season</h2><div class="bullet">• Please fill out all fields.</div>`;
+        paletteCard.innerHTML = `<h2>Palette</h2><div class="bullet">• No palette available.</div>`;
+        return;
+    }
+
+    /* ------------------ 12-SEASON LOGIC ------------------ */
+
+    let temperature = undertone === "Cool" ? "cool" : undertone === "Warm" ? "warm" : "neutral";
+    let value = (skinTone === "Fair" || skinTone === "Light") ? "light" :
+                (skinTone === "Medium") ? "medium" : "deep";
+    let chroma = (eyeClarity === "Bright") ? "bright" :
+                 (eyeClarity === "Soft" || eyeClarity === "Muted") ? "soft" : "deep";
+
+    let season = "";
+
+    if (temperature === "cool") {
+        if (value === "light") {
+            season = (chroma === "soft") ? "Light Summer" : "Cool Summer";
+        } else if (value === "medium") {
+            season = (chroma === "soft") ? "Soft Summer" : "True Summer";
+        } else {
+            season = (chroma === "deep") ? "Deep Winter" : "Cool Winter";
+        }
+    }
+
+    if (temperature === "warm") {
+        if (value === "light") {
+            season = (chroma === "bright") ? "Warm Spring" : "Light Spring";
+        } else if (value === "medium") {
+            season = (chroma === "bright") ? "True Spring" : "Soft Autumn";
+        } else {
+            season = (chroma === "deep") ? "Deep Autumn" : "Warm Autumn";
+        }
+    }
+
+    if (temperature === "neutral") {
+        if (value === "light") {
+            season = (chroma === "soft") ? "Light Summer" : "Light Spring";
+        } else if (value === "medium") {
+            season = (chroma === "soft") ? "Soft Summer" : "Soft Autumn";
+        } else {
+            season = (chroma === "deep") ? "Deep Winter" : "Deep Autumn";
+        }
+    }
+
+    /* ------------------ PALETTE COLORS ------------------ */
+
+    const palettes = {
+        "Light Summer": ["#dbe7f5", "#c9d9f2", "#bcd1f0", "#e8d7ec", "#f5e9f7"],
+        "Cool Summer": ["#b7c7e2", "#a6b8d8", "#c3d1e9", "#d9e3f2", "#e8eef7"],
+        "Soft Summer": ["#c4cbd4", "#b7c0cc", "#d1d7df", "#e2e6eb", "#f0f2f5"],
+        "True Summer": ["#b0c4de", "#9bb7d1", "#c7d4e8", "#dfe7f2", "#eef3f8"],
+
+        "Light Spring": ["#f7e7c9", "#f5d9a6", "#f2cfa1", "#ffe7cc", "#fff2dd"],
+        "Warm Spring": ["#f4c27a", "#f2b56b", "#e8a45c", "#ffd8a8", "#ffe6c7"],
+        "True Spring": ["#f5b14c", "#f29d38", "#e88c2a", "#ffd199", "#ffe3c2"],
+
+        "Soft Autumn": ["#d4b89c", "#c9a98a", "#bfa07f", "#e2cdb8", "#f0e3d6"],
+        "Warm Autumn": ["#c48a4a", "#b97c3d", "#a96f33", "#e2b892", "#f2d8bf"],
+        "Deep Autumn": ["#8b5a2b", "#7a4f26", "#6a4420", "#c49a6c", "#e0c3a3"],
+
+        "Cool Winter": ["#bcd0ff", "#a8c0ff", "#94b0ff", "#d6e0ff", "#e8eeff"],
+        "Deep Winter": ["#4a4e69", "#2e3147", "#1c1f33", "#6b6f8c", "#8d92b3"]
+    };
+
+    const chosenPalette = palettes[season] || ["#c9d9f2"];
+
+    /* ------------------ OUTPUT ------------------ */
+
+    seasonCard.innerHTML = `
+        <h2>Your Season</h2>
+        <div class="bullet">• <strong>${season}</strong></div>
+        <div class="bullet">• Temperature: ${temperature}</div>
+        <div class="bullet">• Value: ${value}</div>
+        <div class="bullet">• Chroma: ${chroma}</div>
+    `;
+
+    paletteCard.innerHTML = `
+        <h2>Palette</h2>
+        <div class="palette-row">
+            ${chosenPalette.map(color => `<div class="swatch" style="background:${color}; border-color:#dbe7f5;"></div>`).join("")}
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
