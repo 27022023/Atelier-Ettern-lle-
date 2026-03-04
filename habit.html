@@ -70,6 +70,22 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            position: relative;
+        }
+
+        .delete-icon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #f5d487;
+            transition: 0.2s ease;
+        }
+
+        .delete-icon:hover {
+            transform: scale(1.15);
+            color: #f4c76c;
         }
 
         .habit-title {
@@ -240,6 +256,7 @@
 
             container.innerHTML += `
                 <div class="habit-card">
+                    <div class="delete-icon" onclick="deleteHabit('${habit.id}')">🗑️</div>
                     <div class="habit-title">${habit.title}</div>
                     <div class="progress-bar"><div id="${habit.id}Fill" class="progress-fill" style="width:${value}%"></div></div>
                     <button class="habit-btn" onclick="increase('${habit.id}')">Add progress</button>
@@ -247,6 +264,14 @@
                 </div>
             `;
         });
+    }
+
+    function deleteHabit(id) {
+        habits = habits.filter(h => h.id !== id);
+        delete progress[id];
+        localStorage.setItem("habits", JSON.stringify(habits));
+        localStorage.setItem("progress", JSON.stringify(progress));
+        renderHabits();
     }
 
     function increase(id) {
