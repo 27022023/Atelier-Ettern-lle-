@@ -190,5 +190,265 @@
         <option>Editorial</option>
     </select>
 </div>
+<script>
+/* ------------------ AESTHETICS ------------------ */
+/* Gold heart = soft aesthetics */
+/* Blue star = bold aesthetics */
+
+const aesthetics = [
+    { name: "Coquette", icon: "❤️", type: "soft" },
+    { name: "Soft Girl", icon: "❤️", type: "soft" },
+    { name: "Balletcore", icon: "❤️", type: "soft" },
+    { name: "Vanilla Girl", icon: "❤️", type: "soft" },
+    { name: "Angelcore", icon: "❤️", type: "soft" },
+
+    { name: "Glam", icon: "⭐", type: "bold" },
+    { name: "Baddie", icon: "⭐", type: "bold" },
+    { name: "Model Off-Duty", icon: "⭐", type: "bold" },
+    { name: "Dark Feminine", icon: "⭐", type: "bold" },
+    { name: "Y2K", icon: "⭐", type: "bold" }
+];
+
+let selectedAesthetic = null;
+
+/* ------------------ LOAD AESTHETIC CARDS ------------------ */
+
+function loadAestheticCards() {
+    const grid = document.getElementById("aestheticGrid");
+    grid.innerHTML = "";
+
+    aesthetics.forEach(a => {
+        const card = document.createElement("div");
+        card.classList.add("aesthetic-card");
+
+        const iconClass = a.type === "soft" ? "heart" : "star";
+
+        card.innerHTML = `
+            <div class="icon ${iconClass}">${a.icon}</div>
+            <div class="aesthetic-name">${a.name}</div>
+        `;
+
+        card.onclick = () => {
+            selectedAesthetic = a.name;
+
+            document.querySelectorAll(".aesthetic-card").forEach(c => {
+                c.style.borderColor = "rgba(255,255,255,0.4)";
+                c.style.boxShadow = "none";
+            });
+
+            card.style.borderColor = "#ffffff";
+            card.style.boxShadow = "0 0 14px rgba(255,255,255,0.8)";
+        };
+
+        grid.appendChild(card);
+    });
+}
+
+loadAestheticCards();
+
+/* ------------------ POSE DATABASE (10 EACH) ------------------ */
+
+const poseIdeas = {
+    "Coquette": [
+        "Soft smile with chin slightly down",
+        "Hand gently touching cheek",
+        "Looking over shoulder with soft eyes",
+        "Holding a ribbon or bow near face",
+        "Sitting with knees together and tilted head",
+        "Mirror selfie with soft flash",
+        "Hands clasped under chin",
+        "Side profile with dreamy gaze",
+        "Holding flowers near face",
+        "Soft back-arch pose"
+    ],
+
+    "Soft Girl": [
+        "Peace sign selfie",
+        "Soft pout with glossy lips",
+        "Hand on cheek with tilted head",
+        "Mirror selfie with pastel outfit",
+        "Sitting cross‑legged on bed",
+        "Looking down with soft smile",
+        "Holding phone with both hands",
+        "Hair tucked behind ear",
+        "Candid laugh pose",
+        "Soft flash selfie"
+    ],
+
+    "Balletcore": [
+        "Arms in soft ballet first position",
+        "Leg extended behind lightly",
+        "Sitting in a graceful side pose",
+        "Hands above head in soft arc",
+        "Mirror pose with pointed toes",
+        "Holding a ballet wrap or skirt",
+        "Soft stretch pose",
+        "Profile pose with elongated neck",
+        "Hands resting on barre or chair",
+        "Light twirl motion shot"
+    ],
+
+    "Vanilla Girl": [
+        "Holding a coffee cup",
+        "Soft smile with cozy sweater",
+        "Mirror selfie with neutral outfit",
+        "Looking out a window",
+        "Sitting on couch with blanket",
+        "Hair tucked behind ear",
+        "Minimalist standing pose",
+        "Walking shot with tote bag",
+        "Soft morning light selfie",
+        "Holding book close to chest"
+    ],
+
+    "Angelcore": [
+        "Hands together like prayer",
+        "Soft upward gaze",
+        "Backlit halo‑light pose",
+        "Holding white flowers",
+        "Sitting with legs tucked in",
+        "Mirror selfie with white outfit",
+        "Soft hair‑touch pose",
+        "Side profile with glow",
+        "Hands near face like wings",
+        "Lying down with soft light"
+    ],
+
+    "Glam": [
+        "Strong jawline angle",
+        "Hand on hip with confidence",
+        "Over‑the‑shoulder smolder",
+        "Mirror selfie with flash",
+        "Full‑body red carpet stance",
+        "Hair flip motion shot",
+        "Leg‑cross sitting pose",
+        "Holding clutch or jewelry",
+        "Bold chin‑up pose",
+        "Side profile with sharp light"
+    ],
+
+    "Baddie": [
+        "Phone covering face mirror pose",
+        "Tongue‑out playful pose",
+        "Hand on waist with attitude",
+        "Low mirror angle",
+        "Squat pose with confidence",
+        "Side profile with slick hair",
+        "Walking shot with strong stride",
+        "Car selfie with sunglasses",
+        "Crossed arms pose",
+        "Bold flash selfie"
+    ],
+
+    "Model Off-Duty": [
+        "Walking shot mid‑step",
+        "Hands in pockets",
+        "Looking away candid",
+        "Leaning on wall",
+        "Holding coffee cup",
+        "Low‑angle street shot",
+        "Hair pushed back effortlessly",
+        "Minimal expression pose",
+        "Cross‑body bag pose",
+        "Sitting on curb casually"
+    ],
+
+    "Dark Feminine": [
+        "Chin up, intense stare",
+        "Hand on throat pose",
+        "Side profile in shadows",
+        "Mirror selfie with dim lighting",
+        "Sitting with crossed legs and stare",
+        "Hair covering one eye",
+        "Back‑arch dramatic pose",
+        "Holding wine glass",
+        "Silhouette shot",
+        "Bold red lip close‑up"
+    ],
+
+    "Y2K": [
+        "Peace sign mirror selfie",
+        "Tongue out with flash",
+        "Low‑rise jeans mirror pose",
+        "Bubblegum blowing pose",
+        "Side profile with mini bag",
+        "Candid laugh with flash",
+        "Phone sticker mirror selfie",
+        "Sitting on floor with legs out",
+        "Hair clips pose",
+        "Glossy lips close‑up"
+    ]
+};
+
+/* ------------------ LIGHTING + BACKGROUND ------------------ */
+
+const lightingIdeas = {
+    soft: [
+        "Soft window light",
+        "Warm morning glow",
+        "Cloudy daylight",
+        "Soft flash",
+        "Golden hour"
+    ],
+    bold: [
+        "Direct flash",
+        "Strong side lighting",
+        "Neon lights",
+        "Shadow contrast",
+        "Backlit glow"
+    ]
+};
+
+const backgroundIdeas = {
+    soft: [
+        "White bedding",
+        "Pastel walls",
+        "Curtains",
+        "Flower field",
+        "Cozy room"
+    ],
+    bold: [
+        "Street at night",
+        "Parking garage",
+        "Neon signs",
+        "Dark room",
+        "Metallic surfaces"
+    ]
+};
+
+/* ------------------ SHOW IDEAS ------------------ */
+
+function showPhotoIdeas() {
+    const poseType = document.getElementById("poseType").value;
+    const poseCard = document.getElementById("poseCard");
+    const tipsCard = document.getElementById("tipsCard");
+
+    if (!selectedAesthetic || !poseType) {
+        poseCard.innerHTML = `<h2>Poses</h2><div class="bullet">• Please select an aesthetic and pose type.</div>`;
+        tipsCard.innerHTML = `<h2>Tips</h2><div class="bullet">• No tips available.</div>`;
+        return;
+    }
+
+    const poses = poseIdeas[selectedAesthetic];
+    const aestheticType = aesthetics.find(a => a.name === selectedAesthetic).type;
+
+    const lighting = lightingIdeas[aestheticType];
+    const backgrounds = backgroundIdeas[aestheticType];
+
+    poseCard.innerHTML = `
+        <h2>${selectedAesthetic} Poses</h2>
+        ${poses.map(p => `<div class="bullet">• ${p}</div>`).join("")}
+    `;
+
+    tipsCard.innerHTML = `
+        <h2>Tips</h2>
+        <div class="bullet"><strong>Lighting:</strong> ${lighting.join(", ")}</div>
+        <div class="bullet"><strong>Backgrounds:</strong> ${backgrounds.join(", ")}</div>
+    `;
+}
+</script>
+
+</body>
+</html>
 
             
