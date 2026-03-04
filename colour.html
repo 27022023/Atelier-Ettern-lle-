@@ -1,203 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Colour Analysis – Atelier Etternelle</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colour Analysis</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
-        font-family: "Playfair Display", serif;
-    }
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* CITY BACKGROUND */
-    .city-bg {
-        position: fixed;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        z-index: -2;
-    }
+        body {
+            height: 100vh;
+            width: 100vw;
+            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            font-family: "Playfair Display", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+        }
 
-    /* BLUR OVERLAY */
-    .overlay {
-        position: fixed;
-        inset: 0;
-        backdrop-filter: blur(6px);
-        background: rgba(255,255,255,0.25);
-        z-index: -1;
-    }
+        /* Back arrow */
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+        }
 
-    /* HEADER */
-    .header {
-        width: 100%;
-        text-align: center;
-        padding: 20px;
-        font-size: 2rem;
-        font-weight: 600;
-        color: #000;
-        text-shadow: 0 0 10px rgba(255,255,255,0.6);
-    }
+        /* Title */
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: gold;
+            text-shadow: 0 0 12px rgba(255,215,0,0.6);
+        }
 
-    /* MAIN PANEL */
-    .panel {
-        width: 90%;
-        max-width: 500px;
-        margin: 40px auto;
-        padding: 25px;
-        border-radius: 20px;
-        background: linear-gradient(135deg, #f7e7c9, #f3d7a6);
-        border: 2px solid #d4a762;
-        box-shadow: 0 0 20px rgba(212,167,98,0.6);
-        text-align: center;
-    }
+        /* Upload boxes */
+        .upload-container {
+            width: 85%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    .upload-btn {
-        display: inline-block;
-        padding: 12px 25px;
-        margin-top: 10px;
-        background: linear-gradient(135deg, #d4a762, #f7d9a6);
-        border-radius: 30px;
-        color: #000;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: 0.3s;
-    }
+        .upload-box {
+            background: black;
+            border: 2px solid gold;
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            color: gold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
 
-    .upload-btn:hover {
-        box-shadow: 0 0 15px rgba(212,167,98,0.9);
-    }
+        .upload-box:hover {
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            transform: scale(1.02);
+        }
 
-    #preview {
-        width: 100%;
-        margin-top: 20px;
-        border-radius: 15px;
-        display: none;
-    }
+        input[type="file"] {
+            display: none;
+        }
 
-    /* COLOR SWATCHES */
-    .swatches {
-        margin-top: 20px;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-    }
+        /* Button */
+        .analyze-btn {
+            margin-top: 20px;
+            background: gold;
+            color: black;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
+        }
 
-    .swatch {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        border: 3px solid #d4a762;
-        box-shadow: 0 0 10px rgba(212,167,98,0.7);
-    }
+        .analyze-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+        }
 
-    /* BACK BUTTON */
-    .back-btn {
-        position: fixed;
-        bottom: 25px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 12px 30px;
-        background: #000;
-        color: #f7d9a6;
-        border: 2px solid #d4a762;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-
-    .back-btn:hover {
-        box-shadow: 0 0 15px rgba(212,167,98,0.9);
-    }
-</style>
+        /* Results */
+        .results {
+            margin-top: 30px;
+            width: 85%;
+            max-width: 600px;
+            background: black;
+            border: 2px solid gold;
+            border-radius: 18px;
+            padding: 20px;
+            color: gold;
+            text-align: center;
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<div id="cityBackground" class="city-bg"></div>
-<div class="overlay"></div>
+    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
-<div class="header">Colour Analysis</div>
+    <h1>Colour Analysis</h1>
 
-<div class="panel">
-    <label class="upload-btn">
-        Upload Photo
-        <input type="file" id="imageInput" accept="image/*" style="display:none;">
-    </label>
+    <div class="upload-container">
 
-    <img id="preview">
+        <label class="upload-box">
+            Upload your nails
+            <input type="file" id="nailsInput" accept="image/*">
+        </label>
 
-    <div id="swatchContainer" class="swatches"></div>
-</div>
+        <label class="upload-box">
+            Upload your outfit
+            <input type="file" id="outfitInput" accept="image/*">
+        </label>
 
-<div class="back-btn" onclick="window.location.href='mirror.html'">Back to Mirror</div>
+        <button class="analyze-btn" onclick="showResults()">Show matching combos</button>
+    </div>
+
+    <div id="resultsBox" class="results">
+        <h2 style="margin-bottom: 10px;">Your Matching Combos</h2>
+        <p>Here you will see:</p>
+        <p>• Nail + outfit color palettes</p>
+        <p>• Matching outfit ideas</p>
+        <p>• Matching nail designs</p>
+        <p>• Aesthetic combos (clean girl, coquette, classy, etc.)</p>
+    </div>
 
 <script>
-    /* CITY BACKGROUND LOADING */
-    const city = (localStorage.getItem("selectedCity") || "").toLowerCase().replace(" ", "");
-    const bg = document.getElementById("cityBackground");
-    bg.style.backgroundImage = `url('images/cities/${city}.jpg')`;
-
-    /* IMAGE UPLOAD + COLOR EXTRACTION */
-    const input = document.getElementById("imageInput");
-    const preview = document.getElementById("preview");
-    const swatchContainer = document.getElementById("swatchContainer");
-
-    input.addEventListener("change", function() {
-        const file = this.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.style.display = "block";
-            extractColors(preview);
-        };
-        reader.readAsDataURL(file);
-    });
-
-    /* SIMPLE COLOR EXTRACTION */
-    function extractColors(img) {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-
-        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-
-        let colors = {};
-
-        for (let i = 0; i < data.length; i += 40) {
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-            const key = `${r},${g},${b}`;
-            colors[key] = (colors[key] || 0) + 1;
-        }
-
-        const sorted = Object.entries(colors)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 5);
-
-        swatchContainer.innerHTML = "";
-
-        sorted.forEach(([rgb]) => {
-            const div = document.createElement("div");
-            div.className = "swatch";
-            div.style.background = `rgb(${rgb})`;
-            swatchContainer.appendChild(div);
-        });
-
-        localStorage.setItem("colourPalette", JSON.stringify(sorted));
+    function showResults() {
+        document.getElementById("resultsBox").style.display = "block";
     }
 </script>
 
