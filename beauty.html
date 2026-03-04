@@ -265,3 +265,341 @@
         <div class="result-card" id="aestheticCard"></div>
         <div class="result-card" id="photoCard"></div>
     </div>
+<script>
+function showResults() {
+
+    const skinType = document.getElementById("skinType").value;
+    const skinTone = document.getElementById("skinTone").value;
+    const undertone = document.getElementById("undertone").value;
+    const hairColor = document.getElementById("hairColor").value;
+    const eyeColor = document.getElementById("eyeColor").value;
+    const faceShape = document.getElementById("faceShape").value;
+    const aesthetic = document.getElementById("aesthetic").value;
+
+    /* ---------------- MAKEUP ---------------- */
+
+    const makeupBase = {
+        Fair: ["Light coverage foundation", "Soft pink blush", "Rose or nude lips"],
+        Light: ["Natural finish foundation", "Peach blush", "Peachy nude lips"],
+        Medium: ["Medium coverage foundation", "Warm bronzer + mauve blush", "Mauve or berry lips"],
+        Tan: ["Warm-toned foundation", "Terracotta blush", "Caramel or brown nude lips"],
+        Deep: ["Rich coverage foundation", "Berry or brick blush", "Deep plum or wine lips"]
+    };
+
+    const undertoneEyeshadow = {
+        Cool: ["Taupe", "Mauve", "Soft plum", "Cool browns"],
+        Neutral: ["Champagne", "Rose gold", "Neutral browns"],
+        Warm: ["Bronze", "Gold", "Copper", "Warm browns"]
+    };
+
+    const eyelinerShape = {
+        Oval: "Classic wing or soft flick",
+        Round: "Elongated wing to stretch the eye",
+        Square: "Smudged liner for softness",
+        Heart: "Soft wing with focus on outer corner",
+        Diamond: "Balanced liner top + bottom (light on bottom)",
+        Long: "Shorter wing, focus on lash volume"
+    };
+
+    const browShape = {
+        Oval: "Soft angled brows",
+        Round: "Slight arch to lift",
+        Square: "Soft, rounded arch",
+        Heart: "Straighter brow with gentle arch",
+        Diamond: "Soft, curved arch",
+        Long: "Defined arch to balance length"
+    };
+
+    const mascaraStyle = {
+        Blue: "Lengthening mascara, focus on outer lashes",
+        Green: "Volumizing + lengthening combo",
+        Brown: "Full volume, fluffy lashes",
+        Hazel: "Wispy, doll-like lashes",
+        Grey: "Defined but not clumpy, length focus"
+    };
+
+    const makeupCard = document.getElementById("makeupCard");
+    const baseList = makeupBase[skinTone] || ["Choose a skin tone for base recommendations."];
+    const eyeshadowList = undertoneEyeshadow[undertone] || ["Choose an undertone for eyeshadow guidance."];
+
+    makeupCard.innerHTML = `
+        <h2>Makeup</h2>
+        <div class="section-title">Base & Cheeks</div>
+        ${baseList.map(m => `<div class="bullet">• ${m}</div>`).join("")}
+
+        <div class="section-title">Eyeshadow & Liner</div>
+        <div class="bullet">• Eyeshadow: ${Array.isArray(eyeshadowList) ? eyeshadowList.join(", ") : eyeshadowList}</div>
+        <div class="bullet">• Eyeliner shape: ${eyelinerShape[faceShape] || "Soft, thin line close to lashes"}</div>
+
+        <div class="section-title">Lashes & Brows</div>
+        <div class="bullet">• Mascara: ${mascaraStyle[eyeColor] || "Length + volume, focus on outer lashes"}</div>
+        <div class="bullet">• Brow shape: ${browShape[faceShape] || "Soft, natural arch following your brow bone"}</div>
+    `;
+
+    /* ---------------- CLOTHING COLORS ---------------- */
+
+    const hairColorsClothes = {
+        Blonde: ["Lavender", "Soft blue", "White", "Pastel pink", "Light grey"],
+        Brown: ["Lilac", "Emerald", "Cream", "Warm neutrals", "Chocolate brown"],
+        Black: ["Ivory", "Hot pink", "Silver", "Red", "Pastel purple"],
+        Red: ["Soft purple", "Black", "Cream", "Forest green"],
+        "Dyed / Fashion Color": ["Monochrome fits", "Black basics", "Pastels matching your hair"]
+    };
+
+    const seasonalPalette = {
+        Fair: "Light Spring / Light Summer vibes: soft, airy colors.",
+        Light: "Soft Summer / Soft Autumn: muted, gentle tones.",
+        Medium: "True Autumn / True Spring: warm, rich colors.",
+        Tan: "Deep Autumn / Deep Spring: saturated, warm shades.",
+        Deep: "Deep Winter / Deep Autumn: bold, high-contrast colors."
+    };
+
+    const colorsCard = document.getElementById("colorsCard");
+    const clothesList = hairColorsClothes[hairColor] || ["Choose a hair color for clothing suggestions."];
+
+    colorsCard.innerHTML = `
+        <h2>Clothing Colors</h2>
+        <div class="section-title">Best Colors</div>
+        ${clothesList.map(c => `<div class="bullet">• ${c}</div>`).join("")}
+
+        <div class="section-title">Seasonal Palette</div>
+        <div class="bullet">• ${seasonalPalette[skinTone] || "Select your skin tone for seasonal guidance."}</div>
+    `;
+
+    /* ---------------- HAIR ---------------- */
+
+    const hairByFace = {
+        Oval: ["Almost any style works", "Soft layers", "Curtain bangs"],
+        Round: ["Long layers", "Face-framing pieces", "Volume at crown, not sides"],
+        Square: ["Soft waves", "Side part", "Curtain or wispy bangs"],
+        Heart: ["Chin-length layers", "Side-swept bangs", "Soft curls at ends"],
+        Diamond: ["Chin-length bobs", "Fringe or curtain bangs", "Soft waves"],
+        Long: ["Long layers", "Side part", "Soft waves to add width"]
+    };
+
+    const hairTextureTips = {
+        Blonde: "Glossy finishes and soft waves look amazing.",
+        Brown: "Soft waves or sleek straight styles both suit you.",
+        Black: "Shiny, sleek styles or big curls both pop beautifully.",
+        Red: "Soft curls and romantic waves highlight the color.",
+        "Dyed / Fashion Color": "Styles that show dimension (layers, waves) show off your color best."
+    };
+
+    const hairCard = document.getElementById("hairCard");
+    const hairFaceList = hairByFace[faceShape] || ["Choose a face shape for haircut suggestions."];
+
+    hairCard.innerHTML = `
+        <h2>Hair</h2>
+        <div class="section-title">Cuts & Shapes</div>
+        ${hairFaceList.map(h => `<div class="bullet">• ${h}</div>`).join("")}
+
+        <div class="section-title">Color & Texture Tips</div>
+        <div class="bullet">• ${hairTextureTips[hairColor] || "Select your hair color for styling tips."}</div>
+    `;
+
+    /* ---------------- JEWELRY ---------------- */
+
+    const jewelryByUndertone = {
+        Cool: ["Silver", "White gold", "Platinum"],
+        Neutral: ["Rose gold", "Silver", "Soft gold"],
+        Warm: ["Gold", "Bronze", "Warm rose gold"]
+    };
+
+    const jewelryBySkinTone = {
+        Fair: ["Delicate pieces", "Small studs", "Thin chains"],
+        Light: ["Minimal hoops", "Layered necklaces"],
+        Medium: ["Chunky gold pieces", "Statement earrings"],
+        Tan: ["Bold hoops", "Layered chains"],
+        Deep: ["Large statement pieces", "Bold gold jewelry"]
+    };
+
+    const jewelryCard = document.getElementById("jewelryCard");
+    const metalList = jewelryByUndertone[undertone] || ["Choose an undertone for metal suggestions."];
+    const styleList = jewelryBySkinTone[skinTone] || ["Select your skin tone for jewelry style ideas."];
+
+    jewelryCard.innerHTML = `
+        <h2>Jewelry & Accessories</h2>
+        <div class="section-title">Best Metals</div>
+        ${metalList.map(j => `<div class="bullet">• ${j}</div>`).join("")}
+
+        <div class="section-title">Style & Scale</div>
+        ${styleList.map(j => `<div class="bullet">• ${j}</div>`).join("")}
+    `;
+
+    /* ---------------- SKINCARE ---------------- */
+
+    const skincareByType = {
+        Dry: {
+            am: ["Gentle hydrating cleanser", "Hydrating toner or essence", "Rich moisturizer", "SPF 30+ cream"],
+            pm: ["Cream cleanser", "Hydrating serum (hyaluronic acid)", "Ceramide moisturizer"],
+            weekly: ["Hydrating mask 1–2x/week", "Avoid harsh exfoliants"]
+        },
+        Oily: {
+            am: ["Foaming or gel cleanser", "Lightweight gel moisturizer", "SPF 30+ (matte finish)"],
+            pm: ["Gel cleanser", "Niacinamide serum", "Light moisturizer"],
+            weekly: ["Clay mask 1–2x/week", "Gentle BHA exfoliant"]
+        },
+        Combination: {
+            am: ["Gentle cleanser", "Light moisturizer on T-zone, richer on dry areas", "SPF 30+"],
+            pm: ["Gentle cleanser", "Hydrating serum", "Balanced moisturizer"],
+            weekly: ["Clay mask on T-zone", "Hydrating mask on dry areas"]
+        },
+        Normal: {
+            am: ["Gentle cleanser", "Light moisturizer", "SPF 30+"],
+            pm: ["Cleanser", "Serum of choice (glow/repair)", "Moisturizer"],
+            weekly: ["Gentle exfoliation 1x/week", "Hydrating mask"]
+        },
+        Sensitive: {
+            am: ["Very gentle cleanser or just water", "Soothing moisturizer", "Mineral SPF 30+"],
+            pm: ["Gentle cleanser", "Soothing serum (centella, panthenol)", "Barrier-repair cream"],
+            weekly: ["Avoid strong exfoliants", "Use calming masks only"]
+        }
+    };
+
+    const skincareCard = document.getElementById("skincareCard");
+    const routine = skincareByType[skinType];
+
+    const amList = routine ? routine.am : ["Select your skin type for a morning routine."];
+    const pmList = routine ? routine.pm : ["Select your skin type for a night routine."];
+    const weeklyList = routine ? routine.weekly : ["Select your skin type for weekly care tips."];
+
+    skincareCard.innerHTML = `
+        <h2>Skincare</h2>
+        <div class="section-title">Morning</div>
+        ${amList.map(s => `<div class="bullet">• ${s}</div>`).join("")}
+
+        <div class="section-title">Night</div>
+        ${pmList.map(s => `<div class="bullet">• ${s}</div>`).join("")}
+
+        <div class="section-title">Weekly</div>
+        ${weeklyList.map(s => `<div class="bullet">• ${s}</div>`).join("")}
+    `;
+
+    /* ---------------- AESTHETICS ---------------- */
+
+    const aestheticProfiles = {
+        "Clean girl": {
+            makeup: ["Glowy skin", "Fluffy brows", "Brown mascara", "Clear or nude gloss"],
+            hair: ["Sleek bun", "Low ponytail", "Straight hair with middle part"],
+            outfit: ["Neutrals", "Simple silhouettes", "Gold jewelry"],
+            nails: ["Short nude", "Milky white", "Soft pink"],
+            accessories: ["Small hoops", "Minimal rings", "Tiny studs"]
+        },
+        "Soft girl": {
+            makeup: ["Blush-heavy look", "Soft pink lips", "Shimmer on lids"],
+            hair: ["Loose waves", "Half-up with bow", "Braids"],
+            outfit: ["Pastels", "Skirts", "Cardigans"],
+            nails: ["Pastel colors", "Cute designs", "Hearts or flowers"],
+            accessories: ["Pearls", "Bows", "Cute hair clips"]
+        },
+        "Coquette": {
+            makeup: ["Flushed cheeks", "Glossy lips", "Soft eyeliner"],
+            hair: ["Curls", "Half-up ribbons", "Loose romantic styles"],
+            outfit: ["Lace", "Ruffles", "Mini skirts"],
+            nails: ["French tips", "Soft pink", "Tiny bows"],
+            accessories: ["Ribbons", "Pearls", "Heart jewelry"]
+        },
+        "Classy": {
+            makeup: ["Neutral glam", "Defined liner", "Red or nude lips"],
+            hair: ["Blowout", "Low chignon", "Smooth waves"],
+            outfit: ["Blazers", "Trousers", "Little black dress"],
+            nails: ["Red", "Nude", "French"],
+            accessories: ["Pearls", "Structured bags", "Delicate gold"]
+        },
+        "Glam": {
+            makeup: ["Full coverage", "Smokey eyes", "Bold lashes", "Defined contour"],
+            hair: ["Big curls", "Hollywood waves", "High pony"],
+            outfit: ["Sparkle", "Bodycon dresses", "Heels"],
+            nails: ["Chrome", "Glitter", "Long coffin"],
+            accessories: ["Statement earrings", "Clutch bags", "Rhinestones"]
+        },
+        "Minimalist": {
+            makeup: ["Barely-there base", "Tinted balm", "Clear mascara"],
+            hair: ["Straight hair", "Simple bun", "Low pony"],
+            outfit: ["Monochrome fits", "Simple lines", "High-quality basics"],
+            nails: ["Clear", "Sheer nude", "Short and neat"],
+            accessories: ["Tiny studs", "Thin rings", "Simple watch"]
+        },
+        "Y2K": {
+            makeup: ["Glossy lips", "Shimmer lids", "Thin eyeliner"],
+            hair: ["Space buns", "Butterfly clips", "High ponytail"],
+            outfit: ["Low-rise jeans", "Baby tees", "Mini skirts"],
+            nails: ["Bright colors", "Fun stickers", "French tips with a twist"],
+            accessories: ["Butterfly clips", "Chunky rings", "Tiny shoulder bags"]
+        },
+        "Baddie": {
+            makeup: ["Snatched contour", "Full dramatic lashes", "Overlined glossy lips"],
+            hair: ["Sleek middle part", "Long straight hair", "High ponytail"],
+            outfit: ["Bodycon dresses", "Cargo pants + crop top", "Oversized jackets"],
+            nails: ["Long acrylics", "Bold colors", "Sharp shapes"],
+            accessories: ["Big hoops", "Chains", "Statement sunglasses"]
+        }
+    };
+
+    const aestheticCard = document.getElementById("aestheticCard");
+    const chosenAesthetic = aestheticProfiles[aesthetic];
+
+    if (chosenAesthetic) {
+        aestheticCard.innerHTML = `
+            <h2>${aesthetic} Aesthetic</h2>
+
+            <div class="section-title">Makeup</div>
+            ${chosenAesthetic.makeup.map(x => `<div class="bullet">• ${x}</div>`).join("")}
+
+            <div class="section-title">Hair</div>
+            ${chosenAesthetic.hair.map(x => `<div class="bullet">• ${x}</div>`).join("")}
+
+            <div class="section-title">Outfit</div>
+            ${chosenAesthetic.outfit.map(x => `<div class="bullet">• ${x}</div>`).join("")}
+
+            <div class="section-title">Nails</div>
+            ${chosenAesthetic.nails.map(x => `<div class="bullet">• ${x}</div>`).join("")}
+
+            <div class="section-title">Accessories</div>
+            ${chosenAesthetic.accessories.map(x => `<div class="bullet">• ${x}</div>`).join("")}
+
+            <div class="tag-row">
+                <div class="tag">Skin tone: ${skinTone || "?"}</div>
+                <div class="tag">Undertone: ${undertone || "?"}</div>
+                <div class="tag">Face shape: ${faceShape || "?"}</div>
+            </div>
+        `;
+    } else {
+        aestheticCard.innerHTML = `
+            <h2>Aesthetic Profile</h2>
+            <div class="bullet">• Choose an aesthetic to see a full breakdown.</div>
+        `;
+    }
+
+    /* ---------------- PHOTO TIPS ---------------- */
+
+    const photoCard = document.getElementById("photoCard");
+
+    photoCard.innerHTML = `
+        <h2>Photo-Ready Tips</h2>
+
+        <div class="section-title">Lighting</div>
+        <div class="bullet">• Face a window for soft, even light.</div>
+        <div class="bullet">• Avoid harsh overhead lighting.</div>
+
+        <div class="section-title">Angles</div>
+        <div class="bullet">• Slight chin down, camera slightly above eye level.</div>
+        <div class="bullet">• Turn your head slightly instead of straight-on.</div>
+
+        <div class="section-title">Makeup for Camera</div>
+        <div class="bullet">• Add a bit more blush and bronzer than usual.</div>
+        <div class="bullet">• Set the T-zone with powder to avoid shine.</div>
+
+        <div class="section-title">Hair & Outfit</div>
+        <div class="bullet">• Add volume or texture to hair for dimension.</div>
+        <div class="bullet">• Choose outfit colors that contrast your background.</div>
+    `;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    showResults();
+});
+</script>
+
+</body>
+</html>
