@@ -755,9 +755,84 @@ tabButtons.forEach(btn => {
         }
     };
 });
-
-/* ------------------ MODAL LOGIC ------------------ */
+   <!-- MODAL LOGIC -->
+<script>
 const modalOverlay = document.getElementById("modalOverlay");
 const modalTitle = document.getElementById("modalTitle");
 const exerciseSelect = document.getElementById("exerciseSelect");
-co<!        
+const durationInput = document.getElementById("durationInput");
+const cancelModalBtn = document.getElementById("cancelModalBtn");
+const saveModalBtn = document.getElementById("saveModalBtn");
+
+let modalDate = null;
+
+/* Populate exercise dropdown */
+function populateExerciseSelect() {
+    exerciseSelect.innerHTML = "";
+    const list = selectedLevel ? exercisesByLevel[selectedLevel] : Object.values(exercisesByLevel).flat();
+    list.forEach(ex => {
+        const opt = document.createElement("option");
+        opt.value = ex;
+        opt.textContent = ex;
+        exerciseSelect.appendChild(opt);
+    });
+}
+
+/* Open modal */
+function openModal(dateIso) {
+    modalDate = dateIso;
+    modalTitle.textContent = `Add Workout – ${dateIso}`;
+
+    populateExerciseSelect();
+
+    if (workoutPlan[dateIso]) {
+        exerciseSelect.value = workoutPlan[dateIso].exercise;
+        durationInput.value = workoutPlan[dateIso].duration;
+    } else {
+        durationInput.value = "";
+    }
+
+    modalOverlay.style.display = "flex";
+}
+
+/* Close modal */
+function closeModal() {
+    modalOverlay.style.display = "none";
+    modalDate = null;
+}
+
+cancelModalBtn.onclick = closeModal;
+
+/* Save workout */
+saveModalBtn.onclick = () => {
+    if (!modalDate) return;
+
+    const exercise = exerciseSelect.value;
+    const duration = parseInt(durationInput.value, 10);
+
+    if (!exercise || !duration || duration <= 0) {
+        alert("Please select an exercise and enter a valid duration.");
+        return;
+    }
+
+    workoutPlan[modalDate] = { exercise, duration };
+
+    closeModal();
+    loadWeeklyView();
+    loadMonthlyView();
+};
+
+/* Close modal when clicking outside */
+modalOverlay.onclick = (e) => {
+    if (e.target === modalOverlay) closeModal();
+};
+
+/* Initialize planner */
+populateExerciseSelect();
+loadWeeklyView();
+loadMonthlyView();
+</script>
+
+</body>
+</html>
+
