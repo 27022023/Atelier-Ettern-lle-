@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Helper</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            font-family: "Playfair Display", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        /* Back arrow */
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+        }
+
+        /* Title */
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: gold;
+            text-shadow: 0 0 12px rgba(255,215,0,0.6);
+        }
+
+        /* Dropdown */
+        .dropdown {
+            width: 85%;
+            max-width: 600px;
+            background: black;
+            border: 2px solid gold;
+            border-radius: 14px;
+            padding: 12px;
+            color: gold;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+
+        select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: gold;
+            font-size: 1.2rem;
+            outline: none;
+        }
+
+        /* Buttons */
+        .button-container {
+            width: 85%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .style-btn {
+            background: gold;
+            color: black;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
+        }
+
+        .style-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+        }
+
+        /* Results box */
+        .results {
+            margin-top: 30px;
+            width: 85%;
+            max-width: 600px;
+            background: black;
+            border: 2px solid gold;
+            border-radius: 18px;
+            padding: 20px;
+            color: gold;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
+    <h1>Style Helper</h1>
+
+    <div class="dropdown">
+        <select id="locationSelect">
+            <option value="" disabled selected>Where are you going?</option>
+            <option>School</option>
+            <option>Date</option>
+            <option>Party</option>
+            <option>Brunch</option>
+            <option>Gym</option>
+            <option>Shopping</option>
+            <option>Beach</option>
+            <option>Formal Event</option>
+        </select>
+    </div>
+
+    <div class="button-container">
+        <button class="style-btn" onclick="showResults('hairstyles')">Hairstyle Ideas</button>
+        <button class="style-btn" onclick="showResults('outfits')">Outfit Ideas</button>
+        <button class="style-btn" onclick="showResults('makeup')">Makeup Ideas</button>
+        <button class="style-btn" onclick="showResults('accessories')">Accessories Ideas</button>
+    </div>
+
+    <div id="resultsBox" class="results">
+        <h2 style="margin-bottom: 10px;">Your Style Suggestions</h2>
+        <p id="resultsText">Choose a category to see ideas!</p>
+    </div>
+
+<script>
+    function showResults(type) {
+        const location = document.getElementById("locationSelect").value;
+        const resultsBox = document.getElementById("resultsBox");
+        const resultsText = document.getElementById("resultsText");
+
+        if (!location) {
+            resultsText.textContent = "Please choose where you're going first!";
+        } else {
+            resultsText.textContent = 
+                "Here are " + type + " for " + location.toLowerCase() + "! (Ideas will go here)";
+        }
+
+        resultsBox.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
