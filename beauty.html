@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Guide</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            font-family: "Playfair Display", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        /* Back arrow */
+        .back-arrow {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+        }
+
+        /* Title */
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            color: gold;
+            text-shadow: 0 0 12px rgba(255,215,0,0.6);
+        }
+
+        /* Form container */
+        .form-container {
+            width: 85%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Input fields */
+        .input-field {
+            background: black;
+            border: 2px solid gold;
+            border-radius: 14px;
+            padding: 12px;
+            color: gold;
+            font-size: 1.2rem;
+        }
+
+        .input-field input,
+        .input-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: gold;
+            font-size: 1.2rem;
+            outline: none;
+        }
+
+        /* Upload box */
+        .upload-box {
+            background: black;
+            border: 2px solid gold;
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            color: gold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .upload-box:hover {
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            transform: scale(1.02);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Button */
+        .analyze-btn {
+            margin-top: 10px;
+            background: gold;
+            color: black;
+            padding: 14px 20px;
+            border-radius: 14px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
+        }
+
+        .analyze-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+        }
+
+        /* Results box */
+        .results {
+            margin-top: 30px;
+            width: 85%;
+            max-width: 600px;
+            background: black;
+            border: 2px solid gold;
+            border-radius: 18px;
+            padding: 20px;
+            color: gold;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
+    <h1>Beauty Guide</h1>
+
+    <div class="form-container">
+
+        <div class="input-field">
+            <select id="skinType">
+                <option value="" disabled selected>Skin Type</option>
+                <option>Dry</option>
+                <option>Oily</option>
+                <option>Combination</option>
+                <option>Normal</option>
+                <option>Sensitive</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="skinTone">
+                <option value="" disabled selected>Skin Tone</option>
+                <option>Fair</option>
+                <option>Light</option>
+                <option>Medium</option>
+                <option>Tan</option>
+                <option>Deep</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="hairColor">
+                <option value="" disabled selected>Hair Color</option>
+                <option>Blonde</option>
+                <option>Brown</option>
+                <option>Black</option>
+                <option>Red</option>
+                <option>Dyed / Fashion Color</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="eyeColor">
+                <option value="" disabled selected>Eye Color</option>
+                <option>Blue</option>
+                <option>Green</option>
+                <option>Brown</option>
+                <option>Hazel</option>
+                <option>Grey</option>
+            </select>
+        </div>
+
+        <label class="upload-box">
+            Upload your photo (optional)
+            <input type="file" id="photoInput" accept="image/*">
+        </label>
+
+        <button class="analyze-btn" onclick="showResults()">Show my beauty profile</button>
+    </div>
+
+    <div id="resultsBox" class="results">
+        <h2 style="margin-bottom: 10px;">Your Beauty Profile</h2>
+        <p id="resultsText">
+            Your personalized makeup, colors, hairstyles, jewelry tones, and beauty tips will appear here!
+        </p>
+    </div>
+
+<script>
+    function showResults() {
+        const resultsBox = document.getElementById("resultsBox");
+        const resultsText = document.getElementById("resultsText");
+
+        resultsText.textContent =
+            "Your personalized beauty suggestions will appear here based on your inputs!";
+
+        resultsBox.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
