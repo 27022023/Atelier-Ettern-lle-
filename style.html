@@ -13,7 +13,7 @@
         body {
             height: 100vh;
             width: 100vw;
-            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            background: linear-gradient(135deg, #f3d9ff, #f7e7ff);
             font-family: "Playfair Display", serif;
             display: flex;
             flex-direction: column;
@@ -21,34 +21,31 @@
             padding-top: 40px;
         }
 
-        /* Back arrow */
         .back-arrow {
             position: absolute;
             top: 20px;
             left: 20px;
             font-size: 2.2rem;
             cursor: pointer;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255,215,0,0.7);
+            color: #d8b4fe;
+            text-shadow: 0 0 10px rgba(216,180,254,0.7);
         }
 
-        /* Title */
         h1 {
             font-size: 2.2rem;
             margin-bottom: 25px;
-            color: gold;
-            text-shadow: 0 0 12px rgba(255,215,0,0.6);
+            color: #d8b4fe;
+            text-shadow: 0 0 12px rgba(216,180,254,0.6);
         }
 
-        /* Dropdown */
         .dropdown {
             width: 85%;
             max-width: 600px;
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 14px;
             padding: 12px;
-            color: gold;
+            color: #d8b4fe;
             font-size: 1.2rem;
             margin-bottom: 25px;
         }
@@ -57,12 +54,11 @@
             width: 100%;
             background: transparent;
             border: none;
-            color: gold;
+            color: #d8b4fe;
             font-size: 1.2rem;
             outline: none;
         }
 
-        /* Buttons */
         .button-container {
             width: 85%;
             max-width: 600px;
@@ -72,7 +68,7 @@
         }
 
         .style-btn {
-            background: gold;
+            background: #d8b4fe;
             color: black;
             padding: 14px;
             border-radius: 14px;
@@ -85,21 +81,37 @@
 
         .style-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            box-shadow: 0 0 20px rgba(216,180,254,0.6);
         }
 
-        /* Results box */
         .results {
             margin-top: 30px;
             width: 85%;
             max-width: 600px;
             background: black;
-            border: 2px solid gold;
+            border: 2px solid #d8b4fe;
             border-radius: 18px;
             padding: 20px;
-            color: gold;
-            text-align: center;
+            color: #d8b4fe;
+            text-align: left;
             display: none;
+        }
+
+        .results h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #e9d5ff;
+        }
+
+        .bullet {
+            margin-left: 15px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
@@ -125,29 +137,113 @@
     </div>
 
     <div class="button-container">
-        <button class="style-btn" onclick="showResults('hairstyles')">Hairstyle Ideas</button>
-        <button class="style-btn" onclick="showResults('outfits')">Outfit Ideas</button>
+        <button class="style-btn" onclick="showResults('hair')">Hairstyle Ideas</button>
+        <button class="style-btn" onclick="showResults('outfit')">Outfit Ideas</button>
         <button class="style-btn" onclick="showResults('makeup')">Makeup Ideas</button>
         <button class="style-btn" onclick="showResults('accessories')">Accessories Ideas</button>
     </div>
 
     <div id="resultsBox" class="results">
-        <h2 style="margin-bottom: 10px;">Your Style Suggestions</h2>
-        <p id="resultsText">Choose a category to see ideas!</p>
+        <h2>Your Style Suggestions</h2>
+        <div id="resultsContent"></div>
     </div>
 
 <script>
+    const ideas = {
+        School: {
+            hair: [
+                "• Low messy bun with face-framing pieces",
+                "• Half-up half-down with a pastel scrunchie",
+                "• Sleek ponytail with a middle part"
+            ],
+            outfit: [
+                "• Oversized hoodie + pleated skirt",
+                "• White tee + jeans + pastel cardigan",
+                "• Cute sweater + black leggings"
+            ],
+            makeup: [
+                "• Light blush + mascara",
+                "• Soft pink gloss",
+                "• Natural brows + dewy skin"
+            ],
+            accessories: [
+                "• Small hoops",
+                "• Pastel hair clips",
+                "• Minimal necklace"
+            ]
+        },
+
+        Date: {
+            hair: [
+                "• Soft curls",
+                "• Half-up bow hairstyle",
+                "• Sleek straight hair"
+            ],
+            outfit: [
+                "• Mini dress + cardigan",
+                "• Cute top + skirt",
+                "• Off-shoulder top + jeans"
+            ],
+            makeup: [
+                "• Soft glam: pink blush + glossy lips",
+                "• Winged eyeliner + nude lips",
+                "• Shimmery eyeshadow + mascara"
+            ],
+            accessories: [
+                "• Pearl earrings",
+                "• Dainty necklace",
+                "• Cute shoulder bag"
+            ]
+        },
+
+        Party: {
+            hair: [
+                "• High ponytail",
+                "• Loose waves",
+                "• Slick bun"
+            ],
+            outfit: [
+                "• Black mini dress",
+                "• Sparkly top + skirt",
+                "• Leather jacket + crop top"
+            ],
+            makeup: [
+                "• Smokey eye",
+                "• Glitter lids",
+                "• Bold lip"
+            ],
+            accessories: [
+                "• Statement earrings",
+                "• Mini bag",
+                "• Layered necklaces"
+            ]
+        }
+    };
+
     function showResults(type) {
         const location = document.getElementById("locationSelect").value;
         const resultsBox = document.getElementById("resultsBox");
-        const resultsText = document.getElementById("resultsText");
+        const resultsContent = document.getElementById("resultsContent");
 
         if (!location) {
-            resultsText.textContent = "Please choose where you're going first!";
-        } else {
-            resultsText.textContent = 
-                "Here are " + type + " for " + location.toLowerCase() + "! (Ideas will go here)";
+            resultsContent.innerHTML = "<p>Please choose where you're going first!</p>";
+            resultsBox.style.display = "block";
+            return;
         }
+
+        const category = {
+            hair: "Hairstyle Ideas",
+            outfit: "Outfit Ideas",
+            makeup: "Makeup Ideas",
+            accessories: "Accessories Ideas"
+        }[type];
+
+        const list = ideas[location]?.[type] || ["• No suggestions available yet"];
+
+        resultsContent.innerHTML = `
+            <div class="section-title">${category} for ${location}</div>
+            ${list.map(item => `<div class="bullet">${item}</div>`).join("")}
+        `;
 
         resultsBox.style.display = "block";
     }
