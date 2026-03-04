@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atelier Etternelle – Mirror Room</title>
+    <title>Atelier Etternelle – Mirror</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 
@@ -14,138 +14,54 @@
             width: 100vw;
             overflow: hidden;
             font-family: "Playfair Display", serif;
-        }
-
-        /* CITY BACKGROUND (GRADIENT VERSION) */
-        .city-paris     { background: linear-gradient(135deg, #f8c8d8, #f7e7c9); }
-        .city-london    { background: linear-gradient(135deg, #b0c4de, #708090); }
-        .city-dubai     { background: linear-gradient(135deg, #f7d9a6, #d4a762); }
-        .city-newyork   { background: linear-gradient(135deg, #1c1f26, #4a5568); }
-        .city-santorini { background: linear-gradient(135deg, #e3f2fd, #90caf9); }
-        .city-milan     { background: linear-gradient(135deg, #f3e5ab, #d4a762); }
-        .city-barcelona { background: linear-gradient(135deg, #ffcc80, #ff8a65); }
-        .city-tokyo     { background: linear-gradient(135deg, #8e24aa, #3949ab); }
-        .city-seoul     { background: linear-gradient(135deg, #b2ebf2, #f8bbd0); }
-        .city-moscow    { background: linear-gradient(135deg, #bbdefb, #ef9a9a); }
-        .city-munich    { background: linear-gradient(135deg, #a5d6a7, #81c784); }
-        .city-prague    { background: linear-gradient(135deg, #ffe0b2, #bcaaa4); }
-
-        .mirror-room {
-            position: relative;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .overlay {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
+            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
+        /* Quote */
         .motto {
             position: absolute;
-            top: 40px;
+            top: 30px;
             width: 100%;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
+            color: #000;
+            text-shadow: 0 0 10px rgba(255,255,255,0.6);
         }
 
-        .mirror-layout {
-            position: relative;
-            width: 80%;
-            max-width: 1100px;
+        /* Mirror wrapper */
+        .mirror-wrapper {
+            width: 75%;
+            max-width: 900px;
             height: 70%;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .side-column {
-            width: 20%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .side-buttons {
-            width: 100%;
-            height: 80%;
             position: relative;
         }
 
-        .service-button {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: #000;
-            border: 2px solid #d4a762;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        /* ⭐ FIX #1: MAKE LABELS WHITE */
-        .service-label {
-            position: absolute;
-            width: 140px;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            font-size: 0.8rem;
-            margin-top: 4px;
-            color: white;
-        }
-
-        .left-1 { top: 5%; }
-        .left-2 { top: 25%; }
-        .left-3 { top: 50%; }
-        .left-4 { top: 75%; }
-
-        .right-1 { top: 10%; }
-        .right-2 { top: 40%; }
-        .right-3 { top: 70%; }
-
-        /* ⭐ FIX #2: MAKE MIRROR WIDER (60% → 115%) */
-        .mirror-wrapper {
-            width: ,100%;
-            height: 115%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        /* Glowing mirror frame */
         .mirror-frame {
             width: 100%;
             height: 100%;
-            border-radius: 45px;
-            background: #000;
-            padding: 10px;
+            border-radius: 55px;
+            padding: 12px;
+            background: linear-gradient(135deg, #ffd9a6, #ffb6c1);
+            box-shadow: 
+                0 0 25px rgba(255, 182, 193, 0.8),
+                0 0 50px rgba(255, 182, 193, 0.6),
+                0 0 80px rgba(255, 182, 193, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .mirror-surface {
             width: 100%;
             height: 100%;
-            border-radius: 35px;
+            border-radius: 45px;
             overflow: hidden;
             background: radial-gradient(circle at top, #ffffff, #d7d7d7);
             display: flex;
@@ -160,138 +76,77 @@
         }
 
         .mirror-placeholder {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: rgba(0,0,0,0.6);
             text-align: center;
         }
 
-        .bottom-controls {
+        /* Down arrow */
+        .arrow {
             position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 18px;
+            bottom: 20px;
+            font-size: 2.5rem;
+            color: #000;
+            cursor: pointer;
+            animation: bounce 1.5s infinite;
         }
 
-        .control-button {
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            background: #000;
-            border: 2px solid #d4a762;
-            cursor: pointer;
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+            100% { transform: translateY(0); }
         }
     </style>
 </head>
 
 <body>
 
-<div id="mirrorRoom" class="mirror-room">
-    <div class="overlay"></div>
+<div id="motto" class="motto"></div>
 
-    <div class="content">
-        <div id="motto" class="motto"></div>
-
-        <div class="mirror-layout">
-
-            <!-- LEFT SIDE BUTTONS -->
-            <div class="side-column">
-                <div class="side-buttons">
-
-                    <div class="service-button left-1" onclick="window.location.href='colour.html'">
-                        <div class="service-label">Colour Analysis</div>
-                    </div>
-
-                    <div class="service-button left-2" onclick="window.location.href='style.html'">
-                        <div class="service-label">Style Helper</div>
-                    </div>
-
-                    <div class="service-button left-3" onclick="window.location.href='photo.html'">
-                        <div class="service-label">Photo Ideas</div>
-                    </div>
-
-                    <div class="service-button left-4" onclick="window.location.href='beauty.html'">
-                        <div class="service-label">Beauty Guide</div>
-                    </div>
-
-                </div>
+<div class="mirror-wrapper">
+    <div class="mirror-frame">
+        <div class="mirror-surface">
+            <video id="cameraFeed" class="mirror-video" autoplay playsinline style="display:none;"></video>
+            <div id="mirrorPlaceholder" class="mirror-placeholder">
+                Welcome to Atelier Etternelle.
             </div>
-
-            <!-- MIRROR -->
-            <div class="mirror-wrapper">
-                <div class="mirror-frame">
-                    <div class="mirror-surface">
-                        <video id="cameraFeed" class="mirror-video" autoplay playsinline style="display:none;"></video>
-                        <div id="mirrorPlaceholder" class="mirror-placeholder">
-                            Welcome to Atelier Etternelle.<br>Click any service.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BOTTOM CONTROLS -->
-                <div class="bottom-controls">
-                    <div class="control-button" onclick="window.location.href='filters.html'"></div>
-                    <div class="control-button" onclick="window.location.href='sparkle.html'"></div>
-                    <div class="control-button" onclick="window.location.href='capture.html'"></div>
-                    <div class="control-button" onclick="window.location.href='save.html'"></div>
-                    <div class="control-button" onclick="window.location.href='share.html'"></div>
-                </div>
-            </div>
-
-            <!-- RIGHT SIDE BUTTONS -->
-            <div class="side-column">
-                <div class="side-buttons">
-
-                    <div class="service-button right-1" onclick="window.location.href='habit.html'">
-                        <div class="service-label">Habit Tracker</div>
-                    </div>
-
-                    <div class="service-button right-2" onclick="window.location.href='workout.html'">
-                        <div class="service-label">Workout Box</div>
-                    </div>
-
-                    <div class="service-button right-3" onclick="window.location.href='music.html'">
-                        <div class="service-label">City Music</div>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
     </div>
+
+    <!-- Arrow to next page -->
+    <div class="arrow" onclick="window.location.href='menu.html'">⬇</div>
 </div>
 
 <script>
-    /* CITY BACKGROUND */
-    const room = document.getElementById("mirrorRoom");
-    const city = (localStorage.getItem("selectedCity") || "").toLowerCase().replace(" ", "");
-    room.classList.add("city-" + city);
-
-    /* MOTTO ROTATION */
+    /* Quote rotation */
     const mottos = [
-        "Glow like it’s golden hour in every city.",
+        "Glow like it’s golden hour.",
         "Elegance is a habit.",
         "You are the main character.",
         "Soft glam, strong energy."
     ];
     let i = 0;
-    setInterval(() => {
-        document.getElementById("motto").textContent = mottos[i];
-        i = (i + 1) % mottos.length;
-    }, 5000);
+    const mottoEl = document.getElementById("motto");
+    mottoEl.textContent = mottos[0];
 
-    /* CAMERA */
+    setInterval(() => {
+        i = (i + 1) % mottos.length;
+        mottoEl.textContent = mottos[i];
+    }, 10000);
+
+    /* Camera */
     const video = document.getElementById("cameraFeed");
     const placeholder = document.getElementById("mirrorPlaceholder");
 
-    navigator.mediaDevices?.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
             video.srcObject = stream;
             video.style.display = "block";
             placeholder.style.display = "none";
         })
-        .catch(() => {});
+        .catch(() => {
+            placeholder.textContent = "Camera unavailable.";
+        });
 </script>
 
 </body>
