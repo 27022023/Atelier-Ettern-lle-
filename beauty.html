@@ -18,42 +18,43 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
+            padding: 32px 0 40px;
         }
 
         .back-arrow {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            font-size: 2.2rem;
+            top: 18px;
+            left: 18px;
+            font-size: 2.1rem;
             cursor: pointer;
             color: #f5d487;
             text-shadow: 0 0 10px rgba(247,231,201,0.6);
+            z-index: 10;
         }
 
         h1 {
-            font-size: 2.2rem;
-            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-bottom: 18px;
             color: #f5d487;
             text-shadow: 0 0 12px rgba(247,231,201,0.6);
         }
 
         .form-container {
-            width: 85%;
-            max-width: 650px;
+            width: 90%;
+            max-width: 700px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 10px;
+            margin-bottom: 18px;
         }
 
         .input-field {
             background: black;
             border: 2px solid #f7e7c9;
-            border-radius: 14px;
-            padding: 10px 12px;
+            border-radius: 18px;
+            padding: 8px 12px;
             color: #f7e7c9;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .input-field select {
@@ -61,7 +62,7 @@
             background: transparent;
             border: none;
             color: #f7e7c9;
-            font-size: 1.1rem;
+            font-size: 1rem;
             outline: none;
         }
 
@@ -69,16 +70,16 @@
             background: black;
             border: 2px solid #f7e7c9;
             border-radius: 18px;
-            padding: 16px;
+            padding: 10px 12px;
             text-align: center;
             color: #f7e7c9;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: 0.2s ease;
         }
 
         .upload-box:hover {
-            box-shadow: 0 0 20px rgba(247,231,201,0.6);
+            box-shadow: 0 0 18px rgba(247,231,201,0.6);
             transform: scale(1.02);
         }
 
@@ -87,17 +88,18 @@
         }
 
         .analyze-btn {
-            margin-top: 10px;
+            margin-top: 6px;
             background: #f5d487;
             color: black;
-            padding: 14px 20px;
-            border-radius: 14px;
-            font-size: 1.2rem;
+            padding: 10px 16px;
+            border-radius: 16px;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
             border: none;
             transition: 0.2s ease;
             box-shadow: 0 0 10px rgba(247,231,201,0.6);
+            align-self: center;
         }
 
         .analyze-btn:hover {
@@ -106,39 +108,40 @@
         }
 
         .results {
-            margin-top: 30px;
-            width: 90%;
-            max-width: 900px;
+            margin-top: 22px;
+            width: 94%;
+            max-width: 1100px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 18px;
+            gap: 14px;
         }
 
         .result-card {
             background: black;
             border: 2px solid #f7e7c9;
             border-radius: 18px;
-            padding: 16px;
+            padding: 12px 14px;
             color: #f7e7c9;
+            font-size: 0.95rem;
         }
 
         .result-card h2 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
             color: #f5d487;
         }
 
         .section-title {
-            font-size: 1.1rem;
-            margin-top: 10px;
-            margin-bottom: 4px;
+            font-size: 1rem;
+            margin-top: 8px;
+            margin-bottom: 3px;
             color: #f7e7c9;
         }
 
         .bullet {
-            margin-left: 15px;
-            margin-bottom: 4px;
-            font-size: 0.98rem;
+            margin-left: 14px;
+            margin-bottom: 3px;
+            font-size: 0.9rem;
         }
 
         .tag-row {
@@ -151,8 +154,8 @@
         .tag {
             border-radius: 999px;
             border: 1px solid #f7e7c9;
-            padding: 3px 10px;
-            font-size: 0.85rem;
+            padding: 3px 9px;
+            font-size: 0.8rem;
             opacity: 0.9;
         }
     </style>
@@ -253,7 +256,7 @@
         <button class="analyze-btn" onclick="showResults()">Show my beauty profile</button>
     </div>
 
-    <div id="resultsWrapper" class="results" style="display:none;">
+    <div id="resultsWrapper" class="results">
         <div class="result-card" id="makeupCard"></div>
         <div class="result-card" id="colorsCard"></div>
         <div class="result-card" id="hairCard"></div>
@@ -273,9 +276,8 @@
         const faceShape = document.getElementById("faceShape").value;
         const aesthetic = document.getElementById("aesthetic").value;
 
-        document.getElementById("resultsWrapper").style.display = "grid";
+        // --- MAKEUP ---
 
-        // Makeup suggestions
         const makeupBase = {
             Fair: ["Light coverage foundation", "Soft pink blush", "Rose or nude lips"],
             Light: ["Natural finish foundation", "Peach blush", "Peachy nude lips"],
@@ -285,9 +287,9 @@
         };
 
         const undertoneEyeshadow = {
-            Cool: ["Taupe, mauve, soft plum, cool browns"],
-            Neutral: ["Champagne, rose gold, neutral browns"],
-            Warm: ["Bronze, gold, copper, warm browns"]
+            Cool: ["Taupe", "Mauve", "Soft plum", "Cool browns"],
+            Neutral: ["Champagne", "Rose gold", "Neutral browns"],
+            Warm: ["Bronze", "Gold", "Copper", "Warm browns"]
         };
 
         const eyelinerShape = {
@@ -317,19 +319,23 @@
         };
 
         const makeupCard = document.getElementById("makeupCard");
+        const baseList = makeupBase[skinTone] || ["Choose a skin tone for base recommendations."];
+        const eyeshadowList = undertoneEyeshadow[undertone] || ["Choose an undertone for eyeshadow guidance."];
+
         makeupCard.innerHTML = `
             <h2>Makeup</h2>
             <div class="section-title">Base & Cheeks</div>
-            ${(makeupBase[skinTone] || ["Choose a skin tone"]).map(m => `<div class="bullet">• ${m}</div>`).join("")}
+            ${baseList.map(m => `<div class="bullet">• ${m}</div>`).join("")}
             <div class="section-title">Eyeshadow & Liner</div>
-            <div class="bullet">• Eyeshadow: ${(undertoneEyeshadow[undertone] || ["Choose an undertone"]).join(", ")}</div>
+            <div class="bullet">• Eyeshadow: ${Array.isArray(eyeshadowList) ? eyeshadowList.join(", ") : eyeshadowList}</div>
             <div class="bullet">• Eyeliner shape: ${eyelinerShape[faceShape] || "Soft, thin line close to lashes"}</div>
             <div class="section-title">Lashes & Brows</div>
             <div class="bullet">• Mascara: ${mascaraStyle[eyeColor] || "Length + volume, focus on outer lashes"}</div>
             <div class="bullet">• Brow shape: ${browShape[faceShape] || "Soft, natural arch following your brow bone"}</div>
         `;
 
-        // Clothing colors
+        // --- CLOTHING COLORS ---
+
         const hairColorsClothes = {
             Blonde: ["Lavender", "Soft blue", "White", "Pastel pink", "Light grey"],
             Brown: ["Lilac", "Emerald", "Cream", "Warm neutrals", "Chocolate brown"],
@@ -347,15 +353,18 @@
         };
 
         const colorsCard = document.getElementById("colorsCard");
+        const clothesList = hairColorsClothes[hairColor] || ["Choose a hair color for clothing suggestions."];
+
         colorsCard.innerHTML = `
             <h2>Clothing Colors</h2>
             <div class="section-title">Best Colors</div>
-            ${(hairColorsClothes[hairColor] || ["Choose a hair color"]).map(c => `<div class="bullet">• ${c}</div>`).join("")}
+            ${clothesList.map(c => `<div class="bullet">• ${c}</div>`).join("")}
             <div class="section-title">Seasonal Palette</div>
             <div class="bullet">• ${seasonalPalette[skinTone] || "Select your skin tone for seasonal guidance."}</div>
         `;
 
-        // Hair suggestions
+        // --- HAIR ---
+
         const hairByFace = {
             Oval: ["Almost any style works", "Soft layers", "Curtain bangs"],
             Round: ["Long layers", "Face-framing pieces", "Volume at crown, not sides"],
@@ -374,19 +383,22 @@
         };
 
         const hairCard = document.getElementById("hairCard");
+        const hairFaceList = hairByFace[faceShape] || ["Choose a face shape for haircut suggestions."];
+
         hairCard.innerHTML = `
             <h2>Hair</h2>
             <div class="section-title">Cuts & Shapes</div>
-            ${(hairByFace[faceShape] || ["Choose a face shape"]).map(h => `<div class="bullet">• ${h}</div>`).join("")}
+            ${hairFaceList.map(h => `<div class="bullet">• ${h}</div>`).join("")}
             <div class="section-title">Color & Texture Tips</div>
             <div class="bullet">• ${hairTextureTips[hairColor] || "Select your hair color for styling tips."}</div>
         `;
 
-        // Jewelry
+        // --- JEWELRY & ACCESSORIES ---
+
         const jewelryByUndertone = {
             Cool: ["Silver", "White gold", "Platinum"],
-            Neutral: ["Rose gold", "Silver", "Gold (soft tones)"],
-            Warm: ["Gold", "Bronze", "Rose gold (warm)"]
+            Neutral: ["Rose gold", "Silver", "Soft gold"],
+            Warm: ["Gold", "Bronze", "Warm rose gold"]
         };
 
         const jewelryBySkinTone = {
@@ -398,15 +410,19 @@
         };
 
         const jewelryCard = document.getElementById("jewelryCard");
+        const metalList = jewelryByUndertone[undertone] || ["Choose an undertone for metal suggestions."];
+        const styleList = jewelryBySkinTone[skinTone] || ["Select your skin tone for jewelry style ideas."];
+
         jewelryCard.innerHTML = `
             <h2>Jewelry & Accessories</h2>
             <div class="section-title">Best Metals</div>
-            ${(jewelryByUndertone[undertone] || ["Choose an undertone"]).map(j => `<div class="bullet">• ${j}</div>`).join("")}
+            ${metalList.map(j => `<div class="bullet">• ${j}</div>`).join("")}
             <div class="section-title">Style & Scale</div>
-            ${(jewelryBySkinTone[skinTone] || ["Select your skin tone"]).map(j => `<div class="bullet">• ${j}</div>`).join("")}
+            ${styleList.map(j => `<div class="bullet">• ${j}</div>`).join("")}
         `;
 
-        // Skincare
+        // --- SKINCARE ---
+
         const skincareByType = {
             Dry: {
                 am: ["Gentle hydrating cleanser", "Hydrating toner or essence", "Rich moisturizer", "SPF 30+ cream"],
@@ -437,17 +453,23 @@
 
         const skincareCard = document.getElementById("skincareCard");
         const routine = skincareByType[skinType];
+
+        const amList = routine ? routine.am : ["Select your skin type for a morning routine."];
+        const pmList = routine ? routine.pm : ["Select your skin type for a night routine."];
+        const weeklyList = routine ? routine.weekly : ["Select your skin type for weekly care tips."];
+
         skincareCard.innerHTML = `
             <h2>Skincare</h2>
             <div class="section-title">Morning</div>
-            ${(routine ? routine.am : ["Select your skin type"]).map(s => `<div class="bullet">• ${s}</div>`).join("")}
+            ${amList.map(s => `<div class="bullet">• ${s}</div>`).join("")}
             <div class="section-title">Night</div>
-            ${(routine ? routine.pm : ["Select your skin type"]).map(s => `<div class="bullet">• ${s}</div>`).join("")}
+            ${pmList.map(s => `<div class="bullet">• ${s}</div>`).join("")}
             <div class="section-title">Weekly</div>
-            ${(routine ? routine.weekly : ["Select your skin type"]).map(s => `<div class="bullet">• ${s}</div>`).join("")}
+            ${weeklyList.map(s => `<div class="bullet">• ${s}</div>`).join("")}
         `;
 
-        // Aesthetic profile
+        // --- AESTHETIC PROFILES ---
+
         const aestheticProfiles = {
             "Clean girl": {
                 makeup: ["Glowy skin", "Fluffy brows", "Brown mascara", "Clear or nude gloss"],
@@ -484,15 +506,4 @@
                 nails: ["Chrome", "Glitter", "Long coffin"],
                 accessories: ["Statement earrings", "Clutch bags", "Rhinestones"]
             },
-            "Minimalist": {
-                makeup: ["Barely-there base", "Tinted balm", "Clear mascara"],
-                hair: ["Straight hair", "Simple bun", "Low pony"],
-                outfit: ["Monochrome fits", "Simple lines", "High-quality basics"],
-                nails: ["Clear", "Sheer nude", "Short and neat"],
-                accessories: ["Tiny studs", "Thin rings", "Simple watch"]
-            },
-            "Y2K": {
-                makeup: ["Glossy lips", "Shimmer lids", "Thin liner"],
-                hair: ["Space buns", "Butterfly clips", "High pony"],
-                outfit: ["Low-rise jeans", "Baby tees", "Mini skirts"],
-          
+            "Mi        
