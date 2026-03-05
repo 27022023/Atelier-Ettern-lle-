@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Beauty Try‑On</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    body{
+      min-height:100vh;
+      width:100vw;
+      background:linear-gradient(135deg,#f8c8d8,#f7e7c9);
+      font-family:"Playfair Display",serif;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:40px 16px 32px;
+      color:#1b1410;
+    }
+
+    .back-arrow{
+      position:fixed;
+      top:20px;
+      left:20px;
+      font-size:2.2rem;
+      cursor:pointer;
+      color:#000;
+      text-shadow:0 0 10px rgba(255,255,255,0.7);
+      z-index:10;
+    }
+
+    h1{
+      font-size:2rem;
+      margin-bottom:6px;
+      text-shadow:0 0 10px rgba(255,255,255,0.6);
+      text-align:center;
+    }
+
+    .subtitle{
+      font-size:.9rem;
+      opacity:.8;
+      margin-bottom:20px;
+      text-align:center;
+    }
+
+    .wrapper{
+      width:100%;
+      max-width:900px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+    }
+
+    /* mirror */
+    .mirror-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-bottom:10px;
+    }
+
+    .mirror{
+      position:relative;
+      width:280px;
+      height:280px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 20%,#fff7e0,#f5d487,#f4c76c,#f7e7c9);
+      padding:10px;
+      box-shadow:0 0 25px rgba(0,0,0,0.25),0 0 35px rgba(247,231,201,0.9);
+    }
+
+    .mirror-inner{
+      position:relative;
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      overflow:hidden;
+      background:#000;
+    }
+
+    video,canvas{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    /* tabs */
+    .tabs{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      margin-top:8px;
+      margin-bottom:6px;
+      flex-wrap:wrap;
+    }
+
+    .tab{
+      padding:8px 14px;
+      border-radius:999px;
+      border:none;
+      cursor:pointer;
+      font-size:.9rem;
+      background:rgba(255,255,255,0.8);
+      box-shadow:0 0 10px rgba(255,255,255,0.9);
+      transition:.2s;
+    }
+
+    .tab.active{
+      background:linear-gradient(135deg,#f5d487,#f4c76c);
+      color:#000;
+    }
+
+    .tab:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 16px rgba(255,255,255,1);
+    }
+
+    /* controls */
+    .panel{
+      width:100%;
+      max-width:600px;
+      background:rgba(255,255,255,0.8);
+      border-radius:18px;
+      padding:14px 16px;
+      box-shadow:0 0 18px rgba(255,255,255,0.9);
+      border:1px solid rgba(255,255,255,0.9);
+    }
+
+    .panel-title{
+      font-size:1.1rem;
+      margin-bottom:6px;
+    }
+
+    .panel-sub{
+      font-size:.85rem;
+      opacity:.8;
+      margin-bottom:10px;
+    }
+
+    .swatches{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .swatch{
+      width:32px;
+      height:32px;
+      border-radius:50%;
+      border:2px solid rgba(255,255,255,0.9);
+      box-shadow:0 0 10px rgba(0,0,0,0.15);
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .swatch:hover{
+      transform:scale(1.08);
+    }
+
+    .styles-grid{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .style-pill{
+      padding:8px 12px;
+      border-radius:999px;
+      background:#000;
+      color:#f7e7c9;
+      font-size:.85rem;
+      cursor:pointer;
+      border:1px solid #f7e7c9;
+      box-shadow:0 0 10px rgba(0,0,0,0.3);
+      transition:.2s;
+    }
+
+    .style-pill:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 16px rgba(0,0,0,0.4);
+    }
+
+    .style-pill.active{
+      background:#f5d487;
+      color:#000;
+      border-color:#f5d487;
+    }
+
+    .note{
+      font-size:.8rem;
+      opacity:.7;
+      margin-top:8px;
+    }
+
+    @media(max-width:480px){
+      .mirror{width:230px;height:230px;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
+  <h1>Live Beauty Try‑On</h1>
+  <div class="subtitle">Try hair colors, haircuts, and makeup live in your golden mirror.</div>
+
+  <div class="wrapper">
+
+    <div class="mirror-wrap">
+      <div class="mirror">
+        <div class="mirror-inner">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="overlay"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="haircolor">Hair Color</button>
+      <button class="tab" data-tab="haircut">Haircut</button>
+      <button class="tab" data-tab="makeup">Makeup</button>
+    </div>
+
+    <!-- Hair color panel -->
+    <div class="panel" id="panel-haircolor">
+      <div class="panel-title">Hair Color</div>
+      <div class="panel-sub">Tap a color bubble to tint your hair area in the mirror.</div>
+      <div class="swatches">
+        <div class="swatch" data-color="rgba(230,200,140,0.45)" style="background:#e6c88c;"></div>
+        <div class="swatch" data-color="rgba(90,60,40,0.55)" style="background:#5a3c28;"></div>
+        <div class="swatch" data-color="rgba(40,20,10,0.6)" style="background:#28140a;"></div>
+        <div class="swatch" data-color="rgba(180,70,60,0.5)" style="background:#b4463c;"></div>
+        <div class="swatch" data-color="rgba(220,120,160,0.45)" style="background:#dc78a0;"></div>
+        <div class="swatch" data-color="rgba(170,130,220,0.45)" style="background:#aa82dc;"></div>
+        <div class="swatch" data-color="rgba(210,160,110,0.5)" style="background:#d2a06e;"></div>
+        <div class="swatch" data-color="rgba(255,255,255,0.35)" style="background:#f5f5f5;"></div>
+      </div>
+      <div class="note">This is a soft tint overlay over the top of the mirror, not full AI segmentation.</div>
+    </div>
+
+    <!-- Haircut panel -->
+    <div class="panel" id="panel-haircut" style="display:none;">
+      <div class="panel-title">Haircut Styles</div>
+      <div class="panel-sub">Pick a haircut overlay to see a rough preview in the mirror.</div>
+      <div class="styles-grid" id="haircutStyles">
+        <div class="style-pill" data-haircut="curtain">Curtain Bangs</div>
+        <div class="style-pill" data-haircut="bob">Soft Bob</div>
+        <div class="style-pill" data-haircut="wolf">Wolf Cut</div>
+        <div class="style-pill" data-haircut="pixie">Pixie</div>
+        <div class="style-pill" data-haircut="longlayers">Long Layers</div>
+        <div class="style-pill" data-haircut="curls">Big Curls</div>
+      </div>
+      <div class="note">These are stylized overlays, not exact haircut simulations.</div>
+    </div>
+
+    <!-- Makeup panel -->
+    <div class="panel" id="panel-makeup" style="display:none;">
+      <div class="panel-title">Makeup Looks</div>
+      <div class="panel-sub">Choose a preset to add soft makeup tints over your face.</div>
+      <div class="styles-grid" id="makeupStyles">
+        <div class="style-pill" data-makeup="clean">Clean Glow</div>
+        <div class="style-pill" data-makeup="softglam">Soft Glam</div>
+        <div class="style-pill" data-makeup="fairy">Fairy Shimmer</div>
+        <div class="style-pill" data-makeup="bold">Bold Night</div>
+      </div>
+      <div class="note">This demo uses soft color overlays, not full landmark‑based makeup yet.</div>
+    </div>
+
+  </div>
+
+  <script>
+    const video = document.getElementById("video");
+    const canvas = document.getElementById("overlay");
+    const ctx = canvas.getContext("2d");
+
+    let activeHairTint = null;
+    let activeHaircut = null;
+    let activeMakeup = null;
+    let activeTab = "haircolor";
+
+    // camera
+    async function startCamera(){
+      try{
+        const stream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+        video.srcObject = stream;
+        video.onloadedmetadata = () => {
+          resizeCanvas();
+          requestAnimationFrame(drawLoop);
+        };
+      }catch(e){
+        console.error(e);
+      }
+    }
+
+    function resizeCanvas(){
+      const rect = video.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.setTransform(window.devicePixelRatio,0,0,window.devicePixelRatio,0,0);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+
+    function clearCanvas(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+
+    function drawLoop(){
+      clearCanvas();
+
+      // hair tint overlay
+      if(activeHairTint && activeTab === "haircolor"){
+        ctx.fillStyle = activeHairTint;
+        ctx.fillRect(0,0,canvas.width,canvas.height*0.6);
+      }
+
+      // haircut overlay (simple top band)
+      if(activeHaircut && activeTab === "haircut"){
+        ctx.fillStyle = "rgba(0,0,0,0.45)";
+        if(activeHaircut === "curtain"){
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.18, canvas.width*0.45, canvas.height*0.22, 0, 0, Math.PI*2);
+          ctx.fill();
+        }else if(activeHaircut === "bob"){
+          ctx.beginPath();
+          ctx.roundRect(canvas.width*0.15, canvas.height*0.05, canvas.width*0.7, canvas.height*0.45, 40);
+          ctx.fill();
+        }else if(activeHaircut === "wolf"){
+          ctx.beginPath();
+          ctx.moveTo(canvas.width*0.1, canvas.height*0.05);
+          ctx.lineTo(canvas.width*0.9, canvas.height*0.05);
+          ctx.lineTo(canvas.width*0.8, canvas.height*0.55);
+          ctx.lineTo(canvas.width*0.2, canvas.height*0.55);
+          ctx.closePath();
+          ctx.fill();
+        }else if(activeHaircut === "pixie"){
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.12, canvas.width*0.4, canvas.height*0.18, 0, 0, Math.PI*2);
+          ctx.fill();
+        }else if(activeHaircut === "longlayers"){
+          ctx.beginPath();
+          ctx.roundRect(canvas.width*0.18, canvas.height*0.02, canvas.width*0.64, canvas.height*0.7, 60);
+          ctx.fill();
+        }else if(activeHaircut === "curls"){
+          ctx.fillStyle = "rgba(0,0,0,0.5)";
+          for(let i=0;i<7;i++){
+            ctx.beginPath();
+            ctx.arc(canvas.width*(0.15+i*0.12), canvas.height*0.18, canvas.height*0.12, 0, Math.PI*2);
+            ctx.fill();
+          }
+        }
+      }
+
+      // makeup overlay (soft tints)
+      if(activeMakeup && activeTab === "makeup"){
+        if(activeMakeup === "clean"){
+          ctx.fillStyle = "rgba(255,220,200,0.25)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.6, canvas.width*0.35, canvas.height*0.22, 0, 0, Math.PI*2);
+          ctx.fill();
+        }else if(activeMakeup === "softglam"){
+          ctx.fillStyle = "rgba(255,180,170,0.35)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.65, canvas.width*0.32, canvas.height*0.18, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.fillStyle = "rgba(200,120,150,0.35)";
+          ctx.fillRect(canvas.width*0.25, canvas.height*0.35, canvas.width*0.5, canvas.height*0.08);
+        }else if(activeMakeup === "fairy"){
+          ctx.fillStyle = "rgba(200,160,255,0.35)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width*0.35, canvas.height*0.38, canvas.width*0.18, canvas.height*0.09, 0, 0, Math.PI*2);
+          ctx.ellipse(canvas.width*0.65, canvas.height*0.38, canvas.width*0.18, canvas.height*0.09, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.fillStyle = "rgba(255,190,220,0.35)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.68, canvas.width*0.3, canvas.height*0.16, 0, 0, Math.PI*2);
+          ctx.fill();
+        }else if(activeMakeup === "bold"){
+          ctx.fillStyle = "rgba(160,40,60,0.5)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.7, canvas.width*0.28, canvas.height*0.12, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.fillStyle = "rgba(40,20,60,0.5)";
+          ctx.fillRect(canvas.width*0.22, canvas.height*0.34, canvas.width*0.56, canvas.height*0.09);
+        }
+      }
+
+      requestAnimationFrame(drawLoop);
+    }
+
+    // tabs
+    const tabs = document.querySelectorAll(".tab");
+    const panels = {
+      haircolor: document.getElementById("panel-haircolor"),
+      haircut: document.getElementById("panel-haircut"),
+      makeup: document.getElementById("panel-makeup")
+    };
+
+    tabs.forEach(tab=>{
+      tab.addEventListener("click",()=>{
+        tabs.forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+        activeTab = tab.dataset.tab;
+        Object.keys(panels).forEach(k=>{
+          panels[k].style.display = (k===activeTab)?"block":"none";
+        });
+      });
+    });
+
+    // hair color swatches
+    document.querySelectorAll(".swatch").forEach(s=>{
+      s.addEventListener("click",()=>{
+        activeHairTint = s.dataset.color;
+      });
+    });
+
+    // haircut styles
+    const haircutButtons = document.querySelectorAll("[data-haircut]");
+    haircutButtons.forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        haircutButtons.forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        activeHaircut = btn.dataset.haircut;
+      });
+    });
+
+    // makeup styles
+    const makeupButtons = document.querySelectorAll("[data-makeup]");
+    makeupButtons.forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        makeupButtons.forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        activeMakeup = btn.dataset.makeup;
+      });
+    });
+
+    startCamera();
+  </script>
+</body>
+</html>
