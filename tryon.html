@@ -317,132 +317,149 @@
     function drawLoop(){
       clearCanvas();
 
-      // HAIR TINT: big band at the top so it's super visible
-      if(activeHairTint && activeTab === "haircolor"){
-        ctx.fillStyle = activeHairTint;
-        ctx.beginPath();
-        ctx.ellipse(canvas.width/2, canvas.height*0.18, canvas.width*0.55, canvas.height*0.35, 0, 0, Math.PI*2);
-        ctx.fill();
-      }
+      // ===== REALISTIC AI OVERLAYS =====
 
-      // HAIRCUT: bold shapes
-      if(activeHaircut && activeTab === "haircut" && activeHaircut !== "none"){
-        ctx.fillStyle = "rgba(0,0,0,0.65)";
-        if(activeHaircut === "curtain"){
-          ctx.beginPath();
-          ctx.ellipse(canvas.width/2, canvas.height*0.2, canvas.width*0.6, canvas.height*0.35, 0, 0, Math.PI*2);
-          ctx.fill();
-        }else if(activeHaircut === "bob"){
-          ctx.beginPath();
-          ctx.roundRect(canvas.width*0.12, canvas.height*0.05, canvas.width*0.76, canvas.height*0.55, 60);
-          ctx.fill();
-        }else if(activeHaircut === "wolf"){
-          ctx.beginPath();
-          ctx.moveTo(canvas.width*0.1, canvas.height*0.05);
-          ctx.lineTo(canvas.width*0.9, canvas.height*0.05);
-          ctx.lineTo(canvas.width*0.8, canvas.height*0.65);
-          ctx.lineTo(canvas.width*0.2, canvas.height*0.65);
-          ctx.closePath();
-          ctx.fill();
-        }else if(activeHaircut === "pixie"){
-          ctx.beginPath();
-          ctx.ellipse(canvas.width/2, canvas.height*0.16, canvas.width*0.5, canvas.height*0.28, 0, 0, Math.PI*2);
-          ctx.fill();
-        }else if(activeHaircut === "longlayers"){
-          ctx.beginPath();
-          ctx.roundRect(canvas.width*0.18, canvas.height*0.02, canvas.width*0.64, canvas.height*0.8, 70);
-          ctx.fill();
-        }else if(activeHaircut === "curls"){
-          for(let i=0;i<7;i++){
-            ctx.beginPath();
-            ctx.arc(canvas.width*(0.15+i*0.12), canvas.height*0.22, canvas.height*0.14, 0, Math.PI*2);
-            ctx.fill();
-          }
-        }
-      }
+// Make sure we have landmarks
+if (!lastLandmarks) {
+  requestAnimationFrame(drawLoop);
+  return;
+}
 
-      // MAKEUP: strong tints so you can see them clearly
-      if(activeMakeup && activeTab === "makeup" && activeMakeup !== "none"){
-        if(activeMakeup === "clean"){
-          ctx.fillStyle = "rgba(255,220,200,0.4)";
-          ctx.beginPath();
-          ctx.ellipse(canvas.width/2, canvas.height*0.6, canvas.width*0.45, canvas.height*0.3, 0, 0, Math.PI*2);
-          ctx.fill();
-        }else if(activeMakeup === "softglam"){
-          ctx.fillStyle = "rgba(255,180,170,0.5)";
-          ctx.beginPath();
-          ctx.ellipse(canvas.width/2, canvas.height*0.68, canvas.width*0.4, canvas.height*0.22, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.fillStyle = "rgba(200,120,150,0.5)";
-          ctx.fillRect(canvas.width*0.22, canvas.height*0.38, canvas.width*0.56, canvas.height*0.12);
-        }else if(activeMakeup === "fairy"){
-          ctx.fillStyle = "rgba(200,160,255,0.5)";
-          ctx.beginPath();
-          ctx.ellipse(canvas.width*0.35, canvas.height*0.4, canvas.width*0.22, canvas.height*0.12, 0, 0, Math.PI*2);
-          ctx.ellipse(canvas.width*0.65, canvas.height*0.4, canvas.width*0.22, canvas.height*0.12, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.fillStyle = "rgba(255,190,220,0.5)";
-          ctx.beginPath();
-          ctx.ellipse(canvas.width/2, canvas.height*0.7, canvas.width*0.36, canvas.height*0.2, 0, 0, Math.PI*2);
-          ctx.fill();
-        }else if(activeMakeup === "bold"){
-          ctx.fillStyle = "rgba(160,40,60,0.7)";
-          ctx.beginPath();
-          ctx.ellipse(canvas.width/2, canvas.height*0.72, canvas.width*0.34, canvas.height*0.16, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.fillStyle = "rgba(40,20,60,0.6)";
-          ctx.fillRect(canvas.width*0.22, canvas.height*0.38, canvas.width*0.56, canvas.height*0.12);
-        }
-      }
+const lm = lastLandmarks;
+const p = i => ({
+  x: lm[i].x * canvas.width,
+  y: lm[i].y * canvas.height
+});
 
-      requestAnimationFrame(drawLoop);
+// -------------------------
+// HAIR TINT (realistic)
+// -------------------------
+if (activeHairTint && activeTab === "haircolor") {
+  ctx.globalCompositeOperation = "soft-light";
+  ctx.fillStyle = activeHairTint;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.globalCompositeOperation = "source-over";
+}
+
+// -------------------------
+// HAIRCUT (aligned to head)
+// -------------------------
+if (activeHaircut && activeTab === "haircut" && activeHaircut !== "none") {
+
+  const headTop = p(10);
+  const headLeft = p(234);
+  const headRight = p(454);
+  const headBottom = p(152);
+
+  const cx = (headLeft.x + headRight.x) / 2;
+  const cy = headTop.y - (headBottom.y - headTop.y) * 0.25;
+
+  ctx.fillStyle = "rgba(0,0,0,0.55)";
+
+  if (activeHaircut === "curtain") {
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, (headRight.x - headLeft.x) * 0.7, (headBottom.y - headTop.y) * 0.6, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  if (activeHaircut === "bob") {
+    ctx.beginPath();
+    ctx.roundRect(
+      headLeft.x - 40,
+      headTop.y - 20,
+      (headRight.x - headLeft.x) + 80,
+      (headBottom.y - headTop.y) * 0.9,
+      40
+    );
+    ctx.fill();
+  }
+
+  if (activeHaircut === "wolf") {
+    ctx.beginPath();
+    ctx.moveTo(headLeft.x - 30, headTop.y - 20);
+    ctx.lineTo(headRight.x + 30, headTop.y - 20);
+    ctx.lineTo(headRight.x + 20, headBottom.y + 40);
+    ctx.lineTo(headLeft.x - 20, headBottom.y + 40);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  if (activeHaircut === "pixie") {
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, (headRight.x - headLeft.x) * 0.55, (headBottom.y - headTop.y) * 0.45, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  if (activeHaircut === "curls") {
+    const radius = (headBottom.y - headTop.y) * 0.18;
+    for (let i = 0; i < 7; i++) {
+      const x = headLeft.x + (i / 6) * (headRight.x - headLeft.x);
+      ctx.beginPath();
+      ctx.arc(x, cy + 20, radius, 0, Math.PI * 2);
+      ctx.fill();
     }
+  }
+}
 
-    // tabs
-    const tabs = document.querySelectorAll(".tab");
-    const panels = {
-      haircolor: document.getElementById("panel-haircolor"),
-      haircut: document.getElementById("panel-haircut"),
-      makeup: document.getElementById("panel-makeup")
-    };
+// -------------------------
+// MAKEUP (realistic)
+// -------------------------
+if (activeMakeup && activeTab === "makeup" && activeMakeup !== "none") {
 
-    tabs.forEach(tab=>{
-      tab.addEventListener("click",()=>{
-        tabs.forEach(t=>t.classList.remove("active"));
-        tab.classList.add("active");
-        activeTab = tab.dataset.tab;
-        Object.keys(panels).forEach(k=>{
-          panels[k].style.display = (k===activeTab)?"block":"none";
-        });
-      });
-    });
+  ctx.globalCompositeOperation = "soft-light";
 
-    // hair color swatches
-    document.querySelectorAll(".swatch").forEach(s=>{
-      s.addEventListener("click",()=>{
-        activeHairTint = s.dataset.color;
-      });
-    });
+  // Lips (real shape)
+  const lipIdx = [61,146,91,181,84,17,314,405,321,375,291,308];
+  const lips = lipIdx.map(p);
 
-    // haircut styles
-    const haircutButtons = document.querySelectorAll("[data-haircut]");
-    haircutButtons.forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        haircutButtons.forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        activeHaircut = btn.dataset.haircut;
-      });
-    });
+  if (activeMakeup === "clean") {
+    drawPolygon(lips, "rgba(255,180,180,1)", 0.45);
+  }
 
-    // makeup styles
-    const makeupButtons = document.querySelectorAll("[data-makeup]");
-    makeupButtons.forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        makeupButtons.forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        activeMakeup = btn.dataset.makeup;
-      });
-    });
+  if (activeMakeup === "softglam") {
+    drawPolygon(lips, "rgba(200,80,120,1)", 0.55);
+  }
+
+  if (activeMakeup === "fairy") {
+    drawPolygon(lips, "rgba(255,190,230,1)", 0.6);
+  }
+
+  if (activeMakeup === "bold") {
+    drawPolygon(lips, "rgba(160,40,60,1)", 0.75);
+  }
+
+  // Eyeshadow (real eyelids)
+  const leftLid = [159,145,153,154,155].map(p);
+  const rightLid = [386,374,380,381,382].map(p);
+
+  if (activeMakeup === "softglam") {
+    drawPolygon(leftLid, "rgba(200,120,150,0.45)", 1);
+    drawPolygon(rightLid, "rgba(200,120,150,0.45)", 1);
+  }
+
+  if (activeMakeup === "fairy") {
+    drawPolygon(leftLid, "rgba(210,160,255,0.45)", 1);
+    drawPolygon(rightLid, "rgba(210,160,255,0.45)", 1);
+  }
+
+  if (activeMakeup === "bold") {
+    drawPolygon(leftLid, "rgba(40,20,60,0.55)", 1);
+    drawPolygon(rightLid, "rgba(40,20,60,0.55)", 1);
+  }
+
+  // Blush (real cheekbones)
+  const leftCheek = [234,93,132,58].map(p);
+  const rightCheek = [454,323,361,288].map(p);
+
+  if (activeMakeup !== "bold") {
+    drawPolygon(leftCheek, "rgba(255,170,170,0.35)", 1);
+    drawPolygon(rightCheek, "rgba(255,170,170,0.35)", 1);
+  }
+
+  ctx.globalCompositeOperation = "source-over";
+}
+
+requestAnimationFrame(drawLoop);
 
     startCamera();
   </script>
