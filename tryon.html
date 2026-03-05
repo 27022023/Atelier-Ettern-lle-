@@ -2,270 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AI Live Beauty Try‑On</title>
+  <title>AI Mirror</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-
     body{
-      min-height:100vh;
-      width:100vw;
-      background:linear-gradient(135deg,#f8c8d8,#f7e7c9);
-      font-family:"Playfair Display",serif;
+      margin:0;
+      background:#f7e7c9;
+      font-family:Arial, sans-serif;
       display:flex;
       flex-direction:column;
       align-items:center;
-      padding:40px 16px 32px;
-      color:#1b1410;
-    }
-
-    .back-arrow{
-      position:fixed;
-      top:20px;
-      left:20px;
-      font-size:2.2rem;
-      cursor:pointer;
-      color:#000;
-      text-shadow:0 0 10px rgba(255,255,255,0.7);
-      z-index:10;
-    }
-
-    h1{
-      font-size:2rem;
-      margin-bottom:6px;
-      text-shadow:0 0 10px rgba(255,255,255,0.6);
-      text-align:center;
-    }
-
-    .subtitle{
-      font-size:.9rem;
-      opacity:.8;
-      margin-bottom:20px;
-      text-align:center;
-    }
-
-    .wrapper{
-      width:100%;
-      max-width:900px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:18px;
-    }
-
-    .mirror-wrap{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      margin-bottom:10px;
+      padding:20px;
     }
 
     .mirror{
-      position:relative;
-      width:380px;
-      height:380px;
+      width:360px;
+      height:360px;
       border-radius:50%;
-      background:radial-gradient(circle at 30% 20%,#fff7e0,#f5d487,#f4c76c,#f7e7c9);
-      padding:14px;
-      box-shadow:
-        0 0 25px rgba(0,0,0,0.25),
-        0 0 35px rgba(247,231,201,0.9),
-        inset 0 0 12px rgba(255,255,255,0.9);
+      padding:12px;
+      background:radial-gradient(circle,#fff7e0,#f4c76c);
+      box-shadow:0 0 25px rgba(0,0,0,0.25), inset 0 0 12px rgba(255,255,255,0.9);
     }
 
     .mirror-inner{
-      position:relative;
       width:100%;
       height:100%;
       border-radius:50%;
       overflow:hidden;
-      background:radial-gradient(circle at 50% 20%,#ffffff,#d0d0d0,#a0a0a0);
+      position:relative;
+      background:#000;
+      will-change:transform;
+      backface-visibility:hidden;
     }
 
     video{
       position:absolute;
-      inset:0;
       width:100%;
       height:100%;
       object-fit:cover;
       transform:scaleX(-1);
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
     }
 
     canvas{
       position:absolute;
-      inset:0;
       width:100%;
       height:100%;
       pointer-events:none;
     }
 
-    .tabs{
+    .controls{
+      margin-top:20px;
       display:flex;
+      gap:10px;
+      flex-wrap:wrap;
       justify-content:center;
-      gap:10px;
-      margin-top:8px;
-      margin-bottom:6px;
-      flex-wrap:wrap;
     }
 
-    .tab{
+    button{
       padding:8px 14px;
-      border-radius:999px;
       border:none;
-      cursor:pointer;
-      font-size:.9rem;
-      background:rgba(255,255,255,0.8);
-      box-shadow:0 0 10px rgba(255,255,255,0.9);
-      transition:.2s;
-    }
-
-    .tab.active{
-      background:linear-gradient(135deg,#f5d487,#f4c76c);
-      color:#000;
-    }
-
-    .panel{
-      width:100%;
-      max-width:600px;
-      background:rgba(255,255,255,0.9);
-      border-radius:18px;
-      padding:14px 16px;
-      box-shadow:0 0 18px rgba(255,255,255,0.9);
-      border:1px solid rgba(255,255,255,0.9);
-    }
-
-    .panel-title{
-      font-size:1.05rem;
-      margin-bottom:6px;
-    }
-
-    .panel-sub{
-      font-size:.85rem;
-      opacity:.8;
-      margin-bottom:10px;
-    }
-
-    .swatches{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .swatch{
-      width:34px;
-      height:34px;
-      border-radius:50%;
-      border:2px solid rgba(255,255,255,0.9);
-      cursor:pointer;
-      box-shadow:0 0 8px rgba(0,0,0,0.2);
-    }
-
-    .styles-grid{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-    }
-
-    .style-pill{
-      padding:8px 12px;
-      border-radius:999px;
+      border-radius:20px;
       background:#000;
-      color:#f7e7c9;
+      color:#fff;
       cursor:pointer;
-      border:1px solid #f7e7c9;
-      font-size:.85rem;
-    }
-
-    .style-pill.active{
-      background:#f5d487;
-      color:#000;
-    }
-
-    .note{
-      font-size:.8rem;
-      opacity:.7;
-      margin-top:8px;
-    }
-
-    @media(max-width:480px){
-      .mirror{width:320px;height:320px;}
     }
   </style>
 </head>
 <body>
 
-  <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
-
-  <h1>AI Live Beauty Try‑On</h1>
-  <div class="subtitle">Face‑tracking hair, haircuts and makeup in your golden mirror.</div>
-
-  <div class="wrapper">
-
-    <div class="mirror-wrap">
-      <div class="mirror">
-        <div class="mirror-inner">
-          <video id="video" autoplay playsinline muted></video>
-          <canvas id="overlay"></canvas>
-        </div>
-      </div>
+  <div class="mirror">
+    <div class="mirror-inner">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
     </div>
-
-    <div class="tabs">
-      <button class="tab active" data-tab="haircolor">Hair Color</button>
-      <button class="tab" data-tab="haircut">Haircut</button>
-      <button class="tab" data-tab="makeup">Makeup</button>
-    </div>
-
-    <!-- Hair color -->
-    <div class="panel" id="panel-haircolor">
-      <div class="panel-title">Hair Color</div>
-      <div class="panel-sub">Medium tints that recolor your hair area without looking fake.</div>
-      <div class="swatches">
-        <div class="swatch" data-color="rgba(230,200,140,0.6)" style="background:#e6c88c;"></div>
-        <div class="swatch" data-color="rgba(90,60,40,0.65)" style="background:#5a3c28;"></div>
-        <div class="swatch" data-color="rgba(40,20,10,0.7)" style="background:#28140a;"></div>
-        <div class="swatch" data-color="rgba(180,70,60,0.65)" style="background:#b4463c;"></div>
-        <div class="swatch" data-color="rgba(220,120,160,0.6)" style="background:#dc78a0;"></div>
-        <div class="swatch" data-color="rgba(170,130,220,0.6)" style="background:#aa82dc;"></div>
-        <div class="swatch" data-color="none" style="background:linear-gradient(135deg,#ffffff,#dddddd);"></div>
-      </div>
-      <div class="note">Last bubble clears the hair color.</div>
-    </div>
-
-    <!-- Haircut -->
-    <div class="panel" id="panel-haircut" style="display:none;">
-      <div class="panel-title">Haircut Shapes</div>
-      <div class="panel-sub">AI‑aligned shapes that sit around your head.</div>
-      <div class="styles-grid">
-        <div class="style-pill" data-haircut="curtain">Curtain Bangs</div>
-        <div class="style-pill" data-haircut="bob">Bob</div>
-        <div class="style-pill" data-haircut="wolf">Wolf Cut</div>
-        <div class="style-pill" data-haircut="pixie">Pixie</div>
-        <div class="style-pill" data-haircut="curls">Curls</div>
-        <div class="style-pill" data-haircut="none">Clear</div>
-      </div>
-      <div class="note">These follow your head position but are still stylized.</div>
-    </div>
-
-    <!-- Makeup -->
-    <div class="panel" id="panel-makeup" style="display:none;">
-      <div class="panel-title">Makeup Looks</div>
-      <div class="panel-sub">Switch between soft and bold AI‑aligned makeup.</div>
-      <div class="styles-grid">
-        <div class="style-pill" data-makeup="clean">Clean Glow</div>
-        <div class="style-pill" data-makeup="softglam">Soft Glam</div>
-        <div class="style-pill" data-makeup="fairy">Fairy</div>
-        <div class="style-pill" data-makeup="bold">Bold</div>
-        <div class="style-pill" data-makeup="none">Clear</div>
-      </div>
-      <div class="note">Lips, eyes and cheeks are placed using AI face landmarks.</div>
-    </div>
-
   </div>
 
-  <!-- MediaPipe Tasks Vision bundle -->
+  <div class="controls">
+    <button onclick="setMakeup('clean')">Clean</button>
+    <button onclick="setMakeup('soft')">Soft Glam</button>
+    <button onclick="setMakeup('bold')">Bold</button>
+    <button onclick="setMakeup(null)">Clear</button>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/vision_bundle.js"></script>
 
   <script>
@@ -273,13 +94,13 @@
     const canvas = document.getElementById("overlay");
     const ctx = canvas.getContext("2d");
 
-    let activeHairTint = null;
-    let activeHaircut = null;
-    let activeMakeup = null;
-    let activeTab = "haircolor";
-
     let faceLandmarker = null;
     let lastVideoTime = -1;
+    let makeupMode = null;
+
+    function setMakeup(mode){
+      makeupMode = mode;
+    }
 
     function resizeCanvas(){
       const rect = video.getBoundingClientRect();
@@ -307,44 +128,28 @@
           modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task"
         },
         runningMode: "VIDEO",
-        numFaces: 1,
-        outputFaceBlendshapes: false,
-        outputFacialTransformationMatrixes: false
+        numFaces: 1
       });
     }
 
     async function startCamera(){
-      try{
-        const stream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
-        video.srcObject = stream;
-        video.onloadedmetadata = () => {
-          resizeCanvas();
-          video.play();
-          requestAnimationFrame(loop);
-        };
-      }catch(e){
-        console.error(e);
-        alert("Please allow camera access to use the mirror.");
-      }
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video:{facingMode:"user"},
+        audio:false
+      });
+      video.srcObject = stream;
+
+      video.onloadedmetadata = () => {
+        resizeCanvas();
+        video.play();
+        requestAnimationFrame(loop);
+      };
     }
 
-    function headWidth(landmarks,w){
-      const left = landmarks[234].x * w;
-      const right = landmarks[454].x * w;
-      return Math.abs(right-left);
-    }
-
-    function headHeight(landmarks,h){
-      const top = landmarks[10].y * h;
-      const bottom = landmarks[152].y * h;
-      return Math.abs(bottom-top);
-    }
-
-    function drawPolygon(points, fillStyle, alpha=1){
-      if(!points || points.length===0) return;
+    function drawPolygon(points, color, alpha=1){
       ctx.save();
       ctx.globalAlpha = alpha;
-      ctx.fillStyle = fillStyle;
+      ctx.fillStyle = color;
       ctx.beginPath();
       ctx.moveTo(points[0].x, points[0].y);
       for(let i=1;i<points.length;i++){
@@ -368,16 +173,14 @@
 
       const now = performance.now();
       const videoTime = video.currentTime;
+
       if(videoTime === lastVideoTime){
         requestAnimationFrame(loop);
         return;
       }
       lastVideoTime = videoTime;
 
-      const w = canvas.width / (window.devicePixelRatio || 1);
-      const h = canvas.height / (window.devicePixelRatio || 1);
-
-      ctx.clearRect(0,0,w,h);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
 
       const results = faceLandmarker.detectForVideo(video, now);
       if(!results.faceLandmarks || results.faceLandmarks.length === 0){
@@ -385,206 +188,36 @@
         return;
       }
 
-      const landmarks = results.faceLandmarks[0];
-      const p = i => ({
-        x: landmarks[i].x * w,
-        y: landmarks[i].y * h
-      });
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
 
-      const hw = headWidth(landmarks,w);
-      const hh = headHeight(landmarks,h);
-      const topHead = p(10);
-      const chin = p(152);
-      const leftHead = p(234);
-      const rightHead = p(454);
-      const cx = (leftHead.x + rightHead.x)/2;
+      const lm = results.faceLandmarks[0];
+      const p = i => ({x: lm[i].x * w, y: lm[i].y * h});
 
-      // HAIR TINT (medium) – above forehead
-      if(activeHairTint && activeHairTint !== "none" && activeTab === "haircolor"){
-        const centerY = topHead.y - hh*0.1;
-        const rx = hw*0.8;
-        const ry = hh*0.7;
-        ctx.save();
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = activeHairTint;
-        ctx.beginPath();
-        ctx.ellipse(cx, centerY, rx, ry, 0, 0, Math.PI*2);
-        ctx.fill();
-        ctx.restore();
-      }
+      if(makeupMode){
+        const lips = [61,146,91,181,84,17,314,405,321,375,291,308].map(p);
 
-      // HAIRCUT SHAPES – aligned to head
-      if(activeHaircut && activeHaircut !== "none" && activeTab === "haircut"){
-        ctx.save();
-        ctx.fillStyle = "rgba(0,0,0,0.45)";
-        ctx.strokeStyle = "rgba(255,255,255,0.6)";
-        ctx.lineWidth = 3;
-
-        if(activeHaircut === "curtain"){
-          ctx.beginPath();
-          ctx.ellipse(cx, topHead.y + hh*0.1, hw*0.9, hh*0.6, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.stroke();
+        if(makeupMode === "clean"){
+          drawPolygon(lips,"rgba(255,180,180,1)",0.5);
         }
 
-        if(activeHaircut === "bob"){
-          const x = leftHead.x - hw*0.2;
-          const y = topHead.y - hh*0.1;
-          const rw = hw*1.4;
-          const rh = hh*0.9;
-          ctx.beginPath();
-          ctx.roundRect(x, y, rw, rh, 40);
-          ctx.fill();
-          ctx.stroke();
+        if(makeupMode === "soft"){
+          drawPolygon(lips,"rgba(200,80,120,1)",0.6);
         }
 
-        if(activeHaircut === "wolf"){
-          ctx.beginPath();
-          ctx.moveTo(leftHead.x - hw*0.25, topHead.y - hh*0.1);
-          ctx.lineTo(rightHead.x + hw*0.25, topHead.y - hh*0.1);
-          ctx.lineTo(rightHead.x + hw*0.15, chin.y + hh*0.15);
-          ctx.lineTo(leftHead.x - hw*0.15, chin.y + hh*0.15);
-          ctx.closePath();
-          ctx.fill();
-          ctx.stroke();
-        }
-
-        if(activeHaircut === "pixie"){
-          ctx.beginPath();
-          ctx.ellipse(cx, topHead.y + hh*0.05, hw*0.8, hh*0.45, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.stroke();
-        }
-
-        if(activeHaircut === "curls"){
-          const centerY = topHead.y + hh*0.2;
-          const radius = hh*0.2;
-          for(let i=0;i<7;i++){
-            const t = -0.6 + i*(1.2/6);
-            const x = cx + t*hw*0.9;
-            ctx.beginPath();
-            ctx.arc(x, centerY, radius, 0, Math.PI*2);
-            ctx.fill();
-            ctx.stroke();
-          }
-        }
-
-        ctx.restore();
-      }
-
-      // MAKEUP – lips, eyes, cheeks
-      if(activeMakeup && activeMakeup !== "none" && activeTab === "makeup"){
-        const lipIdx = [61,146,91,181,84,17,314,405,321,375,291,308];
-        const lipPts = lipIdx.map(p);
-
-        const leftEyeCenter = p(159);
-        const rightEyeCenter = p(386);
-        const eyeW = hw*0.28;
-        const eyeH = eyeW*0.45;
-
-        const leftCheek = p(234);
-        const rightCheek = p(454);
-
-        if(activeMakeup === "clean"){
-          drawPolygon(lipPts,"rgba(255,190,180,1)",0.55);
-          ctx.save();
-          ctx.fillStyle = "rgba(255,210,190,0.45)";
-          ctx.beginPath();
-          ctx.ellipse(leftCheek.x, leftCheek.y+hh*0.05, hw*0.22, hh*0.14, 0, 0, Math.PI*2);
-          ctx.ellipse(rightCheek.x, rightCheek.y+hh*0.05, hw*0.22, hh*0.14, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.restore();
-        }
-
-        if(activeMakeup === "softglam"){
-          drawPolygon(lipPts,"rgba(190,70,100,1)",0.7);
-          ctx.save();
-          ctx.globalAlpha = 0.6;
-          ctx.fillStyle = "rgba(200,120,150,1)";
-          ctx.fillRect(leftEyeCenter.x-eyeW/2, leftEyeCenter.y-eyeH/2, eyeW, eyeH);
-          ctx.fillRect(rightEyeCenter.x-eyeW/2, rightEyeCenter.y-eyeH/2, eyeW, eyeH);
-          ctx.fillStyle = "rgba(255,170,170,1)";
-          ctx.beginPath();
-          ctx.ellipse(leftCheek.x, leftCheek.y+hh*0.05, hw*0.24, hh*0.15, 0, 0, Math.PI*2);
-          ctx.ellipse(rightCheek.x, rightCheek.y+hh*0.05, hw*0.24, hh*0.15, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.restore();
-        }
-
-        if(activeMakeup === "fairy"){
-          ctx.save();
-          ctx.globalAlpha = 0.65;
-          ctx.fillStyle = "rgba(210,160,255,1)";
-          ctx.fillRect(leftEyeCenter.x-eyeW/2, leftEyeCenter.y-eyeH/2, eyeW, eyeH);
-          ctx.fillRect(rightEyeCenter.x-eyeW/2, rightEyeCenter.y-eyeH/2, eyeW, eyeH);
-          drawPolygon(lipPts,"rgba(255,190,230,1)",0.7);
-          ctx.fillStyle = "rgba(255,210,240,1)";
-          ctx.beginPath();
-          ctx.ellipse(leftCheek.x, leftCheek.y+hh*0.05, hw*0.26, hh*0.16, 0, 0, Math.PI*2);
-          ctx.ellipse(rightCheek.x, rightCheek.y+hh*0.05, hw*0.26, hh*0.16, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.restore();
-        }
-
-        if(activeMakeup === "bold"){
-          drawPolygon(lipPts,"rgba(160,40,60,1)",0.8);
-          ctx.save();
-          ctx.globalAlpha = 0.7;
-          ctx.fillStyle = "rgba(40,20,60,1)";
-          ctx.fillRect(leftEyeCenter.x-eyeW/2, leftEyeCenter.y-eyeH/2, eyeW, eyeH);
-          ctx.fillRect(rightEyeCenter.x-eyeW/2, rightEyeCenter.y-eyeH/2, eyeW, eyeH);
-          ctx.restore();
+        if(makeupMode === "bold"){
+          drawPolygon(lips,"rgba(160,40,60,1)",0.8);
         }
       }
 
       requestAnimationFrame(loop);
     }
 
-    // Tabs
-    document.querySelectorAll(".tab").forEach(tab=>{
-      tab.addEventListener("click",()=>{
-        document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-        tab.classList.add("active");
-        activeTab = tab.dataset.tab;
-
-        document.getElementById("panel-haircolor").style.display = activeTab==="haircolor" ? "block" : "none";
-        document.getElementById("panel-haircut").style.display = activeTab==="haircut" ? "block" : "none";
-        document.getElementById("panel-makeup").style.display = activeTab==="makeup" ? "block" : "none";
-      });
-    });
-
-    // Hair color
-    document.querySelectorAll(".swatch").forEach(s=>{
-      s.addEventListener("click",()=>{
-        const c = s.dataset.color;
-        activeHairTint = (c === "none") ? null : c;
-      });
-    });
-
-    // Haircut
-    document.querySelectorAll("[data-haircut]").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        document.querySelectorAll("[data-haircut]").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        const v = btn.dataset.haircut;
-        activeHaircut = (v === "none") ? null : v;
-      });
-    });
-
-    // Makeup
-    document.querySelectorAll("[data-makeup]").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        document.querySelectorAll("[data-makeup]").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
-        const v = btn.dataset.makeup;
-        activeMakeup = (v === "none") ? null : v;
-      });
-    });
-
     (async () => {
       await initAI();
       await startCamera();
     })();
   </script>
+
 </body>
 </html>
