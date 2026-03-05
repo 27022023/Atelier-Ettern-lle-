@@ -281,12 +281,28 @@
     let faceLandmarker = null;
     let lastVideoTime = -1;
 
+    function resizeCanvas(){
+      const rect = video.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+
+      canvas.style.width = rect.width + "px";
+      canvas.style.height = rect.height + "px";
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+
     async function initAI(){
-      const vision = await FilesetResolver.forVisionTasks(
+      const {FaceLandmarker, FilesetResolver} = vision;
+      const fileset = await FilesetResolver.forVisionTasks(
         "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
       );
 
-      faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+      faceLandmarker = await FaceLandmarker.createFromOptions(fileset, {
         baseOptions: {
           modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task"
         },
@@ -311,14 +327,6 @@
         alert("Please allow camera access to use the mirror.");
       }
     }
-
-    function resizeCanvas(){
-      const rect = video.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-    }
-
-    window.addEventListener("resize", resizeCanvas);
 
     function headWidth(landmarks,w){
       const left = landmarks[234].x * w;
@@ -353,12 +361,12 @@
         return;
       }
 
-      const now = performance.now();
       if(video.readyState < 2){
         requestAnimationFrame(loop);
         return;
       }
 
+      const now = performance.now();
       const videoTime = video.currentTime;
       if(videoTime === lastVideoTime){
         requestAnimationFrame(loop);
@@ -366,8 +374,8 @@
       }
       lastVideoTime = videoTime;
 
-      const w = canvas.width;
-      const h = canvas.height;
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
 
       ctx.clearRect(0,0,w,h);
 
@@ -378,7 +386,10 @@
       }
 
       const landmarks = results.faceLandmarks[0];
-      const p = i => ({x: landmarks[i].x * w, y: landmarks[i].y * h});
+      const p = i => ({
+        x: landmarks[i].x * w,
+        y: landmarks[i].y * h
+      });
 
       const hw = headWidth(landmarks,w);
       const hh = headHeight(landmarks,h);
@@ -386,10 +397,10 @@
       const chin = p(152);
       const leftHead = p(234);
       const rightHead = p(454);
+      const cx = (leftHead.x + rightHead.x)/2;
 
       // HAIR TINT (medium) – above forehead
       if(activeHairTint && activeHairTint !== "none" && activeTab === "haircolor"){
-        const centerX = (leftHead.x + rightHead.x)/2;
         const centerY = topHead.y - hh*0.1;
         const rx = hw*0.8;
         const ry = hh*0.7;
@@ -397,7 +408,7 @@
         ctx.globalAlpha = 1;
         ctx.fillStyle = activeHairTint;
         ctx.beginPath();
-        ctx.ellipse(centerX, centerY, rx, ry, 0, 0, Math.PI*2);
+        ctx.ellipse(cx, centerY, rx, ry, 0, 0, Math.PI*2);
         ctx.fill();
         ctx.restore();
       }
@@ -408,8 +419,6 @@
         ctx.fillStyle = "rgba(0,0,0,0.45)";
         ctx.strokeStyle = "rgba(255,255,255,0.6)";
         ctx.lineWidth = 3;
-
-        const cx = (leftHead.x + rightHead.x)/2;
 
         if(activeHaircut === "curtain"){
           ctx.beginPath();
@@ -572,7 +581,6 @@
       });
     });
 
-    // Boot
     (async () => {
       await initAI();
       await startCamera();
