@@ -2,222 +2,449 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AI Mirror</title>
+  <title>Live Beauty Try‑On</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+
     body{
-      margin:0;
-      background:#f7e7c9;
-      font-family:Arial, sans-serif;
+      min-height:100vh;
+      width:100vw;
+      background:linear-gradient(135deg,#f8c8d8,#f7e7c9);
+      font-family:"Playfair Display",serif;
       display:flex;
       flex-direction:column;
       align-items:center;
-      padding:20px;
+      padding:40px 16px 32px;
+      color:#1b1410;
+    }
+
+    .back-arrow{
+      position:fixed;
+      top:20px;
+      left:20px;
+      font-size:2.2rem;
+      cursor:pointer;
+      color:#000;
+      text-shadow:0 0 10px rgba(255,255,255,0.7);
+      z-index:10;
+    }
+
+    h1{
+      font-size:2rem;
+      margin-bottom:6px;
+      text-shadow:0 0 10px rgba(255,255,255,0.6);
+      text-align:center;
+    }
+
+    .subtitle{
+      font-size:.9rem;
+      opacity:.8;
+      margin-bottom:20px;
+      text-align:center;
+    }
+
+    .wrapper{
+      width:100%;
+      max-width:900px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:18px;
+    }
+
+    /* mirror */
+    .mirror-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      margin-bottom:10px;
     }
 
     .mirror{
+      position:relative;
       width:360px;
       height:360px;
       border-radius:50%;
+      background:radial-gradient(circle at 30% 20%,#fff7e0,#f5d487,#f4c76c,#f7e7c9);
       padding:12px;
-      background:radial-gradient(circle,#fff7e0,#f4c76c);
-      box-shadow:0 0 25px rgba(0,0,0,0.25), inset 0 0 12px rgba(255,255,255,0.9);
+      box-shadow:0 0 25px rgba(0,0,0,0.25),0 0 35px rgba(247,231,201,0.9);
     }
 
     .mirror-inner{
+      position:relative;
       width:100%;
       height:100%;
       border-radius:50%;
       overflow:hidden;
-      position:relative;
       background:#000;
-      will-change:transform;
-      backface-visibility:hidden;
     }
 
-    video{
+    video,canvas{
       position:absolute;
+      inset:0;
       width:100%;
       height:100%;
       object-fit:cover;
-      transform:scaleX(-1);
-      image-rendering: crisp-edges;
-      image-rendering: pixelated;
     }
 
-    canvas{
-      position:absolute;
-      width:100%;
-      height:100%;
-      pointer-events:none;
-    }
-
-    .controls{
-      margin-top:20px;
+    /* tabs */
+    .tabs{
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
       justify-content:center;
+      gap:10px;
+      margin-top:8px;
+      margin-bottom:6px;
+      flex-wrap:wrap;
     }
 
-    button{
+    .tab{
       padding:8px 14px;
+      border-radius:999px;
       border:none;
-      border-radius:20px;
-      background:#000;
-      color:#fff;
       cursor:pointer;
+      font-size:.9rem;
+      background:rgba(255,255,255,0.8);
+      box-shadow:0 0 10px rgba(255,255,255,0.9);
+      transition:.2s;
+    }
+
+    .tab.active{
+      background:linear-gradient(135deg,#f5d487,#f4c76c);
+      color:#000;
+    }
+
+    .tab:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 16px rgba(255,255,255,1);
+    }
+
+    /* controls */
+    .panel{
+      width:100%;
+      max-width:600px;
+      background:rgba(255,255,255,0.9);
+      border-radius:18px;
+      padding:14px 16px;
+      box-shadow:0 0 18px rgba(255,255,255,0.9);
+      border:1px solid rgba(255,255,255,0.9);
+    }
+
+    .panel-title{
+      font-size:1.1rem;
+      margin-bottom:6px;
+    }
+
+    .panel-sub{
+      font-size:.85rem;
+      opacity:.8;
+      margin-bottom:10px;
+    }
+
+    .swatches{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .swatch{
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      border:2px solid rgba(255,255,255,0.9);
+      box-shadow:0 0 10px rgba(0,0,0,0.15);
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .swatch:hover{
+      transform:scale(1.08);
+    }
+
+    .styles-grid{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .style-pill{
+      padding:8px 12px;
+      border-radius:999px;
+      background:#000;
+      color:#f7e7c9;
+      font-size:.85rem;
+      cursor:pointer;
+      border:1px solid #f7e7c9;
+      box-shadow:0 0 10px rgba(0,0,0,0.3);
+      transition:.2s;
+    }
+
+    .style-pill:hover{
+      transform:translateY(-1px);
+      box-shadow:0 0 16px rgba(0,0,0,0.4);
+    }
+
+    .style-pill.active{
+      background:#f5d487;
+      color:#000;
+      border-color:#f5d487;
+    }
+
+    .note{
+      font-size:.8rem;
+      opacity:.7;
+      margin-top:8px;
+    }
+
+    @media(max-width:480px){
+      .mirror{width:300px;height:300px;}
     }
   </style>
 </head>
 <body>
 
-  <div class="mirror">
-    <div class="mirror-inner">
-      <video id="video" autoplay playsinline muted></video>
-      <canvas id="overlay"></canvas>
+  <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
+  <h1>Live Beauty Try‑On</h1>
+  <div class="subtitle">Try hair colors, haircuts, and makeup live in your golden mirror.</div>
+
+  <div class="wrapper">
+
+    <div class="mirror-wrap">
+      <div class="mirror">
+        <div class="mirror-inner">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="overlay"></canvas>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="controls">
-    <button onclick="setMakeup('clean')">Clean</button>
-    <button onclick="setMakeup('soft')">Soft Glam</button>
-    <button onclick="setMakeup('bold')">Bold</button>
-    <button onclick="setMakeup(null)">Clear</button>
-  </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="haircolor">Hair Color</button>
+      <button class="tab" data-tab="haircut">Haircut</button>
+      <button class="tab" data-tab="makeup">Makeup</button>
+    </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/vision_bundle.js"></script>
+    <!-- Hair color panel -->
+    <div class="panel" id="panel-haircolor">
+      <div class="panel-title">Hair Color</div>
+      <div class="panel-sub">Tap a color bubble to tint the top of the mirror like your hair.</div>
+      <div class="swatches">
+        <div class="swatch" data-color="rgba(230,200,140,0.65)" style="background:#e6c88c;"></div>
+        <div class="swatch" data-color="rgba(90,60,40,0.7)" style="background:#5a3c28;"></div>
+        <div class="swatch" data-color="rgba(40,20,10,0.75)" style="background:#28140a;"></div>
+        <div class="swatch" data-color="rgba(180,70,60,0.7)" style="background:#b4463c;"></div>
+        <div class="swatch" data-color="rgba(220,120,160,0.65)" style="background:#dc78a0;"></div>
+        <div class="swatch" data-color="rgba(170,130,220,0.65)" style="background:#aa82dc;"></div>
+        <div class="swatch" data-color="rgba(210,160,110,0.7)" style="background:#d2a06e;"></div>
+        <div class="swatch" data-color="rgba(255,255,255,0.55)" style="background:#f5f5f5;"></div>
+      </div>
+      <div class="note">This is a strong tint overlay so you can clearly see the color change.</div>
+    </div>
+
+    <!-- Haircut panel -->
+    <div class="panel" id="panel-haircut" style="display:none;">
+      <div class="panel-title">Haircut Styles</div>
+      <div class="panel-sub">Pick a haircut overlay to see a bold shape over your head area.</div>
+      <div class="styles-grid" id="haircutStyles">
+        <div class="style-pill" data-haircut="curtain">Curtain Bangs</div>
+        <div class="style-pill" data-haircut="bob">Soft Bob</div>
+        <div class="style-pill" data-haircut="wolf">Wolf Cut</div>
+        <div class="style-pill" data-haircut="pixie">Pixie</div>
+        <div class="style-pill" data-haircut="longlayers">Long Layers</div>
+        <div class="style-pill" data-haircut="curls">Big Curls</div>
+        <div class="style-pill" data-haircut="none">Clear (No Haircut)</div>
+      </div>
+      <div class="note">These are stylized shapes so you can feel the vibe of each cut.</div>
+    </div>
+
+    <!-- Makeup panel -->
+    <div class="panel" id="panel-makeup" style="display:none;">
+      <div class="panel-title">Makeup Looks</div>
+      <div class="panel-sub">Choose a preset to add visible makeup tints over the face area.</div>
+      <div class="styles-grid" id="makeupStyles">
+        <div class="style-pill" data-makeup="clean">Clean Glow</div>
+        <div class="style-pill" data-makeup="softglam">Soft Glam</div>
+        <div class="style-pill" data-makeup="fairy">Fairy Shimmer</div>
+        <div class="style-pill" data-makeup="bold">Bold Night</div>
+        <div class="style-pill" data-makeup="none">Clear (No Makeup)</div>
+      </div>
+      <div class="note">These are obvious overlays so you can clearly see each look change.</div>
+    </div>
+
+  </div>
 
   <script>
     const video = document.getElementById("video");
     const canvas = document.getElementById("overlay");
     const ctx = canvas.getContext("2d");
 
-    let faceLandmarker = null;
-    let lastVideoTime = -1;
-    let makeupMode = null;
+    let activeHairTint = null;
+    let activeHaircut = null;
+    let activeMakeup = null;
+    let activeTab = "haircolor";
 
-    function setMakeup(mode){
-      makeupMode = mode;
+    // camera
+    async function startCamera(){
+      try{
+        const stream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+        video.srcObject = stream;
+        video.onloadedmetadata = () => {
+          resizeCanvas();
+          requestAnimationFrame(drawLoop);
+        };
+      }catch(e){
+        console.error(e);
+        alert("Camera access was blocked. Please allow camera to use the try‑on mirror.");
+      }
     }
 
     function resizeCanvas(){
       const rect = video.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-
-      canvas.style.width = rect.width + "px";
-      canvas.style.height = rect.height + "px";
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.setTransform(window.devicePixelRatio,0,0,window.devicePixelRatio,0,0);
     }
 
     window.addEventListener("resize", resizeCanvas);
 
-    async function initAI(){
-      const {FaceLandmarker, FilesetResolver} = vision;
-      const fileset = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
-      );
-
-      faceLandmarker = await FaceLandmarker.createFromOptions(fileset, {
-        baseOptions: {
-          modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task"
-        },
-        runningMode: "VIDEO",
-        numFaces: 1
-      });
-    }
-
-    async function startCamera(){
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video:{facingMode:"user"},
-        audio:false
-      });
-      video.srcObject = stream;
-
-      video.onloadedmetadata = () => {
-        resizeCanvas();
-        video.play();
-        requestAnimationFrame(loop);
-      };
-    }
-
-    function drawPolygon(points, color, alpha=1){
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
-      for(let i=1;i<points.length;i++){
-        ctx.lineTo(points[i].x, points[i].y);
-      }
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-    }
-
-    async function loop(){
-      if(!faceLandmarker){
-        requestAnimationFrame(loop);
-        return;
-      }
-
-      if(video.readyState < 2){
-        requestAnimationFrame(loop);
-        return;
-      }
-
-      const now = performance.now();
-      const videoTime = video.currentTime;
-
-      if(videoTime === lastVideoTime){
-        requestAnimationFrame(loop);
-        return;
-      }
-      lastVideoTime = videoTime;
-
+    function clearCanvas(){
       ctx.clearRect(0,0,canvas.width,canvas.height);
-
-      const results = faceLandmarker.detectForVideo(video, now);
-      if(!results.faceLandmarks || results.faceLandmarks.length === 0){
-        requestAnimationFrame(loop);
-        return;
-      }
-
-      const w = canvas.width / (window.devicePixelRatio || 1);
-      const h = canvas.height / (window.devicePixelRatio || 1);
-
-      const lm = results.faceLandmarks[0];
-      const p = i => ({x: lm[i].x * w, y: lm[i].y * h});
-
-      if(makeupMode){
-        const lips = [61,146,91,181,84,17,314,405,321,375,291,308].map(p);
-
-        if(makeupMode === "clean"){
-          drawPolygon(lips,"rgba(255,180,180,1)",0.5);
-        }
-
-        if(makeupMode === "soft"){
-          drawPolygon(lips,"rgba(200,80,120,1)",0.6);
-        }
-
-        if(makeupMode === "bold"){
-          drawPolygon(lips,"rgba(160,40,60,1)",0.8);
-        }
-      }
-
-      requestAnimationFrame(loop);
     }
 
-    (async () => {
-      await initAI();
-      await startCamera();
-    })();
-  </script>
+    function drawLoop(){
+      clearCanvas();
 
+      // HAIR TINT: big band at the top so it's super visible
+      if(activeHairTint && activeTab === "haircolor"){
+        ctx.fillStyle = activeHairTint;
+        ctx.beginPath();
+        ctx.ellipse(canvas.width/2, canvas.height*0.18, canvas.width*0.55, canvas.height*0.35, 0, 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      // HAIRCUT: bold shapes
+      if(activeHaircut && activeTab === "haircut" && activeHaircut !== "none"){
+        ctx.fillStyle = "rgba(0,0,0,0.65)";
+        if(activeHaircut === "curtain"){
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.2, canvas.width*0.6, canvas.height*0.35, 0, 0, Math.PI*2);
+          ctx.fill();
+        }else if(activeHaircut === "bob"){
+          ctx.beginPath();
+          ctx.roundRect(canvas.width*0.12, canvas.height*0.05, canvas.width*0.76, canvas.height*0.55, 60);
+          ctx.fill();
+        }else if(activeHaircut === "wolf"){
+          ctx.beginPath();
+          ctx.moveTo(canvas.width*0.1, canvas.height*0.05);
+          ctx.lineTo(canvas.width*0.9, canvas.height*0.05);
+          ctx.lineTo(canvas.width*0.8, canvas.height*0.65);
+          ctx.lineTo(canvas.width*0.2, canvas.height*0.65);
+          ctx.closePath();
+          ctx.fill();
+        }else if(activeHaircut === "pixie"){
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.16, canvas.width*0.5, canvas.height*0.28, 0, 0, Math.PI*2);
+          ctx.fill();
+        }else if(activeHaircut === "longlayers"){
+          ctx.beginPath();
+          ctx.roundRect(canvas.width*0.18, canvas.height*0.02, canvas.width*0.64, canvas.height*0.8, 70);
+          ctx.fill();
+        }else if(activeHaircut === "curls"){
+          for(let i=0;i<7;i++){
+            ctx.beginPath();
+            ctx.arc(canvas.width*(0.15+i*0.12), canvas.height*0.22, canvas.height*0.14, 0, Math.PI*2);
+            ctx.fill();
+          }
+        }
+      }
+
+      // MAKEUP: strong tints so you can see them clearly
+      if(activeMakeup && activeTab === "makeup" && activeMakeup !== "none"){
+        if(activeMakeup === "clean"){
+          ctx.fillStyle = "rgba(255,220,200,0.4)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.6, canvas.width*0.45, canvas.height*0.3, 0, 0, Math.PI*2);
+          ctx.fill();
+        }else if(activeMakeup === "softglam"){
+          ctx.fillStyle = "rgba(255,180,170,0.5)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.68, canvas.width*0.4, canvas.height*0.22, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.fillStyle = "rgba(200,120,150,0.5)";
+          ctx.fillRect(canvas.width*0.22, canvas.height*0.38, canvas.width*0.56, canvas.height*0.12);
+        }else if(activeMakeup === "fairy"){
+          ctx.fillStyle = "rgba(200,160,255,0.5)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width*0.35, canvas.height*0.4, canvas.width*0.22, canvas.height*0.12, 0, 0, Math.PI*2);
+          ctx.ellipse(canvas.width*0.65, canvas.height*0.4, canvas.width*0.22, canvas.height*0.12, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.fillStyle = "rgba(255,190,220,0.5)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.7, canvas.width*0.36, canvas.height*0.2, 0, 0, Math.PI*2);
+          ctx.fill();
+        }else if(activeMakeup === "bold"){
+          ctx.fillStyle = "rgba(160,40,60,0.7)";
+          ctx.beginPath();
+          ctx.ellipse(canvas.width/2, canvas.height*0.72, canvas.width*0.34, canvas.height*0.16, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.fillStyle = "rgba(40,20,60,0.6)";
+          ctx.fillRect(canvas.width*0.22, canvas.height*0.38, canvas.width*0.56, canvas.height*0.12);
+        }
+      }
+
+      requestAnimationFrame(drawLoop);
+    }
+
+    // tabs
+    const tabs = document.querySelectorAll(".tab");
+    const panels = {
+      haircolor: document.getElementById("panel-haircolor"),
+      haircut: document.getElementById("panel-haircut"),
+      makeup: document.getElementById("panel-makeup")
+    };
+
+    tabs.forEach(tab=>{
+      tab.addEventListener("click",()=>{
+        tabs.forEach(t=>t.classList.remove("active"));
+        tab.classList.add("active");
+        activeTab = tab.dataset.tab;
+        Object.keys(panels).forEach(k=>{
+          panels[k].style.display = (k===activeTab)?"block":"none";
+        });
+      });
+    });
+
+    // hair color swatches
+    document.querySelectorAll(".swatch").forEach(s=>{
+      s.addEventListener("click",()=>{
+        activeHairTint = s.dataset.color;
+      });
+    });
+
+    // haircut styles
+    const haircutButtons = document.querySelectorAll("[data-haircut]");
+    haircutButtons.forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        haircutButtons.forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        activeHaircut = btn.dataset.haircut;
+      });
+    });
+
+    // makeup styles
+    const makeupButtons = document.querySelectorAll("[data-makeup]");
+    makeupButtons.forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        makeupButtons.forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+        activeMakeup = btn.dataset.makeup;
+      });
+    });
+
+    startCamera();
+  </script>
 </body>
 </html>
