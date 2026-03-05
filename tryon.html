@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Live Beauty Try‑On</title>
+  <title>AI Live Beauty Try‑On</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
@@ -69,7 +69,10 @@
       border-radius:50%;
       background:radial-gradient(circle at 30% 20%,#fff7e0,#f5d487,#f4c76c,#f7e7c9);
       padding:14px;
-      box-shadow:0 0 25px rgba(0,0,0,0.25),0 0 35px rgba(247,231,201,0.9);
+      box-shadow:
+        0 0 25px rgba(0,0,0,0.25),
+        0 0 35px rgba(247,231,201,0.9),
+        inset 0 0 12px rgba(255,255,255,0.9);
     }
 
     .mirror-inner{
@@ -78,15 +81,24 @@
       height:100%;
       border-radius:50%;
       overflow:hidden;
-      background:#000;
+      background:radial-gradient(circle at 50% 20%,#ffffff,#d0d0d0,#a0a0a0);
     }
 
-    video,canvas{
+    video{
       position:absolute;
       inset:0;
       width:100%;
       height:100%;
       object-fit:cover;
+      transform:scaleX(-1);
+    }
+
+    canvas{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      pointer-events:none;
     }
 
     .tabs{
@@ -124,6 +136,17 @@
       border:1px solid rgba(255,255,255,0.9);
     }
 
+    .panel-title{
+      font-size:1.05rem;
+      margin-bottom:6px;
+    }
+
+    .panel-sub{
+      font-size:.85rem;
+      opacity:.8;
+      margin-bottom:10px;
+    }
+
     .swatches{
       display:flex;
       flex-wrap:wrap;
@@ -136,6 +159,7 @@
       border-radius:50%;
       border:2px solid rgba(255,255,255,0.9);
       cursor:pointer;
+      box-shadow:0 0 8px rgba(0,0,0,0.2);
     }
 
     .styles-grid{
@@ -151,11 +175,18 @@
       color:#f7e7c9;
       cursor:pointer;
       border:1px solid #f7e7c9;
+      font-size:.85rem;
     }
 
     .style-pill.active{
       background:#f5d487;
       color:#000;
+    }
+
+    .note{
+      font-size:.8rem;
+      opacity:.7;
+      margin-top:8px;
     }
 
     @media(max-width:480px){
@@ -167,8 +198,8 @@
 
   <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
-  <h1>Live Beauty Try‑On</h1>
-  <div class="subtitle">Real‑time face tracking for hair, haircuts and makeup in your golden mirror.</div>
+  <h1>AI Live Beauty Try‑On</h1>
+  <div class="subtitle">Face‑tracking hair, haircuts and makeup in your golden mirror.</div>
 
   <div class="wrapper">
 
@@ -187,18 +218,26 @@
       <button class="tab" data-tab="makeup">Makeup</button>
     </div>
 
+    <!-- Hair color -->
     <div class="panel" id="panel-haircolor">
+      <div class="panel-title">Hair Color</div>
+      <div class="panel-sub">Medium tints that recolor your hair area without looking fake.</div>
       <div class="swatches">
-        <div class="swatch" data-color="rgba(230,200,140,0.7)" style="background:#e6c88c;"></div>
-        <div class="swatch" data-color="rgba(90,60,40,0.75)" style="background:#5a3c28;"></div>
-        <div class="swatch" data-color="rgba(40,20,10,0.8)" style="background:#28140a;"></div>
-        <div class="swatch" data-color="rgba(180,70,60,0.75)" style="background:#b4463c;"></div>
-        <div class="swatch" data-color="rgba(220,120,160,0.7)" style="background:#dc78a0;"></div>
-        <div class="swatch" data-color="rgba(170,130,220,0.7)" style="background:#aa82dc;"></div>
+        <div class="swatch" data-color="rgba(230,200,140,0.6)" style="background:#e6c88c;"></div>
+        <div class="swatch" data-color="rgba(90,60,40,0.65)" style="background:#5a3c28;"></div>
+        <div class="swatch" data-color="rgba(40,20,10,0.7)" style="background:#28140a;"></div>
+        <div class="swatch" data-color="rgba(180,70,60,0.65)" style="background:#b4463c;"></div>
+        <div class="swatch" data-color="rgba(220,120,160,0.6)" style="background:#dc78a0;"></div>
+        <div class="swatch" data-color="rgba(170,130,220,0.6)" style="background:#aa82dc;"></div>
+        <div class="swatch" data-color="none" style="background:linear-gradient(135deg,#ffffff,#dddddd);"></div>
       </div>
+      <div class="note">Last bubble clears the hair color.</div>
     </div>
 
+    <!-- Haircut -->
     <div class="panel" id="panel-haircut" style="display:none;">
+      <div class="panel-title">Haircut Shapes</div>
+      <div class="panel-sub">AI‑aligned shapes that sit around your head.</div>
       <div class="styles-grid">
         <div class="style-pill" data-haircut="curtain">Curtain Bangs</div>
         <div class="style-pill" data-haircut="bob">Bob</div>
@@ -207,9 +246,13 @@
         <div class="style-pill" data-haircut="curls">Curls</div>
         <div class="style-pill" data-haircut="none">Clear</div>
       </div>
+      <div class="note">These follow your head position but are still stylized.</div>
     </div>
 
+    <!-- Makeup -->
     <div class="panel" id="panel-makeup" style="display:none;">
+      <div class="panel-title">Makeup Looks</div>
+      <div class="panel-sub">Switch between soft and bold AI‑aligned makeup.</div>
       <div class="styles-grid">
         <div class="style-pill" data-makeup="clean">Clean Glow</div>
         <div class="style-pill" data-makeup="softglam">Soft Glam</div>
@@ -217,13 +260,13 @@
         <div class="style-pill" data-makeup="bold">Bold</div>
         <div class="style-pill" data-makeup="none">Clear</div>
       </div>
+      <div class="note">Lips, eyes and cheeks are placed using AI face landmarks.</div>
     </div>
 
   </div>
 
-  <!-- MediaPipe FaceMesh + camera utils -->
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <!-- MediaPipe Tasks Vision bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/vision_bundle.js"></script>
 
   <script>
     const video = document.getElementById("video");
@@ -235,185 +278,47 @@
     let activeMakeup = null;
     let activeTab = "haircolor";
 
-    function resizeCanvas(width, height){
-      canvas.width = width;
-      canvas.height = height;
+    let faceLandmarker = null;
+    let lastVideoTime = -1;
+
+    async function initAI(){
+      const vision = await FilesetResolver.forVisionTasks(
+        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
+      );
+
+      faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
+        baseOptions: {
+          modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task"
+        },
+        runningMode: "VIDEO",
+        numFaces: 1,
+        outputFaceBlendshapes: false,
+        outputFacialTransformationMatrixes: false
+      });
     }
 
-    function drawPolygon(points, fillStyle){
-      if(points.length === 0) return;
-      ctx.fillStyle = fillStyle;
-      ctx.beginPath();
-      ctx.moveTo(points[0].x, points[0].y);
-      for(let i=1;i<points.length;i++){
-        ctx.lineTo(points[i].x, points[i].y);
+    async function startCamera(){
+      try{
+        const stream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+        video.srcObject = stream;
+        video.onloadedmetadata = () => {
+          resizeCanvas();
+          video.play();
+          requestAnimationFrame(loop);
+        };
+      }catch(e){
+        console.error(e);
+        alert("Please allow camera access to use the mirror.");
       }
-      ctx.closePath();
-      ctx.fill();
     }
 
-    function onResults(results){
-      const img = results.image;
-      resizeCanvas(img.width, img.height);
-      ctx.save();
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.drawImage(img,0,0,canvas.width,canvas.height);
-
-      if(!results.multiFaceLandmarks || results.multiFaceLandmarks.length === 0){
-        ctx.restore();
-        return;
-      }
-
-      const landmarks = results.multiFaceLandmarks[0];
-      const w = canvas.width;
-      const h = canvas.height;
-
-      const p = i => ({x: landmarks[i].x * w, y: landmarks[i].y * h});
-
-      // HAIR COLOR: tint above forehead using forehead + top points
-      if(activeHairTint && activeTab === "haircolor"){
-        const forehead = p(10);   // near forehead
-        const topHead = p(151);   // top of head-ish
-        const radiusX = (Math.abs(p(234).x - p(454).x) * 0.7) || (w*0.4);
-        const radiusY = Math.abs(forehead.y - topHead.y) * 1.4 || (h*0.25);
-
-        ctx.fillStyle = activeHairTint;
-        ctx.beginPath();
-        ctx.ellipse(w/2, topHead.y, radiusX, radiusY, 0, 0, Math.PI*2);
-        ctx.fill();
-      }
-
-      // HAIRCUT: shapes aligned to head
-      if(activeHaircut && activeTab === "haircut" && activeHaircut !== "none"){
-        const topHead = p(151);
-        const chin = p(152);
-        const leftHead = p(234);
-        const rightHead = p(454);
-
-        const headWidth = Math.abs(rightHead.x - leftHead.x);
-        const headHeight = Math.abs(chin.y - topHead.y);
-
-        ctx.fillStyle = "rgba(0,0,0,0.65)";
-
-        if(activeHaircut === "curtain"){
-          ctx.beginPath();
-          ctx.ellipse((leftHead.x+rightHead.x)/2, topHead.y + headHeight*0.15, headWidth*0.7, headHeight*0.45, 0, 0, Math.PI*2);
-          ctx.fill();
-        }
-
-        if(activeHaircut === "bob"){
-          ctx.beginPath();
-          const x = leftHead.x - headWidth*0.15;
-          const y = topHead.y - headHeight*0.05;
-          const wRect = headWidth*1.3;
-          const hRect = headHeight*0.8;
-          ctx.roundRect(x, y, wRect, hRect, 40);
-          ctx.fill();
-        }
-
-        if(activeHaircut === "wolf"){
-          ctx.beginPath();
-          ctx.moveTo(leftHead.x - headWidth*0.2, topHead.y - headHeight*0.1);
-          ctx.lineTo(rightHead.x + headWidth*0.2, topHead.y - headHeight*0.1);
-          ctx.lineTo(rightHead.x + headWidth*0.1, chin.y + headHeight*0.1);
-          ctx.lineTo(leftHead.x - headWidth*0.1, chin.y + headHeight*0.1);
-          ctx.closePath();
-          ctx.fill();
-        }
-
-        if(activeHaircut === "pixie"){
-          ctx.beginPath();
-          ctx.ellipse((leftHead.x+rightHead.x)/2, topHead.y + headHeight*0.05, headWidth*0.6, headHeight*0.35, 0, 0, Math.PI*2);
-          ctx.fill();
-        }
-
-        if(activeHaircut === "curls"){
-          const centerY = topHead.y + headHeight*0.2;
-          const radius = headHeight*0.18;
-          for(let i=0;i<7;i++){
-            const t = -0.6 + i*(1.2/6);
-            const x = (leftHead.x+rightHead.x)/2 + t*headWidth*0.7;
-            ctx.beginPath();
-            ctx.arc(x, centerY, radius, 0, Math.PI*2);
-            ctx.fill();
-          }
-        }
-      }
-
-      // MAKEUP: lips, eyes, cheeks using landmarks
-      if(activeMakeup && activeTab === "makeup" && activeMakeup !== "none"){
-        // Lips polygon (outer)
-        const lipIndices = [61,146,91,181,84,17,314,405,321,375,291,308];
-        const lipPoints = lipIndices.map(p);
-        // Eyes (simple rectangles around eyes)
-        const leftEyeCenter = p(159);
-        const rightEyeCenter = p(386);
-        const eyeWidth = headWidth(landmarks,w) * 0.25;
-        const eyeHeight = eyeWidth * 0.4;
-
-        // Cheeks
-        const leftCheek = p(234);
-        const rightCheek = p(454);
-
-        if(activeMakeup === "clean"){
-          ctx.globalAlpha = 0.45;
-          ctx.fillStyle = "rgba(255,200,180,1)";
-          drawPolygon(lipPoints, ctx.fillStyle);
-          ctx.beginPath();
-          ctx.ellipse(leftCheek.x, leftCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.18, headHeight(landmarks,h)*0.12, 0, 0, Math.PI*2);
-          ctx.ellipse(rightCheek.x, rightCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.18, headHeight(landmarks,h)*0.12, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.globalAlpha = 1;
-        }
-
-        if(activeMakeup === "softglam"){
-          ctx.globalAlpha = 0.6;
-          ctx.fillStyle = "rgba(180,60,90,1)";
-          drawPolygon(lipPoints, ctx.fillStyle);
-
-          ctx.fillStyle = "rgba(200,120,150,1)";
-          ctx.fillRect(leftEyeCenter.x-eyeWidth/2, leftEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
-          ctx.fillRect(rightEyeCenter.x-eyeWidth/2, rightEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
-
-          ctx.fillStyle = "rgba(255,170,170,1)";
-          ctx.beginPath();
-          ctx.ellipse(leftCheek.x, leftCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.2, headHeight(landmarks,h)*0.13, 0, 0, Math.PI*2);
-          ctx.ellipse(rightCheek.x, rightCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.2, headHeight(landmarks,h)*0.13, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.globalAlpha = 1;
-        }
-
-        if(activeMakeup === "fairy"){
-          ctx.globalAlpha = 0.6;
-          ctx.fillStyle = "rgba(210,140,255,1)";
-          ctx.fillRect(leftEyeCenter.x-eyeWidth/2, leftEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
-          ctx.fillRect(rightEyeCenter.x-eyeWidth/2, rightEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
-
-          ctx.fillStyle = "rgba(255,190,220,1)";
-          drawPolygon(lipPoints, ctx.fillStyle);
-
-          ctx.fillStyle = "rgba(255,210,240,1)";
-          ctx.beginPath();
-          ctx.ellipse(leftCheek.x, leftCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.22, headHeight(landmarks,h)*0.14, 0, 0, Math.PI*2);
-          ctx.ellipse(rightCheek.x, rightCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.22, headHeight(landmarks,h)*0.14, 0, 0, Math.PI*2);
-          ctx.fill();
-          ctx.globalAlpha = 1;
-        }
-
-        if(activeMakeup === "bold"){
-          ctx.globalAlpha = 0.7;
-          ctx.fillStyle = "rgba(160,40,60,1)";
-          drawPolygon(lipPoints, ctx.fillStyle);
-
-          ctx.fillStyle = "rgba(40,20,60,1)";
-          ctx.fillRect(leftEyeCenter.x-eyeWidth/2, leftEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
-          ctx.fillRect(rightEyeCenter.x-eyeWidth/2, rightEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
-          ctx.globalAlpha = 1;
-        }
-      }
-
-      ctx.restore();
+    function resizeCanvas(){
+      const rect = video.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
     }
+
+    window.addEventListener("resize", resizeCanvas);
 
     function headWidth(landmarks,w){
       const left = landmarks[234].x * w;
@@ -427,12 +332,212 @@
       return Math.abs(bottom-top);
     }
 
+    function drawPolygon(points, fillStyle, alpha=1){
+      if(!points || points.length===0) return;
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = fillStyle;
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for(let i=1;i<points.length;i++){
+        ctx.lineTo(points[i].x, points[i].y);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    async function loop(){
+      if(!faceLandmarker){
+        requestAnimationFrame(loop);
+        return;
+      }
+
+      const now = performance.now();
+      if(video.readyState < 2){
+        requestAnimationFrame(loop);
+        return;
+      }
+
+      const videoTime = video.currentTime;
+      if(videoTime === lastVideoTime){
+        requestAnimationFrame(loop);
+        return;
+      }
+      lastVideoTime = videoTime;
+
+      const w = canvas.width;
+      const h = canvas.height;
+
+      ctx.clearRect(0,0,w,h);
+
+      const results = faceLandmarker.detectForVideo(video, now);
+      if(!results.faceLandmarks || results.faceLandmarks.length === 0){
+        requestAnimationFrame(loop);
+        return;
+      }
+
+      const landmarks = results.faceLandmarks[0];
+      const p = i => ({x: landmarks[i].x * w, y: landmarks[i].y * h});
+
+      const hw = headWidth(landmarks,w);
+      const hh = headHeight(landmarks,h);
+      const topHead = p(10);
+      const chin = p(152);
+      const leftHead = p(234);
+      const rightHead = p(454);
+
+      // HAIR TINT (medium) – above forehead
+      if(activeHairTint && activeHairTint !== "none" && activeTab === "haircolor"){
+        const centerX = (leftHead.x + rightHead.x)/2;
+        const centerY = topHead.y - hh*0.1;
+        const rx = hw*0.8;
+        const ry = hh*0.7;
+        ctx.save();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = activeHairTint;
+        ctx.beginPath();
+        ctx.ellipse(centerX, centerY, rx, ry, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // HAIRCUT SHAPES – aligned to head
+      if(activeHaircut && activeHaircut !== "none" && activeTab === "haircut"){
+        ctx.save();
+        ctx.fillStyle = "rgba(0,0,0,0.45)";
+        ctx.strokeStyle = "rgba(255,255,255,0.6)";
+        ctx.lineWidth = 3;
+
+        const cx = (leftHead.x + rightHead.x)/2;
+
+        if(activeHaircut === "curtain"){
+          ctx.beginPath();
+          ctx.ellipse(cx, topHead.y + hh*0.1, hw*0.9, hh*0.6, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        if(activeHaircut === "bob"){
+          const x = leftHead.x - hw*0.2;
+          const y = topHead.y - hh*0.1;
+          const rw = hw*1.4;
+          const rh = hh*0.9;
+          ctx.beginPath();
+          ctx.roundRect(x, y, rw, rh, 40);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        if(activeHaircut === "wolf"){
+          ctx.beginPath();
+          ctx.moveTo(leftHead.x - hw*0.25, topHead.y - hh*0.1);
+          ctx.lineTo(rightHead.x + hw*0.25, topHead.y - hh*0.1);
+          ctx.lineTo(rightHead.x + hw*0.15, chin.y + hh*0.15);
+          ctx.lineTo(leftHead.x - hw*0.15, chin.y + hh*0.15);
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        if(activeHaircut === "pixie"){
+          ctx.beginPath();
+          ctx.ellipse(cx, topHead.y + hh*0.05, hw*0.8, hh*0.45, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.stroke();
+        }
+
+        if(activeHaircut === "curls"){
+          const centerY = topHead.y + hh*0.2;
+          const radius = hh*0.2;
+          for(let i=0;i<7;i++){
+            const t = -0.6 + i*(1.2/6);
+            const x = cx + t*hw*0.9;
+            ctx.beginPath();
+            ctx.arc(x, centerY, radius, 0, Math.PI*2);
+            ctx.fill();
+            ctx.stroke();
+          }
+        }
+
+        ctx.restore();
+      }
+
+      // MAKEUP – lips, eyes, cheeks
+      if(activeMakeup && activeMakeup !== "none" && activeTab === "makeup"){
+        const lipIdx = [61,146,91,181,84,17,314,405,321,375,291,308];
+        const lipPts = lipIdx.map(p);
+
+        const leftEyeCenter = p(159);
+        const rightEyeCenter = p(386);
+        const eyeW = hw*0.28;
+        const eyeH = eyeW*0.45;
+
+        const leftCheek = p(234);
+        const rightCheek = p(454);
+
+        if(activeMakeup === "clean"){
+          drawPolygon(lipPts,"rgba(255,190,180,1)",0.55);
+          ctx.save();
+          ctx.fillStyle = "rgba(255,210,190,0.45)";
+          ctx.beginPath();
+          ctx.ellipse(leftCheek.x, leftCheek.y+hh*0.05, hw*0.22, hh*0.14, 0, 0, Math.PI*2);
+          ctx.ellipse(rightCheek.x, rightCheek.y+hh*0.05, hw*0.22, hh*0.14, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.restore();
+        }
+
+        if(activeMakeup === "softglam"){
+          drawPolygon(lipPts,"rgba(190,70,100,1)",0.7);
+          ctx.save();
+          ctx.globalAlpha = 0.6;
+          ctx.fillStyle = "rgba(200,120,150,1)";
+          ctx.fillRect(leftEyeCenter.x-eyeW/2, leftEyeCenter.y-eyeH/2, eyeW, eyeH);
+          ctx.fillRect(rightEyeCenter.x-eyeW/2, rightEyeCenter.y-eyeH/2, eyeW, eyeH);
+          ctx.fillStyle = "rgba(255,170,170,1)";
+          ctx.beginPath();
+          ctx.ellipse(leftCheek.x, leftCheek.y+hh*0.05, hw*0.24, hh*0.15, 0, 0, Math.PI*2);
+          ctx.ellipse(rightCheek.x, rightCheek.y+hh*0.05, hw*0.24, hh*0.15, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.restore();
+        }
+
+        if(activeMakeup === "fairy"){
+          ctx.save();
+          ctx.globalAlpha = 0.65;
+          ctx.fillStyle = "rgba(210,160,255,1)";
+          ctx.fillRect(leftEyeCenter.x-eyeW/2, leftEyeCenter.y-eyeH/2, eyeW, eyeH);
+          ctx.fillRect(rightEyeCenter.x-eyeW/2, rightEyeCenter.y-eyeH/2, eyeW, eyeH);
+          drawPolygon(lipPts,"rgba(255,190,230,1)",0.7);
+          ctx.fillStyle = "rgba(255,210,240,1)";
+          ctx.beginPath();
+          ctx.ellipse(leftCheek.x, leftCheek.y+hh*0.05, hw*0.26, hh*0.16, 0, 0, Math.PI*2);
+          ctx.ellipse(rightCheek.x, rightCheek.y+hh*0.05, hw*0.26, hh*0.16, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.restore();
+        }
+
+        if(activeMakeup === "bold"){
+          drawPolygon(lipPts,"rgba(160,40,60,1)",0.8);
+          ctx.save();
+          ctx.globalAlpha = 0.7;
+          ctx.fillStyle = "rgba(40,20,60,1)";
+          ctx.fillRect(leftEyeCenter.x-eyeW/2, leftEyeCenter.y-eyeH/2, eyeW, eyeH);
+          ctx.fillRect(rightEyeCenter.x-eyeW/2, rightEyeCenter.y-eyeH/2, eyeW, eyeH);
+          ctx.restore();
+        }
+      }
+
+      requestAnimationFrame(loop);
+    }
+
     // Tabs
     document.querySelectorAll(".tab").forEach(tab=>{
       tab.addEventListener("click",()=>{
         document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
         tab.classList.add("active");
         activeTab = tab.dataset.tab;
+
         document.getElementById("panel-haircolor").style.display = activeTab==="haircolor" ? "block" : "none";
         document.getElementById("panel-haircut").style.display = activeTab==="haircut" ? "block" : "none";
         document.getElementById("panel-makeup").style.display = activeTab==="makeup" ? "block" : "none";
@@ -441,7 +546,10 @@
 
     // Hair color
     document.querySelectorAll(".swatch").forEach(s=>{
-      s.addEventListener("click",()=> activeHairTint = s.dataset.color);
+      s.addEventListener("click",()=>{
+        const c = s.dataset.color;
+        activeHairTint = (c === "none") ? null : c;
+      });
     });
 
     // Haircut
@@ -449,7 +557,8 @@
       btn.addEventListener("click",()=>{
         document.querySelectorAll("[data-haircut]").forEach(b=>b.classList.remove("active"));
         btn.classList.add("active");
-        activeHaircut = btn.dataset.haircut;
+        const v = btn.dataset.haircut;
+        activeHaircut = (v === "none") ? null : v;
       });
     });
 
@@ -458,40 +567,16 @@
       btn.addEventListener("click",()=>{
         document.querySelectorAll("[data-makeup]").forEach(b=>b.classList.remove("active"));
         btn.classList.add("active");
-        activeMakeup = btn.dataset.makup || btn.dataset.makeup;
+        const v = btn.dataset.makeup;
+        activeMakeup = (v === "none") ? null : v;
       });
     });
 
-    // Fix typo-safe
-    document.querySelectorAll("[data-makeup]").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        activeMakeup = btn.getAttribute("data-makeup");
-      });
-    });
-
-    // Start MediaPipe FaceMesh + camera
-    const faceMesh = new FaceMesh.FaceMesh({
-      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
-    });
-
-    faceMesh.setOptions({
-      maxNumFaces: 1,
-      refineLandmarks: true,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5
-    });
-
-    faceMesh.onResults(onResults);
-
-    const camera = new Camera.Camera(video, {
-      onFrame: async () => {
-        await faceMesh.send({image: video});
-      },
-      width: 640,
-      height: 480
-    });
-
-    camera.start();
+    // Boot
+    (async () => {
+      await initAI();
+      await startCamera();
+    })();
   </script>
 </body>
 </html>
