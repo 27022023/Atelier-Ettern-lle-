@@ -197,7 +197,82 @@
     }
 
     startCamera();
-  </script>
+<script>
+
+// HAIRCUT OVERLAY
+const haircutOverlay = document.createElement("img");
+haircutOverlay.id = "haircutOverlay";
+haircutOverlay.style.position = "absolute";
+haircutOverlay.style.top = "0";
+haircutOverlay.style.left = "0";
+haircutOverlay.style.width = "100%";
+haircutOverlay.style.pointerEvents = "none";
+haircutOverlay.style.zIndex = "999";
+document.body.appendChild(haircutOverlay);
+
+// HAIR COLOR LAYER
+const hairColorLayer = document.createElement("div");
+hairColorLayer.id = "hairColorLayer";
+hairColorLayer.style.position = "absolute";
+hairColorLayer.style.top = "0";
+hairColorLayer.style.left = "0";
+hairColorLayer.style.width = "100%";
+hairColorLayer.style.height = "100%";
+hairColorLayer.style.mixBlendMode = "soft-light";
+hairColorLayer.style.pointerEvents = "none";
+hairColorLayer.style.zIndex = "998";
+document.body.appendChild(hairColorLayer);
+
+// MAKEUP FILTER
+function applyMakeup(type) {
+    const video = document.querySelector("video");
+    if (!video) return;
+
+    const presets = {
+        clean: "brightness(1.1) saturate(1.1)",
+        natural: "brightness(1.05) contrast(1.05)",
+        stargirl: "brightness(1.2) saturate(1.3)",
+        fashion: "contrast(1.3) saturate(1.2)",
+        bold: "contrast(1.4) saturate(1.4)",
+        oldmoney: "brightness(0.95) contrast(1.1)",
+        french: "contrast(1.2) saturate(1.1)",
+        coquette: "brightness(1.15) saturate(1.25)"
+    };
+
+    video.style.filter = presets[type] || "none";
+}
+
+// HAIR COLOR
+function applyHairColor(color) {
+    const colors = {
+        brown: "rgba(120, 72, 30, 0.35)",
+        black: "rgba(20, 20, 20, 0.45)",
+        blonde: "rgba(255, 220, 120, 0.35)",
+        ginger: "rgba(200, 80, 20, 0.35)",
+        red: "rgba(220, 40, 20, 0.35)"
+    };
+
+    hairColorLayer.style.background = colors[color] || "transparent";
+}
+
+// HAIRCUT
+function applyHaircut(style) {
+    haircutOverlay.src = `haircuts/${style}.png`;
+}
+
+// BUTTON CLICK HANDLER
+document.querySelectorAll(".button-row button").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const effect = btn.dataset.effect;
+        const value = btn.dataset.value;
+
+        if (effect === "haircut") applyHaircut(value);
+        if (effect === "haircolor") applyHairColor(value);
+        if (effect === "makeup") applyMakeup(value);
+    });
+});
+
+</script>
 </body>
 </html>
       
