@@ -1,235 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Beauty Mirror – Filters Only</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #111;
-            color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            padding: 30px 10px;
-        }
+  <meta charset="UTF-8">
+  <title>Beauty Mirror</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .app {
-            max-width: 900px;
-            width: 100%;
-        }
+  <style>
+    body{
+      margin:0;
+      background:#f7e7c9;
+      font-family:Arial, sans-serif;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:20px;
+    }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #f7e7b8;
-        }
+    .mirror{
+      width:360px;
+      height:360px;
+      border-radius:50%;
+      padding:12px;
+      background:radial-gradient(circle,#fff7e0,#f4c76c);
+      box-shadow:0 0 25px rgba(0,0,0,0.25), inset 0 0 12px rgba(255,255,255,0.9);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
 
-        .mirror-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
+    .mirror-inner{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      overflow:hidden;
+      position:relative;
+      background:#000;
+    }
 
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            aspect-ratio: 3 / 4;
-            margin: 0 auto;
-            border-radius: 30px;
-            padding: 8px;
-            background: radial-gradient(circle at top, #f7e7b8, #d9b56f, #5a3b12);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-        }
+    video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transform:scaleX(-1);
+      filter:var(--video-filter, none);
+    }
 
-        video {
-            width: 100%;
-            height: 100%;
-            border-radius: 24px;
-            object-fit: cover;
-            background: #000;
-        }
+    .controls{
+      margin-top:20px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+    }
 
-        .filters {
-            text-align: center;
-            margin: 20px 0 10px;
-        }
-
-        .filters h3 {
-            margin-bottom: 10px;
-            color: #f7e7b8;
-        }
-
-        .filter-row {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .filters button {
-            padding: 8px 16px;
-            border-radius: 999px;
-            border: none;
-            cursor: pointer;
-            font-size: 13px;
-            background: #333;
-            color: #f5f5f5;
-            transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-        }
-
-        .filters button:hover {
-            background: #555;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-        }
-
-        .filters button.active {
-            background: #f7e7b8;
-            color: #111;
-        }
-
-        .error {
-            text-align: center;
-            color: #ffb3b3;
-            margin-top: 10px;
-            min-height: 20px;
-            font-size: 14px;
-        }
-
-        .group-label {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #d0c7a0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-    </style>
+    button{
+      padding:8px 14px;
+      border:none;
+      border-radius:20px;
+      background:#000;
+      color:#fff;
+      cursor:pointer;
+      font-size:14px;
+    }
+  </style>
 </head>
 <body>
-<div class="app">
-    <h1>Beauty Mirror</h1>
 
-    <div class="mirror-wrapper">
-        <div class="video-container">
-            <video id="video" autoplay playsinline></video>
-        </div>
+  <div class="mirror">
+    <div class="mirror-inner">
+      <video id="video" autoplay playsinline muted></video>
     </div>
+  </div>
 
-    <div class="error" id="errorMsg"></div>
+  <div class="controls">
+    <button onclick="setFilter('none')">No Filter</button>
+    <button onclick="setFilter('softglam')">Soft Glam</button>
+    <button onclick="setFilter('warm')">Warm Glow</button>
+    <button onclick="setFilter('cool')">Cool Tone</button>
+    <button onclick="setFilter('smooth')">Smooth Skin</button>
+    <button onclick="setFilter('dramatic')">Dramatic</button>
+  </div>
 
-    <div class="filters">
-        <h3>Filters</h3>
-
-        <div class="group-label">Basic / Soft</div>
-        <div class="filter-row">
-            <button data-filter="none" class="active">Original</button>
-            <button data-filter="soft">Soft Glow</button>
-            <button data-filter="bright">Bright & Clear</button>
-            <button data-filter="warm">Warm Tone</button>
-            <button data-filter="cool">Cool Tone</button>
-        </div>
-
-        <div class="group-label">Aesthetic</div>
-        <div class="filter-row">
-            <button data-filter="vintage">Vintage</button>
-            <button data-filter="sepia">Sepia Film</button>
-            <button data-filter="fade">Faded Pastel</button>
-            <button data-filter="dreamy">Dreamy</button>
-        </div>
-
-        <div class="group-label">Social / Beauty</div>
-        <div class="filter-row">
-            <button data-filter="beautysoft">Beauty Soft</button>
-            <button data-filter="glow">Glow</button>
-            <button data-filter="dramatic">Dramatic</button>
-            <button data-filter="pop">Color Pop</button>
-        </div>
-    </div>
-</div>
-
-<script>
+  <script>
     const video = document.getElementById("video");
-    const errorMsg = document.getElementById("errorMsg");
 
-    async function startCamera() {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-            video.srcObject = stream;
-            errorMsg.textContent = "";
-        } catch (err) {
-            console.error(err);
-            errorMsg.textContent = "Camera access blocked or unavailable.";
-        }
-    }
-
-    function applyFilter(type) {
-        switch (type) {
-            case "none":
-                video.style.filter = "none";
-                break;
-
-            // BASIC / SOFT
-            case "soft":
-                video.style.filter = "brightness(1.05) contrast(1.02) saturate(1.05)";
-                break;
-            case "bright":
-                video.style.filter = "brightness(1.15) contrast(1.08)";
-                break;
-            case "warm":
-                video.style.filter = "brightness(1.05) contrast(1.05) saturate(1.1) hue-rotate(10deg)";
-                break;
-            case "cool":
-                video.style.filter = "brightness(1.02) contrast(1.05) saturate(1.05) hue-rotate(-10deg)";
-                break;
-
-            // AESTHETIC
-            case "vintage":
-                video.style.filter = "contrast(1.1) saturate(0.8) sepia(0.3)";
-                break;
-            case "sepia":
-                video.style.filter = "sepia(0.8) contrast(1.05)";
-                break;
-            case "fade":
-                video.style.filter = "brightness(1.1) contrast(0.9) saturate(0.8)";
-                break;
-            case "dreamy":
-                video.style.filter = "brightness(1.15) contrast(0.95) saturate(1.1)";
-                break;
-
-            // SOCIAL / BEAUTY
-            case "beautysoft":
-                video.style.filter = "brightness(1.08) contrast(1.02) saturate(1.08) blur(0.3px)";
-                break;
-            case "glow":
-                video.style.filter = "brightness(1.18) contrast(1.05) saturate(1.15)";
-                break;
-            case "dramatic":
-                video.style.filter = "contrast(1.35) saturate(1.1)";
-                break;
-            case "pop":
-                video.style.filter = "contrast(1.2) saturate(1.3)";
-                break;
-
-            default:
-                video.style.filter = "none";
-        }
-    }
-
-    document.querySelectorAll(".filters button").forEach(btn => {
-        btn.addEventListener("click", () => {
-            document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            const type = btn.dataset.filter;
-            applyFilter(type);
+    async function startCamera(){
+      try{
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video:{facingMode:"user"},
+          audio:false
         });
-    });
+        video.srcObject = stream;
+      }catch(e){
+        alert("Camera access failed: " + e.message);
+      }
+    }
+
+    function setFilter(name){
+      let filter = "none";
+
+      if(name === "softglam"){
+        filter = "brightness(1.15) contrast(1.1) saturate(1.25) blur(0.5px)";
+      }else if(name === "warm"){
+        filter = "brightness(1.1) contrast(1.05) sepia(0.25)";
+      }else if(name === "cool"){
+        filter = "brightness(1.05) contrast(1.1) hue-rotate(20deg)";
+      }else if(name === "smooth"){
+        filter = "brightness(1.1) blur(1px)";
+      }else if(name === "dramatic"){
+        filter = "contrast(1.4) saturate(1.2)";
+      }
+
+      video.style.setProperty("--video-filter", filter);
+    }
 
     startCamera();
-</script>
+  </script>
 </body>
 </html>
-            
-                      
+        
