@@ -55,7 +55,6 @@
       gap:18px;
     }
 
-    /* mirror */
     .mirror-wrap{
       display:flex;
       justify-content:center;
@@ -90,7 +89,6 @@
       object-fit:cover;
     }
 
-    /* tabs */
     .tabs{
       display:flex;
       justify-content:center;
@@ -170,7 +168,7 @@
   <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
   <h1>Live Beauty Try‑On</h1>
-  <div class="subtitle">Try hair colors, haircuts, and makeup live in your golden mirror.</div>
+  <div class="subtitle">Real‑time face tracking for hair, haircuts and makeup in your golden mirror.</div>
 
   <div class="wrapper">
 
@@ -189,7 +187,6 @@
       <button class="tab" data-tab="makeup">Makeup</button>
     </div>
 
-    <!-- Hair color panel -->
     <div class="panel" id="panel-haircolor">
       <div class="swatches">
         <div class="swatch" data-color="rgba(230,200,140,0.7)" style="background:#e6c88c;"></div>
@@ -201,7 +198,6 @@
       </div>
     </div>
 
-    <!-- Haircut panel -->
     <div class="panel" id="panel-haircut" style="display:none;">
       <div class="styles-grid">
         <div class="style-pill" data-haircut="curtain">Curtain Bangs</div>
@@ -213,7 +209,6 @@
       </div>
     </div>
 
-    <!-- Makeup panel -->
     <div class="panel" id="panel-makeup" style="display:none;">
       <div class="styles-grid">
         <div class="style-pill" data-makeup="clean">Clean Glow</div>
@@ -226,6 +221,10 @@
 
   </div>
 
+  <!-- MediaPipe FaceMesh + camera utils -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+
   <script>
     const video = document.getElementById("video");
     const canvas = document.getElementById("overlay");
@@ -236,143 +235,216 @@
     let activeMakeup = null;
     let activeTab = "haircolor";
 
-    async function startCamera(){
-      const stream = await navigator.mediaDevices.getUserMedia({video:true});
-      video.srcObject = stream;
-      video.onloadedmetadata = () => {
-        resizeCanvas();
-        requestAnimationFrame(drawLoop);
-      };
+    function resizeCanvas(width, height){
+      canvas.width = width;
+      canvas.height = height;
     }
 
-    function resizeCanvas(){
-      const rect = video.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+    function drawPolygon(points, fillStyle){
+      if(points.length === 0) return;
+      ctx.fillStyle = fillStyle;
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for(let i=1;i<points.length;i++){
+        ctx.lineTo(points[i].x, points[i].y);
+      }
+      ctx.closePath();
+      ctx.fill();
     }
 
-    function drawLoop(){
+    function onResults(results){
+      const img = results.image;
+      resizeCanvas(img.width, img.height);
+      ctx.save();
       ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
 
+      if(!results.multiFaceLandmarks || results.multiFaceLandmarks.length === 0){
+        ctx.restore();
+        return;
+      }
+
+      const landmarks = results.multiFaceLandmarks[0];
       const w = canvas.width;
       const h = canvas.height;
 
-      // HAIR TINT (top 40%)
-      if(activeHairTint && activeTab==="haircolor"){
+      const p = i => ({x: landmarks[i].x * w, y: landmarks[i].y * h});
+
+      // HAIR COLOR: tint above forehead using forehead + top points
+      if(activeHairTint && activeTab === "haircolor"){
+        const forehead = p(10);   // near forehead
+        const topHead = p(151);   // top of head-ish
+        const radiusX = (Math.abs(p(234).x - p(454).x) * 0.7) || (w*0.4);
+        const radiusY = Math.abs(forehead.y - topHead.y) * 1.4 || (h*0.25);
+
         ctx.fillStyle = activeHairTint;
         ctx.beginPath();
-        ctx.ellipse(w/2, h*0.18, w*0.55, h*0.35, 0, 0, Math.PI*2);
+        ctx.ellipse(w/2, topHead.y, radiusX, radiusY, 0, 0, Math.PI*2);
         ctx.fill();
       }
 
-      // HAIRCUT SHAPES
-      if(activeHaircut && activeTab==="haircut" && activeHaircut!=="none"){
+      // HAIRCUT: shapes aligned to head
+      if(activeHaircut && activeTab === "haircut" && activeHaircut !== "none"){
+        const topHead = p(151);
+        const chin = p(152);
+        const leftHead = p(234);
+        const rightHead = p(454);
+
+        const headWidth = Math.abs(rightHead.x - leftHead.x);
+        const headHeight = Math.abs(chin.y - topHead.y);
+
         ctx.fillStyle = "rgba(0,0,0,0.65)";
 
-        if(activeHaircut==="curtain"){
+        if(activeHaircut === "curtain"){
           ctx.beginPath();
-          ctx.ellipse(w/2, h*0.22, w*0.6, h*0.38, 0, 0, Math.PI*2);
+          ctx.ellipse((leftHead.x+rightHead.x)/2, topHead.y + headHeight*0.15, headWidth*0.7, headHeight*0.45, 0, 0, Math.PI*2);
           ctx.fill();
         }
 
-        if(activeHaircut==="bob"){
+        if(activeHaircut === "bob"){
           ctx.beginPath();
-          ctx.roundRect(w*0.12, h*0.05, w*0.76, h*0.55, 60);
+          const x = leftHead.x - headWidth*0.15;
+          const y = topHead.y - headHeight*0.05;
+          const wRect = headWidth*1.3;
+          const hRect = headHeight*0.8;
+          ctx.roundRect(x, y, wRect, hRect, 40);
           ctx.fill();
         }
 
-        if(activeHaircut==="wolf"){
+        if(activeHaircut === "wolf"){
           ctx.beginPath();
-          ctx.moveTo(w*0.1, h*0.05);
-          ctx.lineTo(w*0.9, h*0.05);
-          ctx.lineTo(w*0.8, h*0.65);
-          ctx.lineTo(w*0.2, h*0.65);
+          ctx.moveTo(leftHead.x - headWidth*0.2, topHead.y - headHeight*0.1);
+          ctx.lineTo(rightHead.x + headWidth*0.2, topHead.y - headHeight*0.1);
+          ctx.lineTo(rightHead.x + headWidth*0.1, chin.y + headHeight*0.1);
+          ctx.lineTo(leftHead.x - headWidth*0.1, chin.y + headHeight*0.1);
           ctx.closePath();
           ctx.fill();
         }
 
-        if(activeHaircut==="pixie"){
+        if(activeHaircut === "pixie"){
           ctx.beginPath();
-          ctx.ellipse(w/2, h*0.18, w*0.5, h*0.28, 0, 0, Math.PI*2);
+          ctx.ellipse((leftHead.x+rightHead.x)/2, topHead.y + headHeight*0.05, headWidth*0.6, headHeight*0.35, 0, 0, Math.PI*2);
           ctx.fill();
         }
 
-        if(activeHaircut==="curls"){
+        if(activeHaircut === "curls"){
+          const centerY = topHead.y + headHeight*0.2;
+          const radius = headHeight*0.18;
           for(let i=0;i<7;i++){
+            const t = -0.6 + i*(1.2/6);
+            const x = (leftHead.x+rightHead.x)/2 + t*headWidth*0.7;
             ctx.beginPath();
-            ctx.arc(w*(0.15+i*0.12), h*0.22, h*0.14, 0, Math.PI*2);
+            ctx.arc(x, centerY, radius, 0, Math.PI*2);
             ctx.fill();
           }
         }
       }
 
-      // MAKEUP (very visible)
-      if(activeMakeup && activeTab==="makeup" && activeMakeup!=="none"){
+      // MAKEUP: lips, eyes, cheeks using landmarks
+      if(activeMakeup && activeTab === "makeup" && activeMakeup !== "none"){
+        // Lips polygon (outer)
+        const lipIndices = [61,146,91,181,84,17,314,405,321,375,291,308];
+        const lipPoints = lipIndices.map(p);
+        // Eyes (simple rectangles around eyes)
+        const leftEyeCenter = p(159);
+        const rightEyeCenter = p(386);
+        const eyeWidth = headWidth(landmarks,w) * 0.25;
+        const eyeHeight = eyeWidth * 0.4;
 
-        if(activeMakeup==="clean"){
-          ctx.fillStyle="rgba(255,200,180,0.45)";
+        // Cheeks
+        const leftCheek = p(234);
+        const rightCheek = p(454);
+
+        if(activeMakeup === "clean"){
+          ctx.globalAlpha = 0.45;
+          ctx.fillStyle = "rgba(255,200,180,1)";
+          drawPolygon(lipPoints, ctx.fillStyle);
           ctx.beginPath();
-          ctx.ellipse(w/2, h*0.62, w*0.45, h*0.28, 0, 0, Math.PI*2);
+          ctx.ellipse(leftCheek.x, leftCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.18, headHeight(landmarks,h)*0.12, 0, 0, Math.PI*2);
+          ctx.ellipse(rightCheek.x, rightCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.18, headHeight(landmarks,h)*0.12, 0, 0, Math.PI*2);
           ctx.fill();
+          ctx.globalAlpha = 1;
         }
 
-        if(activeMakeup==="softglam"){
-          ctx.fillStyle="rgba(255,150,150,0.55)";
-          ctx.beginPath();
-          ctx.ellipse(w/2, h*0.68, w*0.42, h*0.22, 0, 0, Math.PI*2);
-          ctx.fill();
+        if(activeMakeup === "softglam"){
+          ctx.globalAlpha = 0.6;
+          ctx.fillStyle = "rgba(180,60,90,1)";
+          drawPolygon(lipPoints, ctx.fillStyle);
 
-          ctx.fillStyle="rgba(180,90,140,0.55)";
-          ctx.fillRect(w*0.22, h*0.38, w*0.56, h*0.12);
+          ctx.fillStyle = "rgba(200,120,150,1)";
+          ctx.fillRect(leftEyeCenter.x-eyeWidth/2, leftEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
+          ctx.fillRect(rightEyeCenter.x-eyeWidth/2, rightEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
+
+          ctx.fillStyle = "rgba(255,170,170,1)";
+          ctx.beginPath();
+          ctx.ellipse(leftCheek.x, leftCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.2, headHeight(landmarks,h)*0.13, 0, 0, Math.PI*2);
+          ctx.ellipse(rightCheek.x, rightCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.2, headHeight(landmarks,h)*0.13, 0, 0, Math.PI*2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
         }
 
-        if(activeMakeup==="fairy"){
-          ctx.fillStyle="rgba(200,160,255,0.55)";
-          ctx.beginPath();
-          ctx.ellipse(w*0.35, h*0.4, w*0.22, h*0.12, 0, 0, Math.PI*2);
-          ctx.ellipse(w*0.65, h*0.4, w*0.22, h*0.12, 0, 0, Math.PI*2);
-          ctx.fill();
+        if(activeMakeup === "fairy"){
+          ctx.globalAlpha = 0.6;
+          ctx.fillStyle = "rgba(210,140,255,1)";
+          ctx.fillRect(leftEyeCenter.x-eyeWidth/2, leftEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
+          ctx.fillRect(rightEyeCenter.x-eyeWidth/2, rightEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
 
-          ctx.fillStyle="rgba(255,190,220,0.55)";
+          ctx.fillStyle = "rgba(255,190,220,1)";
+          drawPolygon(lipPoints, ctx.fillStyle);
+
+          ctx.fillStyle = "rgba(255,210,240,1)";
           ctx.beginPath();
-          ctx.ellipse(w/2, h*0.72, w*0.36, h*0.2, 0, 0, Math.PI*2);
+          ctx.ellipse(leftCheek.x, leftCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.22, headHeight(landmarks,h)*0.14, 0, 0, Math.PI*2);
+          ctx.ellipse(rightCheek.x, rightCheek.y+headHeight(landmarks,h)*0.05, headWidth(landmarks,w)*0.22, headHeight(landmarks,h)*0.14, 0, 0, Math.PI*2);
           ctx.fill();
+          ctx.globalAlpha = 1;
         }
 
-        if(activeMakeup==="bold"){
-          ctx.fillStyle="rgba(160,40,60,0.75)";
-          ctx.beginPath();
-          ctx.ellipse(w/2, h*0.74, w*0.34, h*0.16, 0, 0, Math.PI*2);
-          ctx.fill();
+        if(activeMakeup === "bold"){
+          ctx.globalAlpha = 0.7;
+          ctx.fillStyle = "rgba(160,40,60,1)";
+          drawPolygon(lipPoints, ctx.fillStyle);
 
-          ctx.fillStyle="rgba(40,20,60,0.7)";
-          ctx.fillRect(w*0.22, h*0.38, w*0.56, h*0.12);
+          ctx.fillStyle = "rgba(40,20,60,1)";
+          ctx.fillRect(leftEyeCenter.x-eyeWidth/2, leftEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
+          ctx.fillRect(rightEyeCenter.x-eyeWidth/2, rightEyeCenter.y-eyeHeight/2, eyeWidth, eyeHeight);
+          ctx.globalAlpha = 1;
         }
       }
 
-      requestAnimationFrame(drawLoop);
+      ctx.restore();
     }
 
-    // TAB SWITCHING
+    function headWidth(landmarks,w){
+      const left = landmarks[234].x * w;
+      const right = landmarks[454].x * w;
+      return Math.abs(right-left);
+    }
+
+    function headHeight(landmarks,h){
+      const top = landmarks[10].y * h;
+      const bottom = landmarks[152].y * h;
+      return Math.abs(bottom-top);
+    }
+
+    // Tabs
     document.querySelectorAll(".tab").forEach(tab=>{
       tab.addEventListener("click",()=>{
         document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
         tab.classList.add("active");
-
         activeTab = tab.dataset.tab;
-
         document.getElementById("panel-haircolor").style.display = activeTab==="haircolor" ? "block" : "none";
         document.getElementById("panel-haircut").style.display = activeTab==="haircut" ? "block" : "none";
         document.getElementById("panel-makeup").style.display = activeTab==="makeup" ? "block" : "none";
       });
     });
 
-    // HAIR COLOR
+    // Hair color
     document.querySelectorAll(".swatch").forEach(s=>{
       s.addEventListener("click",()=> activeHairTint = s.dataset.color);
     });
 
-    // HAIRCUT
+    // Haircut
     document.querySelectorAll("[data-haircut]").forEach(btn=>{
       btn.addEventListener("click",()=>{
         document.querySelectorAll("[data-haircut]").forEach(b=>b.classList.remove("active"));
@@ -381,16 +453,45 @@
       });
     });
 
-    // MAKEUP
+    // Makeup
     document.querySelectorAll("[data-makeup]").forEach(btn=>{
       btn.addEventListener("click",()=>{
         document.querySelectorAll("[data-makeup]").forEach(b=>b.classList.remove("active"));
         btn.classList.add("active");
-        activeMakeup = btn.dataset.makeup;
+        activeMakeup = btn.dataset.makup || btn.dataset.makeup;
       });
     });
 
-    startCamera();
+    // Fix typo-safe
+    document.querySelectorAll("[data-makeup]").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        activeMakeup = btn.getAttribute("data-makeup");
+      });
+    });
+
+    // Start MediaPipe FaceMesh + camera
+    const faceMesh = new FaceMesh.FaceMesh({
+      locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+    });
+
+    faceMesh.setOptions({
+      maxNumFaces: 1,
+      refineLandmarks: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+
+    faceMesh.onResults(onResults);
+
+    const camera = new Camera.Camera(video, {
+      onFrame: async () => {
+        await faceMesh.send({image: video});
+      },
+      width: 640,
+      height: 480
+    });
+
+    camera.start();
   </script>
 </body>
 </html>
