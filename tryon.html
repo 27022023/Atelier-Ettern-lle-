@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Beauty Mirror</title>
+    <title>Beauty Mirror – Filters Only</title>
     <style>
         body {
             margin: 0;
@@ -51,41 +51,9 @@
             background: #000;
         }
 
-        #hairColorLayer,
-        #haircutOverlay,
-        #labelOverlay {
-            position: absolute;
-            left: 8px;
-            top: 8px;
-            width: calc(100% - 16px);
-            height: calc(100% - 16px);
-            pointer-events: none;
-            border-radius: 24px;
-        }
-
-        #hairColorLayer {
-            mix-blend-mode: soft-light;
-            z-index: 2;
-        }
-
-        #haircutOverlay {
-            z-index: 3;
-            border: 3px solid transparent;
-        }
-
-        #labelOverlay {
-            z-index: 4;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding-top: 10px;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
         .filters {
             text-align: center;
-            margin: 15px 0 10px;
+            margin: 20px 0 10px;
         }
 
         .filters h3 {
@@ -93,11 +61,11 @@
             color: #f7e7b8;
         }
 
-        .filters .filter-row {
+        .filter-row {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
 
         .filters button {
@@ -105,65 +73,22 @@
             border-radius: 999px;
             border: none;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             background: #333;
             color: #f5f5f5;
-            transition: background 0.15s ease, transform 0.15s ease;
+            transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
         }
 
         .filters button:hover {
             background: #555;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
 
-        .beauty-section {
-            width: 100%;
-            text-align: center;
-            margin-top: 25px;
-        }
-
-        .beauty-section h3 {
-            font-size: 20px;
-            margin: 25px 0 15px;
-            color: #d4af37;
-            font-weight: 600;
-        }
-
-        .button-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 22px; /* wide spacing */
-            margin-bottom: 35px;
-        }
-
-        .button-row button {
-            padding: 14px 26px;
-            border-radius: 16px;
-            border: none;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            color: black; /* readable */
-            background: linear-gradient(to bottom, #f8e7b8, #d9b56f);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.25);
-            transition: transform 0.15s ease, box-shadow 0.15s ease, outline 0.15s ease;
-            outline: 2px solid transparent;
-            outline-offset: 2px;
-        }
-
-        .button-row button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.35);
-        }
-
-        .button-row button:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-        }
-
-        .button-row button.active {
-            outline: 2px solid #ffffff;
+        .filters button.active {
+            background: #f7e7b8;
+            color: #111;
         }
 
         .error {
@@ -172,6 +97,14 @@
             margin-top: 10px;
             min-height: 20px;
             font-size: 14px;
+        }
+
+        .group-label {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #d0c7a0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -182,9 +115,6 @@
     <div class="mirror-wrapper">
         <div class="video-container">
             <video id="video" autoplay playsinline></video>
-            <div id="hairColorLayer"></div>
-            <div id="haircutOverlay"></div>
-            <div id="labelOverlay"></div>
         </div>
     </div>
 
@@ -192,63 +122,37 @@
 
     <div class="filters">
         <h3>Filters</h3>
+
+        <div class="group-label">Basic / Soft</div>
         <div class="filter-row">
-            <button data-filter="none">Original</button>
-            <button data-filter="soft">Soft</button>
-            <button data-filter="cool">Cool</button>
-            <button data-filter="warm">Warm</button>
-        </div>
-    </div>
-
-    <div class="beauty-section">
-
-        <h3>Haircuts</h3>
-        <div class="button-row" id="haircutRow">
-            <button data-effect="haircut" data-value="Butterfly Cut">Butterfly Cut</button>
-            <button data-effect="haircut" data-value="Wolf Cut">Wolf Cut</button>
-            <button data-effect="haircut" data-value="Pixie Cut">Pixie Cut</button>
-            <button data-effect="haircut" data-value="French Bob">French Bob</button>
-            <button data-effect="haircut" data-value="Layers">Layers</button>
-            <button data-effect="haircut" data-value="Curtain Bangs">Curtain Bangs</button>
-            <button data-effect="haircut" data-value="Full Bangs">Full Bangs</button>
-            <button data-effect="haircut" data-value="Less Bangs">Less Bangs</button>
-            <button data-effect="haircut" data-value="Straight">Straight</button>
-            <button data-effect="haircut" data-value="Curly">Curly</button>
+            <button data-filter="none" class="active">Original</button>
+            <button data-filter="soft">Soft Glow</button>
+            <button data-filter="bright">Bright & Clear</button>
+            <button data-filter="warm">Warm Tone</button>
+            <button data-filter="cool">Cool Tone</button>
         </div>
 
-        <h3>Hair Color</h3>
-        <div class="button-row" id="hairColorRow">
-            <button data-effect="haircolor" data-value="brown">Brown</button>
-            <button data-effect="haircolor" data-value="black">Black</button>
-            <button data-effect="haircolor" data-value="blonde">Blonde</button>
-            <button data-effect="haircolor" data-value="ginger">Ginger</button>
-            <button data-effect="haircolor" data-value="red">More Ginger‑Red</button>
+        <div class="group-label">Aesthetic</div>
+        <div class="filter-row">
+            <button data-filter="vintage">Vintage</button>
+            <button data-filter="sepia">Sepia Film</button>
+            <button data-filter="fade">Faded Pastel</button>
+            <button data-filter="dreamy">Dreamy</button>
         </div>
 
-        <h3>Makeup</h3>
-        <div class="button-row" id="makeupRow">
-            <button data-effect="makeup" data-value="clean">Clean Girl</button>
-            <button data-effect="makeup" data-value="natural">Natural Makeup</button>
-            <button data-effect="makeup" data-value="stargirl">Stargirl Makeup</button>
-            <button data-effect="makeup" data-value="fashion">Fashion Icon Model</button>
-            <button data-effect="makeup" data-value="bold">Bold Makeup</button>
-            <button data-effect="makeup" data-value="oldmoney">Old Money Makeup</button>
-            <button data-effect="makeup" data-value="french">French Makeup</button>
-            <button data-effect="makeup" data-value="coquette">Coquette Makeup</button>
+        <div class="group-label">Social / Beauty</div>
+        <div class="filter-row">
+            <button data-filter="beautysoft">Beauty Soft</button>
+            <button data-filter="glow">Glow</button>
+            <button data-filter="dramatic">Dramatic</button>
+            <button data-filter="pop">Color Pop</button>
         </div>
-
     </div>
 </div>
 
 <script>
     const video = document.getElementById("video");
     const errorMsg = document.getElementById("errorMsg");
-    const hairColorLayer = document.getElementById("hairColorLayer");
-    const haircutOverlay = document.getElementById("haircutOverlay");
-    const labelOverlay = document.getElementById("labelOverlay");
-
-    let baseFilter = "none";
-    let makeupFilter = "none";
 
     async function startCamera() {
         try {
@@ -261,92 +165,65 @@
         }
     }
 
-    function updateVideoFilter() {
-        if (makeupFilter === "none") {
-            video.style.filter = baseFilter;
-        } else if (baseFilter === "none") {
-            video.style.filter = makeupFilter;
-        } else {
-            video.style.filter = baseFilter + " " + makeupFilter;
+    function applyFilter(type) {
+        switch (type) {
+            case "none":
+                video.style.filter = "none";
+                break;
+
+            // BASIC / SOFT
+            case "soft":
+                video.style.filter = "brightness(1.05) contrast(1.02) saturate(1.05)";
+                break;
+            case "bright":
+                video.style.filter = "brightness(1.15) contrast(1.08)";
+                break;
+            case "warm":
+                video.style.filter = "brightness(1.05) contrast(1.05) saturate(1.1) hue-rotate(10deg)";
+                break;
+            case "cool":
+                video.style.filter = "brightness(1.02) contrast(1.05) saturate(1.05) hue-rotate(-10deg)";
+                break;
+
+            // AESTHETIC
+            case "vintage":
+                video.style.filter = "contrast(1.1) saturate(0.8) sepia(0.3)";
+                break;
+            case "sepia":
+                video.style.filter = "sepia(0.8) contrast(1.05)";
+                break;
+            case "fade":
+                video.style.filter = "brightness(1.1) contrast(0.9) saturate(0.8)";
+                break;
+            case "dreamy":
+                video.style.filter = "brightness(1.15) contrast(0.95) saturate(1.1)";
+                break;
+
+            // SOCIAL / BEAUTY
+            case "beautysoft":
+                video.style.filter = "brightness(1.08) contrast(1.02) saturate(1.08) blur(0.3px)";
+                break;
+            case "glow":
+                video.style.filter = "brightness(1.18) contrast(1.05) saturate(1.15)";
+                break;
+            case "dramatic":
+                video.style.filter = "contrast(1.35) saturate(1.1)";
+                break;
+            case "pop":
+                video.style.filter = "contrast(1.2) saturate(1.3)";
+                break;
+
+            default:
+                video.style.filter = "none";
         }
     }
 
-    // FILTER BUTTONS
     document.querySelectorAll(".filters button").forEach(btn => {
         btn.addEventListener("click", () => {
-            const type = btn.dataset.filter;
             document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-
-            if (type === "none") baseFilter = "none";
-            if (type === "soft") baseFilter = "brightness(1.05) contrast(1.02)";
-            if (type === "cool") baseFilter = "contrast(1.05) saturate(1.05) hue-rotate(-10deg)";
-            if (type === "warm") baseFilter = "contrast(1.05) saturate(1.1) hue-rotate(10deg)";
-
-            updateVideoFilter();
-        });
-    });
-
-    // MAKEUP
-    function applyMakeup(type) {
-        const presets = {
-            clean: "brightness(1.08) saturate(1.08)",
-            natural: "brightness(1.05) contrast(1.05)",
-            stargirl: "brightness(1.15) saturate(1.25)",
-            fashion: "contrast(1.25) saturate(1.15)",
-            bold: "contrast(1.35) saturate(1.35)",
-            oldmoney: "brightness(0.96) contrast(1.12)",
-            french: "contrast(1.18) saturate(1.08)",
-            coquette: "brightness(1.12) saturate(1.2)"
-        };
-        makeupFilter = presets[type] || "none";
-        updateVideoFilter();
-    }
-
-    // HAIR COLOR
-    function applyHairColor(color) {
-        const colors = {
-            brown: "rgba(120, 72, 30, 0.35)",
-            black: "rgba(20, 20, 20, 0.45)",
-            blonde: "rgba(255, 220, 120, 0.35)",
-            ginger: "rgba(200, 80, 20, 0.35)",
-            red: "rgba(220, 40, 20, 0.35)"
-        };
-        hairColorLayer.style.background = colors[color] || "transparent";
-    }
-
-    // HAIRCUT (visual frame + label)
-    function applyHaircut(styleName) {
-        labelOverlay.textContent = styleName;
-        haircutOverlay.style.borderColor = "#f7e7b8";
-
-        if (styleName.toLowerCase().includes("bangs")) {
-            haircutOverlay.style.boxShadow = "0 -40px 60px rgba(0,0,0,0.7) inset";
-        } else if (styleName.toLowerCase().includes("pixie")) {
-            haircutOverlay.style.boxShadow = "0 -25px 40px rgba(0,0,0,0.6) inset";
-        } else if (styleName.toLowerCase().includes("bob")) {
-            haircutOverlay.style.boxShadow = "0 -15px 35px rgba(0,0,0,0.6) inset";
-        } else if (styleName.toLowerCase().includes("curly")) {
-            haircutOverlay.style.boxShadow = "0 0 40px rgba(0,0,0,0.7) inset";
-        } else {
-            haircutOverlay.style.boxShadow = "0 -10px 25px rgba(0,0,0,0.5) inset";
-        }
-    }
-
-    // BEAUTY BUTTONS
-    document.querySelectorAll(".button-row button").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const effect = btn.dataset.effect;
-            const value = btn.dataset.value;
-
-            // visual active state per row
-            const row = btn.parentElement;
-            row.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-
-            if (effect === "makeup") applyMakeup(value);
-            if (effect === "haircolor") applyHairColor(value);
-            if (effect === "haircut") applyHaircut(value);
+            const type = btn.dataset.filter;
+            applyFilter(type);
         });
     });
 
@@ -354,4 +231,5 @@
 </script>
 </body>
 </html>
+            
                       
