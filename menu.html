@@ -13,7 +13,7 @@
         body {
             height: 100vh;
             width: 100vw;
-            background: linear-gradient(135deg, #f8c8d8, #f7e7c9);
+            background: linear-gradient(135deg, #f7e7c9, #f1d9a9); /* champagne gold */
             font-family: "Playfair Display", serif;
             display: flex;
             flex-direction: column;
@@ -28,14 +28,14 @@
             left: 20px;
             font-size: 2.2rem;
             cursor: pointer;
-            color: #000;
+            color: #4a4a4a;
             text-shadow: 0 0 8px rgba(255,255,255,0.6);
         }
 
         h1 {
             font-size: 2rem;
             margin-bottom: 30px;
-            color: #000;
+            color: #4a4a4a;
             text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
 
@@ -53,30 +53,19 @@
             border-radius: 18px;
             font-size: 1.3rem;
             text-align: center;
-            color: #000;
+            color: #2e2e2e;
             cursor: pointer;
             font-weight: 600;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: linear-gradient(135deg, #d9d9d9, #f0f0ff); /* metallic silver + lavender */
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(4px);
         }
 
         .service-box:hover {
             transform: scale(1.03);
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            box-shadow: 0 0 25px rgba(0,0,0,0.2);
         }
-
-        /* Pastel colors */
-        .color-analysis { background: #ffe0e9; }
-        .style-helper   { background: #fff2cc; }
-        .photo-ideas    { background: #e0f7fa; }
-        .beauty-guide   { background: #e8e0ff; }
-        .habit-tracker  { background: #e0ffe4; }
-        .selfcare       { background: #f3e0ff; }
-        .tryon          { background: #ffe8cc; }
-
-        /* NEW pastel colors */
-        .skincare       { background: #ffe6f2; }
-        .nails          { background: #e6f0ff; }
-        .glowup         { background: #e9ffe6; }
     </style>
 </head>
 
@@ -89,47 +78,55 @@
 
     <div class="menu-container">
 
-        <div class="service-box color-analysis" onclick="window.location.href='colour.html'">
+        <div class="service-box" onclick="window.location.href='colour.html'">
             Colour Analysis
         </div>
 
-        <div class="service-box style-helper" onclick="window.location.href='style.html'">
+        <div class="service-box" onclick="window.location.href='style.html'">
             Style Helper
         </div>
 
-        <div class="service-box photo-ideas" onclick="window.location.href='photo.html'">
+        <div class="service-box" onclick="window.location.href='photo.html'">
             Photo Ideas
         </div>
 
-        <div class="service-box beauty-guide" onclick="window.location.href='beauty.html'">
+        <div class="service-box" onclick="window.location.href='beauty.html'">
             Beauty Guide
         </div>
 
-        <div class="service-box habit-tracker" onclick="window.location.href='habit.html'">
+        <div class="service-box" onclick="window.location.href='habit.html'">
             Habit Tracker
         </div>
 
-        <div class="service-box selfcare" onclick="window.location.href='selfcare.html'">
+        <div class="service-box" onclick="window.location.href='selfcare.html'">
             Self‑Care
         </div>
 
-        <!-- NEW: Skincare Helper -->
-        <div class="service-box skincare" onclick="window.location.href='skincare.html'">
+        <div class="service-box" onclick="window.location.href='skincare.html'">
             Skincare Helper
         </div>
 
-        <!-- NEW: Nail Inspiration -->
-        <div class="service-box nails" onclick="window.location.href='nails.html'">
+        <div class="service-box" onclick="window.location.href='nails.html'">
             Nail Inspiration
         </div>
 
-        <!-- NEW: Glow-Up Challenges -->
-        <div class="service-box glowup" onclick="window.location.href='glowup.html'">
+        <div class="service-box" onclick="window.location.href='glowup.html'">
             Glow‑Up Challenges
         </div>
 
-        <!-- Beauty Mirror -->
-        <div class="service-box tryon" onclick="window.location.href='tryon.html'">
+        <div class="service-box" onclick="window.location.href='makeup.html'">
+            Makeup Guide
+        </div>
+
+        <div class="service-box" onclick="window.location.href='hair.html'">
+            Hair Guide
+        </div>
+
+        <div class="service-box" onclick="window.location.href='aesthetics.html'">
+            Aesthetic Library
+        </div>
+
+        <div class="service-box" onclick="window.location.href='tryon.html'">
             Beauty Mirror
         </div>
 
