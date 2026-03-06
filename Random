@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Guide</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            background: radial-gradient(circle at top left, #ffd6f5 0%, #f3c4ff 25%, #d9c7ff 55%, #fbe9ff 100%);
+            background-attachment: fixed;
+            font-family: "Playfair Display", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 0 40px;
+            color: #2b1233;
+        }
+
+        .back-arrow {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            font-size: 2.1rem;
+            cursor: pointer;
+            color: #ffe6ff;
+            text-shadow: 0 0 12px rgba(255, 230, 255, 0.9);
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 18px;
+            color: #ffe6ff;
+            text-shadow: 0 0 14px rgba(255, 230, 255, 0.9);
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .input-field {
+            background: rgba(25, 10, 35, 0.9);
+            border-radius: 20px;
+            padding: 8px 12px;
+            color: #fbefff;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 240, 255, 0.7);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.3) inset,
+                0 10px 25px rgba(40, 0, 60, 0.45);
+        }
+
+        .input-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #fbefff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .upload-box {
+            background: rgba(25, 10, 35, 0.9);
+            border-radius: 20px;
+            padding: 10px 12px;
+            text-align: center;
+            color: #fbefff;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: 1px solid rgba(255, 240, 255, 0.7);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.3) inset,
+                0 10px 25px rgba(40, 0, 60, 0.45);
+        }
+
+        .upload-box:hover {
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+                0 14px 30px rgba(40, 0, 60, 0.7);
+            transform: translateY(-1px);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .analyze-btn {
+            margin-top: 6px;
+            background: linear-gradient(135deg, #ffb7f5, #f3a9ff, #d9b5ff);
+            color: #2b1233;
+            padding: 10px 16px;
+            border-radius: 18px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+                0 12px 26px rgba(60, 0, 80, 0.7);
+            align-self: center;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+                0 16px 32px rgba(60, 0, 80, 0.9);
+        }
+
+        .results {
+            margin-top: 22px;
+            width: 94%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+        }
+
+        .result-card {
+            background: radial-gradient(circle at top left, #ffffff 0%, #fdf5ff 40%, #f3e7ff 100%);
+            border-radius: 22px;
+            padding: 12px 14px;
+            color: #2b1233;
+            font-size: 0.95rem;
+            border: 1px solid rgba(255, 230, 255, 0.9);
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+                0 14px 30px rgba(40, 0, 60, 0.55);
+        }
+
+        .result-card h2 {
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+            color: #b25adf;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            margin-top: 8px;
+            margin-bottom: 3px;
+            color: #3a163f;
+            font-weight: 600;
+        }
+
+        .bullet {
+            margin-left: 14px;
+            margin-bottom: 3px;
+            font-size: 0.9rem;
+        }
+
+        .tag-row {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            border-radius: 999px;
+            border: 1px solid rgba(178, 90, 223, 0.7);
+            padding: 3px 9px;
+            font-size: 0.8rem;
+            background: rgba(255, 245, 255, 0.9);
+            color: #3a163f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
+    <h1>Beauty Guide</h1>
+
+    <div class="form-container">
+
+        <div class="input-field">
+            <select id="skinType">
+                <option disabled selected>Skin Type</option>
+                <option>Dry</option>
+                <option>Oily</option>
+                <option>Combination</option>
+                <option>Normal</option>
+                <option>Sensitive</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="skinTone">
+                <option disabled selected>Skin Tone</option>
+                <option>Fair</option>
+                <option>Light</option>
+                <option>Medium</option>
+                <option>Tan</option>
+                <option>Deep</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="undertone">
+                <option disabled selected>Undertone</option>
+                <option>Cool</option>
+                <option>Neutral</option>
+                <option>Warm</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="hairColor">
+                <option disabled selected>Hair Color</option>
+                <option>Blonde</option>
+                <option>Brown</option>
+                <option>Black</option>
+                <option>Red</option>
+                <option>Dyed / Fashion Color</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="eyeColor">
+                <option disabled selected>Eye Color</option>
+                <option>Blue</option>
+                <option>Green</option>
+                <option>Brown</option>
+                <option>Hazel</option>
+                <option>Grey</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="faceShape">
+                <option disabled selected>Face Shape</option>
+                <option>Oval</option>
+                <option>Round</option>
+                <option>Square</option>
+                <option>Heart</option>
+                <option>Diamond</option>
+                <option>Long</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="aesthetic">
+                <option disabled selected>Preferred Aesthetic</option>
+                <option>Clean girl</option>
+                <option>Soft girl</option>
+                <option>Coquette</option>
+                <option>Classy</option>
+                <option>Glam</option>
+                <option>Minimalist</option>
+                <option>Y2K</option>
+                <option>Baddie</option>
+            </select>
+        </div>
+
+        <label class="upload-box">
+            Upload your photo (optional)
+            <input type="file" id="photoInput" accept="image/*">
+        </label>
+
+        <button class="analyze-btn" onclick="showResults()">Show my beauty profile</button>
+    </div>
+
+    <div id="resultsWrapper" class="results">
+        <div class="result-card" id="makeupCard"></div>
+        <div class="result-card" id="colorsCard"></div>
+        <div class="result-card" id="hairCard"></div>
+        <div class="result-card" id="jewelryCard"></div>
+        <div class="result-card" id="skincareCard"></div>
+        <div class="result-card" id="aestheticCard"></div>
+        <div class="result-card" id="photoCard"></div>
+    </div>
+
+<script>
+function showResults() {
+    const skinType = document.getElementById("skinType").value;
+    const skinTone = document.getElementById("skinTone").value;
+    const undertone = document.getElementById("undertone").value;
+    const hairColor = document.getElementById("hairColor").value;
+    const eyeColor = document.getElementById("eyeColor").value;
+    const faceShape = document.getElementById("faceShape").value;
+    const aesthetic = document.getElementById("aesthetic").value;
+
+    /* ---------------- MAKEUP ---------------- */
+
+    const makeupBase = {
+        Fair: [
+            "Light coverage or skin tint to avoid heaviness",
+            "Soft pink or cool rose blush on upper cheeks",
+            "Subtle cool-toned contour (avoid too warm bronzers)",
+            "Translucent setting powder, only where needed"
+        ],
+        Light: [
+            "Natural finish foundation or BB cream",
+            "Peach or soft coral blush for a fresh look",
+            "Neutral bronzer to add warmth without orange tones",
+            "Light dusting of powder on T-zone"
+        ],
+        Medium: [
+            "Medium coverage foundation to even tone",
+            "Warm bronzer + mauve or rose blush",
+            "Golden or champagne highlighter on high points",
+            "Soft setting with powder for long wear"
+        ],
+        Tan: [
+            "Warm-toned foundation with golden undertones",
+            "Terracotta or burnt peach blush",
+            "Rich bronzer to sculpt and warm the face",
+            "Glow mist to keep skin radiant"
+        ],
+        Deep: [
+            "Rich coverage foundation that matches undertone",
+            "Berry, brick, or deep rose blush",
+            "Gold or bronze highlighter for a lit-from-within glow",
+            "Strategic powder only where you get oily"
+        ]
+    };
+
+    const undertoneEyeshadow = {
+        Cool: [
+            "Taupe and cool browns for everyday",
+            "Mauve and plum for soft glam",
+            "Silver or icy shimmer on inner corner"
+        ],
+        Neutral: [
+            "Champagne and rose gold for day looks",
+            "Neutral browns for crease definition",
+            "Soft bronze shimmer for night"
+        ],
+        Warm: [
+            "Bronze and copper for warmth",
+            "Warm browns in the crease",
+            "Gold shimmer on lid or inner corner"
+        ]
+    };
+
+    const eyelinerShape = {
+        Oval: "Classic wing or soft flick that follows your natural lash line.",
+        Round: "Elongated wing to visually stretch the eye horizontally.",
+        Square: "Smudged liner for softness around sharper features.",
+        Heart: "Soft wing with focus on outer corner to balance forehead and chin.",
+        Diamond: "Balanced liner top + very soft bottom smudge to avoid harshness.",
+        Long: "Shorter wing, focus on lash volume to avoid over-elongating."
+    };
+
+    const browShape = {
+        Oval: "Soft angled brows that follow your natural arch.",
+        Round: "Slight arch to lift and elongate the face.",
+        Square: "Soft, rounded arch to balance strong jawline.",
+        Heart: "Straighter brow with gentle arch to soften forehead.",
+        Diamond: "Soft, curved arch to balance cheekbones.",
+        Long: "Defined arch to visually shorten the face length."
+    };
+
+    const mascaraStyle = {
+        Blue: "Lengthening mascara, focus on outer lashes for a cat-eye effect.",
+        Green: "Volumizing + lengthening combo to frame the eye color.",
+        Brown: "Full volume, fluffy lashes to open the eyes.",
+        Hazel: "Wispy, doll-like lashes with extra length in the center.",
+        Grey: "Defined but not clumpy, length-focused for a clean look."
+    };
+
+    const makeupCard = document.getElementById("makeupCard");
+    const baseList = makeupBase[skinTone] || ["Choose a skin tone for base recommendations."];
+    const eyeshadowList = undertoneEyeshadow[undertone] || ["Choose an undertone for eyeshadow guidance."];
+
+    makeupCard.innerHTML = `
+        <h2>Makeup</h2>
+
+        <div class="section-title">Base & Complexion</div>
+        ${baseList.map(m => `<div class="bullet">• ${m}</div>`).join("")}
+        <div class="bullet">• Match foundation to your neck, not just your face.</div>
+        <div class="bullet">• Use concealer only where needed to keep skin natural.</div>
+
+        <div class="section-title">Blush, Bronzer & Highlight</div>
+        <div class="bullet">• Place blush slightly higher for a lifted effect.</div>
+        <div class="bullet">• Use bronzer where the sun naturally hits: forehead, cheeks, nose.</div>
+        <div class="bullet">• Highlighter on cheekbones, nose bridge, and cupid’s bow for glow.</div>
+
+        <div class="section-title">Eyeshadow & Liner</div>
+        <div class="bullet">• Eyeshadow: ${Array.isArray(eyeshadowList) ? eyeshadowList.join(", ") : eyeshadowList}</div>
+        <div class="bullet">• Eyeliner shape: ${eyelinerShape[faceShape] || "Soft, thin line close to lashes for subtle definition."}</div>
+
+        <div class="section-title">Lashes & Brows</div>
+        <div class="bullet">• Mascara: ${mascaraStyle[eyeColor] || "Length + volume, focus on outer lashes for a flattering shape."}</div>
+        <div class="bullet">• Brow shape: ${browShape[faceShape] || "Soft, natural arch following your brow bone."}</div>
+        <div class="bullet">• Brush brows upward and set with clear or tinted gel.</div>
+
+        <div class="section-title">Lips</div>
+        <div class="bullet">• Slightly overline only the cupid’s bow and center of bottom lip.</div>
+        <div class="bullet">• Choose nudes that are 1–2 shades deeper than your natural lip color.</div>
+        <div class="bullet">• Gloss in the center of the lips makes them look fuller.</div>
+    `;
+
+    /* ---------------- CLOTHING COLORS ---------------- */
+
+    const hairColorsClothes = {
+        Blonde: [
+            "Lavender and lilac tones",
+            "Soft blue and baby denim",
+            "White and cream for a clean look",
+            "Pastel pink and blush tones",
+            "Light grey and silver accents"
+        ],
+        Brown: [
+            "Lilac and dusty rose",
+            "Emerald and forest green",
+            "Cream and warm beige",
+            "Chocolate brown monochrome looks",
+            "Soft navy and muted teal"
+        ],
+        Black: [
+            "Ivory and off-white for contrast",
+            "Hot pink and fuchsia",
+            "Silver and metallic accents",
+            "Red and burgundy",
+            "Pastel purple and periwinkle"
+        ],
+        Red: [
+            "Soft purple and mauve",
+            "Black and deep charcoal",
+            "Cream and warm beige",
+            "Forest green and emerald"
+        ],
+        "Dyed / Fashion Color": [
+            "Monochrome outfits that match or complement your hair",
+            "Black basics to let your hair stand out",
+            "Pastels that echo your hair tone",
+            "Denim and white as a neutral base"
+        ]
+    };
+
+    const seasonalPalette = {
+        Fair: "Light Spring / Light Summer vibes: soft, airy colors and low contrast outfits.",
+        Light: "Soft Summer / Soft Autumn: muted, gentle tones with subtle contrast.",
+        Medium: "True Autumn / True Spring: warm, rich colors and medium contrast.",
+        Tan: "Deep Autumn / Deep Spring: saturated, warm shades with stronger contrast.",
+        Deep: "Deep Winter / Deep Autumn: bold, high-contrast colors and jewel tones."
+    };
+
+    const colorsCard = document.getElementById("colorsCard");
+    const clothesList = hairColorsClothes[hairColor] || ["Choose a hair color for clothing suggestions."];
+
+    colorsCard.innerHTML = `
+        <h2>Clothing Colors</h2>
+
+        <div class="section-title">Best Colors</div>
+        ${clothesList.map(c => `<div class="bullet">• ${c}</div>`).join("")}
+
+        <div class="section-title">Neutrals & Metallics</div>
+        <div class="bullet">• Cool undertone: grey, charcoal, icy beige, silver.</div>
+        <div class="bullet">• Neutral undertone: taupe, cream, soft brown, rose gold.</div>
+        <div class="bullet">• Warm undertone: camel, espresso, warm beige, gold and bronze.</div>
+
+        <div class="section-title">Seasonal Palette</div>
+        <div class="bullet">• ${seasonalPalette[skinTone] || "Select your skin tone for seasonal guidance."}</div>
+    `;
+
+    /* ---------------- HAIR ---------------- */
+
+    const hairByFace = {
+        Oval: [
+            "Almost any style works with this balanced shape.",
+            "Soft layers that frame the face.",
+            "Curtain bangs for a romantic look.",
+            "Loose waves or sleek straight styles."
+        ],
+        Round: [
+            "Long layers that fall below the chin.",
+            "Face-framing pieces that start below the cheekbones.",
+            "Volume at the crown, not at the sides.",
+            "Soft side part to elongate the face."
+        ],
+        Square: [
+            "Soft waves to soften strong angles.",
+            "Side part to break up symmetry.",
+            "Curtain or wispy bangs to soften the forehead.",
+            "Layers that start below the jawline."
+        ],
+        Heart: [
+            "Chin-length layers to balance a wider forehead.",
+            "Side-swept bangs to soften the upper face.",
+            "Soft curls at the ends to add fullness at the jaw.",
+            "Half-up styles that don’t add too much volume on top."
+        ],
+        Diamond: [
+            "Chin-length bobs to soften cheekbones.",
+            "Fringe or curtain bangs to balance the forehead.",
+            "Soft waves to add width at the jawline.",
+            "Tucked-behind-the-ear styles to show off cheekbones."
+        ],
+        Long: [
+            "Long layers to add movement and volume.",
+            "Side part to add width and balance length.",
+            "Soft waves or curls to create horizontal volume.",
+            "Avoid styles that are too flat at the sides."
+        ]
+    };
+
+    const hairTextureTips = {
+        Blonde: "Glossy finishes and soft waves look amazing and show dimension.",
+        Brown: "Soft waves or sleek straight styles both suit you and show richness.",
+        Black: "Shiny, sleek styles or big curls both pop beautifully against your skin.",
+        Red: "Soft curls and romantic waves highlight the color and depth.",
+        "Dyed / Fashion Color": "Styles with layers and waves show off color shifts and dimension best."
+    };
+
+    const hairCard = document.getElementById("hairCard");
+    const hairFaceList = hairByFace[faceShape] || ["Choose a face shape for haircut suggestions."];
+
+    hairCard.innerHTML = `
+        <h2>Hair</h2>
+
+        <div class="section-title">Cuts & Shapes</div>
+        ${hairFaceList.map(h => `<div class="bullet">• ${h}</div>`).join("")}
+
+        <div class="section-title">Color & Texture Tips</div>
+        <div class="bullet">• ${hairTextureTips[hairColor] || "Select your hair color for styling tips."}</div>
+        <div class="bullet">• Add face-framing pieces to soften features and highlight cheekbones.</div>
+        <div class="bullet">• Use gloss or shine sprays to enhance color and dimension.</div>
+    `;
+
+    /* ---------------- JEWELRY ----------------
