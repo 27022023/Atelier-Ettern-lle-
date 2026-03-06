@@ -4,43 +4,48 @@
 <meta charset="UTF-8">
 <title>Self‑Care Planner 🫧</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
+
 body{
   font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   min-height:100vh;
   background:radial-gradient(circle at top,#f5ecff,#d4cffc,#a9afff);
   color:#1b1630;
-  padding:20px;
+  padding:28px;
   display:flex;
   flex-direction:column;
   align-items:center;
 }
+
 h1{
-  font-size:1.9rem;
-  margin-bottom:6px;
+  font-size:2.3rem;
+  margin-bottom:10px;
   text-align:center;
 }
+
 .subtitle{
-  font-size:.9rem;
-  opacity:.8;
-  margin-bottom:18px;
+  font-size:1.1rem;
+  opacity:.85;
+  margin-bottom:24px;
   text-align:center;
 }
+
 .container{
   width:100%;
   max-width:900px;
   display:flex;
   flex-direction:column;
-  gap:16px;
+  gap:22px;
 }
 
 /* glass cards */
 .card{
-  background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(230,230,255,.8));
-  border-radius:18px;
-  padding:14px 16px;
-  box-shadow:0 0 18px rgba(255,255,255,.9);
+  background:linear-gradient(135deg,rgba(255,255,255,.75),rgba(230,230,255,.85));
+  border-radius:22px;
+  padding:22px 24px;
+  box-shadow:0 0 22px rgba(255,255,255,.9);
   border:1px solid rgba(255,255,255,.9);
 }
 
@@ -48,81 +53,102 @@ h1{
 .moods{
   display:flex;
   flex-wrap:wrap;
-  gap:10px;
+  gap:14px;
 }
+
 .mood{
-  padding:8px 14px;
+  padding:12px 18px;
   border-radius:999px;
-  background:rgba(255,255,255,.9);
+  background:rgba(255,255,255,.92);
   border:1px solid rgba(210,210,255,.9);
   cursor:pointer;
-  font-size:.9rem;
+  font-size:1.05rem;
   display:flex;
   align-items:center;
-  gap:6px;
-  box-shadow:0 0 10px rgba(255,255,255,.9);
+  gap:8px;
+  box-shadow:0 0 12px rgba(255,255,255,.9);
   transition:.15s;
 }
-.mood span.emoji{font-size:1.1rem}
-.mood:hover{
-  transform:translateY(-1px);
-  box-shadow:0 0 14px rgba(255,255,255,1);
+
+.mood span.emoji{
+  font-size:1.3rem;
 }
+
+.mood:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 16px rgba(255,255,255,1);
+}
+
 .mood.active{
   background:linear-gradient(135deg,#fdfbff,#dcd8ff);
 }
 
 /* suggestions */
 .suggestions-list{
-  margin-top:8px;
-  padding-left:18px;
-  font-size:.9rem;
+  margin-top:12px;
+  padding-left:22px;
+  font-size:1rem;
 }
-.suggestions-list li{margin-bottom:4px}
+
+.suggestions-list li{
+  margin-bottom:6px;
+}
 
 /* weekly planner */
 .week-grid{
   display:grid;
   grid-template-columns:repeat(7,1fr);
-  gap:6px;
-  margin-top:8px;
+  gap:10px;
+  margin-top:12px;
 }
+
 .day{
-  background:rgba(255,255,255,.95);
-  border-radius:12px;
-  padding:6px;
-  font-size:.8rem;
+  background:rgba(255,255,255,.97);
+  border-radius:16px;
+  padding:12px;
+  font-size:1rem;
   cursor:pointer;
-  min-height:54px;
+  min-height:80px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
   transition:.15s;
 }
+
 .day:hover{
-  box-shadow:0 0 10px rgba(255,255,255,1);
-  transform:translateY(-1px);
+  box-shadow:0 0 14px rgba(255,255,255,1);
+  transform:translateY(-2px);
 }
-.day-name{font-weight:600;margin-bottom:4px}
-.day-plan{font-size:.75rem;opacity:.8}
+
+.day-name{
+  font-weight:700;
+  margin-bottom:6px;
+  font-size:1.05rem;
+}
+
+.day-plan{
+  font-size:.95rem;
+  opacity:.85;
+}
 
 /* reflection */
 textarea{
   width:100%;
-  min-height:120px;
-  border-radius:14px;
+  min-height:160px;
+  border-radius:18px;
   border:1px solid rgba(210,210,255,.9);
-  padding:10px 12px;
+  padding:14px 16px;
   font-family:inherit;
-  font-size:.9rem;
+  font-size:1rem;
   resize:vertical;
-  background:rgba(255,255,255,.9);
-  box-shadow:0 0 10px rgba(255,255,255,.9);
+  background:rgba(255,255,255,.92);
+  box-shadow:0 0 12px rgba(255,255,255,.9);
 }
+
 .ref-note{
-  font-size:.8rem;
+  font-size:.9rem;
   opacity:.7;
-  margin-top:4px;
+  margin-top:6px;
 }
 
 /* modal */
@@ -135,80 +161,113 @@ textarea{
   justify-content:center;
   z-index:50;
 }
+
 .modal{
   background:#fdfdff;
-  border-radius:16px;
-  padding:14px 16px 12px;
+  border-radius:18px;
+  padding:20px 22px;
   width:90%;
-  max-width:320px;
-  box-shadow:0 0 20px rgba(0,0,0,.3);
+  max-width:340px;
+  box-shadow:0 0 22px rgba(0,0,0,.3);
 }
-.modal h3{margin-bottom:6px;font-size:1rem}
-.modal label{font-size:.8rem;display:block;margin:4px 0 2px}
+
+.modal h3{
+  margin-bottom:10px;
+  font-size:1.2rem;
+}
+
+.modal label{
+  font-size:1rem;
+  display:block;
+  margin:6px 0 4px;
+}
+
 .modal select{
   width:100%;
-  padding:6px 8px;
-  border-radius:10px;
+  padding:10px 12px;
+  border-radius:12px;
   border:1px solid rgba(210,210,255,.9);
-  margin-bottom:8px;
+  margin-bottom:12px;
+  font-size:1rem;
 }
+
 .modal-buttons{
   display:flex;
   justify-content:flex-end;
-  gap:6px;
-  margin-top:6px;
+  gap:10px;
+  margin-top:10px;
 }
+
 .modal-buttons button{
   border:none;
-  border-radius:10px;
-  padding:5px 10px;
-  font-size:.8rem;
+  border-radius:12px;
+  padding:8px 14px;
+  font-size:.95rem;
   cursor:pointer;
 }
+
 .modal-buttons .save{
   background:linear-gradient(135deg,#e7e4ff,#cbc7ff);
 }
+
 .modal-buttons .cancel{
   background:#f2f2f7;
 }
 
+/* back arrow */
+.back-arrow{
+  position:absolute;
+  top:20px;
+  left:20px;
+  font-size:2.4rem;
+  cursor:pointer;
+  color:#1b1630;
+  text-shadow:0 0 10px rgba(255,255,255,0.7);
+}
+
 @media(max-width:720px){
-  .week-grid{grid-template-columns:repeat(4,1fr);}
+  .week-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
 }
 </style>
 </head>
+
 <body>
+
+<!-- BACK ARROW -->
+<div class="back-arrow" onclick="window.location.href='services.html'">←</div>
 
 <h1>Self‑Care Planner 🫧</h1>
 <div class="subtitle">Soft spa‑day energy, tiny rituals, and a place to pour your thoughts.</div>
 
 <div class="container">
 
-  <!-- Moods + suggestions -->
+  <!-- Moods -->
   <div class="card">
-    <h2 style="font-size:1.1rem;margin-bottom:6px;">Choose your self‑care mood</h2>
+    <h2 style="font-size:1.3rem;margin-bottom:10px;">Choose your self‑care mood</h2>
     <div class="moods" id="moodRow"></div>
     <ul class="suggestions-list" id="suggestionsList"></ul>
   </div>
 
   <!-- Weekly planner -->
   <div class="card">
-    <h2 style="font-size:1.1rem;">This week’s self‑care</h2>
-    <p style="font-size:.85rem;opacity:.8;margin-top:2px;">Tap a day to assign one of your self‑care ideas.</p>
+    <h2 style="font-size:1.3rem;">This week’s self‑care</h2>
+    <p style="font-size:1rem;opacity:.8;margin-top:4px;">Tap a day to assign or remove a self‑care idea.</p>
     <div class="week-grid" id="weekGrid"></div>
   </div>
 
   <!-- Reflection -->
   <div class="card">
-    <h2 style="font-size:1.1rem;">Self‑reflection</h2>
-    <p style="font-size:.85rem;opacity:.8;margin:2px 0 6px;">How are you really feeling today?</p>
+    <h2 style="font-size:1.3rem;">Self‑reflection</h2>
+    <p style="font-size:1rem;opacity:.8;margin:4px 0 10px;">How are you really feeling today?</p>
     <textarea id="reflectionBox" placeholder="Write about your emotions, thoughts, or what you need right now..."></textarea>
     <div class="ref-note" id="refStatus">Autosaving…</div>
   </div>
 
 </div>
 
-<!-- Modal for assigning self‑care to a day -->
+<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h3 id="modalTitle">Self‑care for Monday</h3>
@@ -222,7 +281,7 @@ textarea{
 </div>
 
 <script>
-// moods + suggestions
+/* ------------------ MOODS ------------------ */
 const moodsData = [
   { id:"calm", label:"Calm", emoji:"🫧", ideas:[
     "Warm bath with lavender oil",
@@ -260,7 +319,6 @@ let currentMoodId = null;
 const moodRow = document.getElementById("moodRow");
 const suggestionsList = document.getElementById("suggestionsList");
 
-// build mood bubbles
 moodsData.forEach(m => {
   const div = document.createElement("button");
   div.type = "button";
@@ -284,7 +342,7 @@ function selectMood(id){
   });
 }
 
-// weekly planner
+/* ------------------ WEEKLY PLANNER ------------------ */
 const weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const weekGrid = document.getElementById("weekGrid");
 let weekPlan = JSON.parse(localStorage.getItem("selfcare_weekPlan") || "{}");
@@ -314,7 +372,7 @@ function refreshWeekGrid(){
   localStorage.setItem("selfcare_weekPlan", JSON.stringify(weekPlan));
 }
 
-// modal
+/* ------------------ MODAL ------------------ */
 const modalOverlay = document.getElementById("modalOverlay");
 const modalTitle = document.getElementById("modalTitle");
 const modalSelect = document.getElementById("modalSelect");
@@ -327,7 +385,13 @@ function openDayModal(dayIndex){
   modalTitle.textContent = `Self‑care for ${weekDays[dayIndex]}`;
   modalSelect.innerHTML = "";
 
-  // collect all ideas from all moods
+  /* CLEAR OPTION */
+  const clearOpt = document.createElement("option");
+  clearOpt.value = "";
+  clearOpt.textContent = "— Clear this day —";
+  modalSelect.appendChild(clearOpt);
+
+  /* Add all ideas */
   const allIdeas = moodsData.flatMap(m=>m.ideas);
   allIdeas.forEach(text=>{
     const opt = document.createElement("option");
@@ -338,21 +402,30 @@ function openDayModal(dayIndex){
 
   modalOverlay.style.display = "flex";
 }
+
 function closeModal(){
   modalOverlay.style.display = "none";
   currentDayIndex = null;
 }
+
 cancelModal.onclick = closeModal;
 modalOverlay.onclick = e => { if(e.target === modalOverlay) closeModal(); };
+
 saveModal.onclick = () => {
   if(currentDayIndex == null) return;
   const val = modalSelect.value;
-  weekPlan[currentDayIndex] = val;
+
+  if(val === ""){
+    delete weekPlan[currentDayIndex];
+  } else {
+    weekPlan[currentDayIndex] = val;
+  }
+
   refreshWeekGrid();
   closeModal();
 };
 
-// reflection with autosave
+/* ------------------ REFLECTION AUTOSAVE ------------------ */
 const reflectionBox = document.getElementById("reflectionBox");
 const refStatus = document.getElementById("refStatus");
 const REF_KEY = "selfcare_reflection";
@@ -370,9 +443,10 @@ reflectionBox.addEventListener("input", ()=>{
   }, 500);
 });
 
-// default mood
+/* Default mood */
 selectMood("calm");
 </script>
 
 </body>
 </html>
+  
