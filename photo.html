@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,6 +20,7 @@
         flex-direction: column;
         align-items: center;
         padding: 32px 0 40px;
+        color: #000 !important;
     }
 
     .back-arrow {
@@ -27,19 +29,18 @@
         left: 18px;
         font-size: 2.1rem;
         cursor: pointer;
-        color: #ffffff;
-        text-shadow: 0 0 12px rgba(255,255,255,0.7);
+        color: #000 !important;
+        text-shadow: none !important;
         z-index: 10;
     }
 
     h1 {
         font-size: 2rem;
         margin-bottom: 18px;
-        color: #ffffff;
-        text-shadow: 0 0 14px rgba(255,255,255,0.8);
+        color: #000 !important;
+        text-shadow: none !important;
     }
 
-    /* Aesthetic selector */
     .aesthetic-grid {
         width: 92%;
         max-width: 900px;
@@ -50,9 +51,9 @@
     }
 
     .aesthetic-card {
-        background: rgba(255,255,255,0.25);
+        background: rgba(255,255,255,0.35);
         backdrop-filter: blur(8px);
-        border: 2px solid rgba(255,255,255,0.4);
+        border: 2px solid rgba(0,0,0,0.25);
         border-radius: 16px;
         padding: 12px;
         text-align: center;
@@ -62,45 +63,32 @@
 
     .aesthetic-card:hover {
         transform: scale(1.05);
-        box-shadow: 0 0 14px rgba(255,255,255,0.6);
+        box-shadow: 0 0 14px rgba(0,0,0,0.25);
     }
 
     .icon {
         font-size: 1.8rem;
         margin-bottom: 6px;
         display: inline-block;
+        color: #ffffff !important;
         filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
     }
 
-    /* Glossy gold heart */
-    .heart {
-        color: #f5d487;
-        text-shadow: 0 0 6px rgba(245,212,135,0.8);
-    }
-
-    /* Glossy blue star */
-    .star {
-        color: #7ab4ff;
-        text-shadow: 0 0 6px rgba(122,180,255,0.8);
-    }
-
     .aesthetic-name {
-        color: #ffffff;
+        color: #000 !important;
         font-size: 1rem;
-        text-shadow: 0 0 8px rgba(255,255,255,0.7);
+        text-shadow: none !important;
     }
 
-    /* Pose type dropdown */
     .pose-select {
         width: 90%;
         max-width: 700px;
-        background: rgba(255,255,255,0.25);
-        border: 2px solid rgba(255,255,255,0.4);
+        background: rgba(255,255,255,0.35);
+        border: 2px solid rgba(0,0,0,0.25);
         border-radius: 16px;
         padding: 10px 14px;
-        color: #ffffff;
+        color: #000 !important;
         margin-bottom: 16px;
-        font-size: 1rem;
         backdrop-filter: blur(8px);
     }
 
@@ -108,32 +96,29 @@
         width: 100%;
         background: transparent;
         border: none;
-        color: #ffffff;
+        color: #000 !important;
         font-size: 1rem;
         outline: none;
     }
 
-    /* Button */
     .show-btn {
         background: #ffffff;
-        color: #4a4a4a;
+        color: #000;
         padding: 12px 18px;
         border-radius: 16px;
         font-size: 1.1rem;
         font-weight: 600;
         cursor: pointer;
-        border: none;
+        border: 2px solid rgba(0,0,0,0.25);
         transition: 0.2s ease;
-        box-shadow: 0 0 12px rgba(255,255,255,0.7);
         margin-bottom: 20px;
     }
 
     .show-btn:hover {
         transform: scale(1.05);
-        box-shadow: 0 0 20px rgba(255,255,255,0.9);
+        box-shadow: 0 0 20px rgba(0,0,0,0.25);
     }
 
-    /* Results */
     .results {
         width: 94%;
         max-width: 1100px;
@@ -143,27 +128,28 @@
     }
 
     .result-card {
-        background: rgba(255,255,255,0.25);
+        background: rgba(255,255,255,0.35);
         backdrop-filter: blur(10px);
-        border: 2px solid rgba(255,255,255,0.4);
+        border: 2px solid rgba(0,0,0,0.25);
         border-radius: 18px;
         padding: 14px 16px;
-        color: #ffffff;
+        color: #000 !important;
         font-size: 1rem;
-        text-shadow: 0 0 6px rgba(255,255,255,0.6);
+        text-shadow: none !important;
     }
 
     .result-card h2 {
         font-size: 1.3rem;
         margin-bottom: 8px;
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(255,255,255,0.9);
+        color: #000 !important;
+        text-shadow: none !important;
     }
 
     .bullet {
         margin-left: 14px;
         margin-bottom: 6px;
         font-size: 0.95rem;
+        color: #000 !important;
     }
 </style>
 </head>
@@ -174,10 +160,8 @@
 
 <h1>Photo Ideas</h1>
 
-<!-- Aesthetic selector -->
 <div class="aesthetic-grid" id="aestheticGrid"></div>
 
-<!-- Pose type -->
 <div class="pose-select">
     <select id="poseType">
         <option disabled selected>Select Pose Type</option>
@@ -197,7 +181,6 @@
 </div>
 
 <script>
-/* ------------------ AESTHETICS ------------------ */
 const aesthetics = [
     { name: "Coquette", icon: "❤️", type: "soft" },
     { name: "Soft Girl", icon: "❤️", type: "soft" },
@@ -214,7 +197,6 @@ const aesthetics = [
 
 let selectedAesthetic = null;
 
-/* ------------------ LOAD AESTHETIC CARDS ------------------ */
 function loadAestheticCards() {
     const grid = document.getElementById("aestheticGrid");
     grid.innerHTML = "";
@@ -223,10 +205,8 @@ function loadAestheticCards() {
         const card = document.createElement("div");
         card.classList.add("aesthetic-card");
 
-        const iconClass = a.type === "soft" ? "heart" : "star";
-
         card.innerHTML = `
-            <div class="icon ${iconClass}">${a.icon}</div>
+            <div class="icon">${a.icon}</div>
             <div class="aesthetic-name">${a.name}</div>
         `;
 
@@ -234,12 +214,12 @@ function loadAestheticCards() {
             selectedAesthetic = a.name;
 
             document.querySelectorAll(".aesthetic-card").forEach(c => {
-                c.style.borderColor = "rgba(255,255,255,0.4)";
+                c.style.borderColor = "rgba(0,0,0,0.25)";
                 c.style.boxShadow = "none";
             });
 
-            card.style.borderColor = "#ffffff";
-            card.style.boxShadow = "0 0 14px rgba(255,255,255,0.8)";
+            card.style.borderColor = "#000";
+            card.style.boxShadow = "0 0 14px rgba(0,0,0,0.25)";
         };
 
         grid.appendChild(card);
@@ -248,154 +228,258 @@ function loadAestheticCards() {
 
 loadAestheticCards();
 
-/* ------------------ POSE DATABASE (10 EACH) ------------------ */
 const poseIdeas = {
     "Coquette": [
         "Soft smile with chin slightly down",
         "Hand gently touching cheek",
         "Looking over shoulder with soft eyes",
-        "Holding a ribbon or bow near face",
-        "Sitting with knees together and tilted head",
+        "Holding a ribbon near face",
+        "Sitting with knees together",
         "Mirror selfie with soft flash",
         "Hands clasped under chin",
-        "Side profile with dreamy gaze",
+        "Side profile dreamy gaze",
         "Holding flowers near face",
-        "Soft back-arch pose"
+        "Soft back-arch pose",
+        "Holding skirt lightly",
+        "Kissing-the-air pose",
+        "Hands behind back shy smile",
+        "Twirl pose",
+        "Holding a book to chest",
+        "Soft pout with big eyes",
+        "Lying on stomach feet up",
+        "Hands cupping face",
+        "Looking up softly",
+        "Hair‑twirl pose"
     ],
 
     "Soft Girl": [
         "Peace sign selfie",
-        "Soft pout with glossy lips",
-        "Hand on cheek with tilted head",
-        "Mirror selfie with pastel outfit",
+        "Soft pout glossy lips",
+        "Hand on cheek tilted head",
+        "Mirror selfie pastel outfit",
         "Sitting cross‑legged on bed",
-        "Looking down with soft smile",
-        "Holding phone with both hands",
+        "Looking down soft smile",
+        "Holding phone both hands",
         "Hair tucked behind ear",
-        "Candid laugh pose",
-        "Soft flash selfie"
+        "Candid laugh",
+        "Soft flash selfie",
+        "Hugging pillow",
+        "Holding iced coffee",
+        "Sitting on floor knees up",
+        "Cute over‑shoulder look",
+        "Hands in sleeves",
+        "Soft side-eye smile",
+        "Holding plushie",
+        "Mirror peace sign",
+        "Lying on bed soft smile",
+        "Hands on cheeks blushy"
     ],
 
     "Balletcore": [
-        "Arms in soft ballet first position",
-        "Leg extended behind lightly",
-        "Sitting in a graceful side pose",
-        "Hands above head in soft arc",
-        "Mirror pose with pointed toes",
-        "Holding a ballet wrap or skirt",
+        "Arms in first position",
+        "Leg extended behind",
+        "Graceful side sitting pose",
+        "Hands above head arc",
+        "Mirror pose pointed toes",
+        "Holding ballet wrap",
         "Soft stretch pose",
-        "Profile pose with elongated neck",
-        "Hands resting on barre or chair",
-        "Light twirl motion shot"
+        "Profile elongated neck",
+        "Hands on barre",
+        "Light twirl motion",
+        "Relevé mirror pose",
+        "Soft arabesque",
+        "Hands on waist stance",
+        "Sitting pointed toes",
+        "Holding ballet shoes",
+        "Soft plié",
+        "Back-arched elegant pose",
+        "Looking down softly",
+        "Hair bun close-up",
+        "Graceful arm wave"
     ],
 
     "Vanilla Girl": [
-        "Holding a coffee cup",
-        "Soft smile with cozy sweater",
-        "Mirror selfie with neutral outfit",
-        "Looking out a window",
-        "Sitting on couch with blanket",
+        "Holding coffee cup",
+        "Soft smile cozy sweater",
+        "Mirror selfie neutral outfit",
+        "Looking out window",
+        "Sitting on couch blanket",
         "Hair tucked behind ear",
         "Minimalist standing pose",
-        "Walking shot with tote bag",
-        "Soft morning light selfie",
-        "Holding book close to chest"
+        "Walking shot tote bag",
+        "Morning light selfie",
+        "Holding book to chest",
+        "Candid kitchen shot",
+        "Holding flowers casually",
+        "Mirror selfie clean background",
+        "Sitting on bed legs crossed",
+        "Soft over‑shoulder look",
+        "Holding skincare bottle",
+        "Warm sunlight face shot",
+        "Hands in pockets",
+        "Messy bun selfie",
+        "Holding candle or mug"
     ],
 
     "Angelcore": [
-        "Hands together like prayer",
+        "Hands together prayer pose",
         "Soft upward gaze",
-        "Backlit halo‑light pose",
+        "Backlit halo light",
         "Holding white flowers",
-        "Sitting with legs tucked in",
-        "Mirror selfie with white outfit",
-        "Soft hair‑touch pose",
-        "Side profile with glow",
+        "Sitting legs tucked",
+        "Mirror selfie white outfit",
+        "Soft hair‑touch",
+        "Side profile glow",
         "Hands near face like wings",
-        "Lying down with soft light"
+        "Lying down soft light",
+        "Looking up innocent",
+        "Holding sheer fabric",
+        "Floating-hands pose",
+        "Backlit silhouette",
+        "Soft smile closed eyes",
+        "Hands cupping light",
+        "Soft twirl white dress",
+        "Barefoot soft pose",
+        "Holding feathers",
+        "Soft kneeling pose"
     ],
 
     "Glam": [
         "Strong jawline angle",
-        "Hand on hip with confidence",
-        "Over‑the‑shoulder smolder",
-        "Mirror selfie with flash",
-        "Full‑body red carpet stance",
-        "Hair flip motion shot",
+        "Hand on hip confidence",
+        "Over‑shoulder smolder",
+        "Mirror selfie flash",
+        "Red carpet stance",
+        "Hair flip motion",
         "Leg‑cross sitting pose",
-        "Holding clutch or jewelry",
+        "Holding clutch",
         "Bold chin‑up pose",
-        "Side profile with sharp light"
+        "Side profile sharp light",
+        "Hand in hair",
+        "Sitting on counter glam",
+        "Walking in heels",
+        "Holding perfume",
+        "Close-up glam eye",
+        "Mirror dramatic lighting",
+        "Red lip close-up",
+        "Hand on waist silhouette",
+        "High-angle diva pose",
+        "Soft glam pout"
     ],
 
     "Baddie": [
-        "Phone covering face mirror pose",
-        "Tongue‑out playful pose",
-        "Hand on waist with attitude",
+        "Phone covering face mirror",
+        "Tongue‑out pose",
+        "Hand on waist attitude",
         "Low mirror angle",
-        "Squat pose with confidence",
-        "Side profile with slick hair",
-        "Walking shot with strong stride",
-        "Car selfie with sunglasses",
-        "Crossed arms pose",
-        "Bold flash selfie"
+        "Squat confident pose",
+        "Side profile slick hair",
+        "Walking strong stride",
+        "Car selfie sunglasses",
+        "Crossed arms",
+        "Bold flash selfie",
+        "Mirror arched back",
+        "Sitting on counter",
+        "Leg pop pose",
+        "Holding mini bag",
+        "Sunglasses down pose",
+        "Hair flip attitude",
+        "Mirror low-rise pants",
+        "Side hip pop",
+        "Standing one knee bent",
+        "Bold stare"
     ],
 
     "Model Off-Duty": [
-        "Walking shot mid‑step",
+        "Walking mid‑step",
         "Hands in pockets",
         "Looking away candid",
         "Leaning on wall",
-        "Holding coffee cup",
+        "Holding coffee",
         "Low‑angle street shot",
-        "Hair pushed back effortlessly",
-        "Minimal expression pose",
+        "Hair pushed back",
+        "Minimal expression",
         "Cross‑body bag pose",
-        "Sitting on curb casually"
+        "Sitting on curb",
+        "Jacket over shoulder",
+        "Looking down walking",
+        "Hair-adjusting candid",
+        "Standing one leg forward",
+        "Mirror simple outfit",
+        "Sunglasses on head",
+        "Holding phone casually",
+        "Soft smirk",
+        "Hands behind back",
+        "Street-style candid"
     ],
 
     "Dark Feminine": [
-        "Chin up, intense stare",
-        "Hand on throat pose",
-        "Side profile in shadows",
-        "Mirror selfie with dim lighting",
-        "Sitting with crossed legs and stare",
+        "Chin up intense stare",
+        "Hand on throat",
+        "Side profile shadows",
+        "Mirror selfie dim light",
+        "Sitting crossed legs stare",
         "Hair covering one eye",
-        "Back‑arch dramatic pose",
+        "Back‑arch dramatic",
         "Holding wine glass",
         "Silhouette shot",
-        "Bold red lip close‑up"
+        "Red lip close-up",
+        "Hand on jawline",
+        "Looking down dark expression",
+        "Mirror flash",
+        "Standing in doorway shadows",
+        "Hands behind head",
+        "Slow-walk dramatic",
+        "Coat over shoulders",
+        "Side-eye intense",
+        "Dark lipstick close-up",
+        "Hands on hips power pose"
     ],
 
     "Y2K": [
         "Peace sign mirror selfie",
-        "Tongue out with flash",
-        "Low‑rise jeans mirror pose",
-        "Bubblegum blowing pose",
-        "Side profile with mini bag",
-        "Candid laugh with flash",
-        "Phone sticker mirror selfie",
-        "Sitting on floor with legs out",
+        "Tongue out flash",
+        "Low‑rise jeans mirror",
+        "Bubblegum blowing",
+        "Side profile mini bag",
+        "Candid laugh flash",
+        "Phone sticker mirror",
+        "Sitting on floor legs out",
         "Hair clips pose",
-        "Glossy lips close‑up"
+        "Glossy lips close-up",
+        "Mini skirt mirror",
+        "Pink flip phone pose",
+        "Standing hip pop",
+        "Flash-in-dark selfie",
+        "Cute pout gloss",
+        "Mirror butterfly clips",
+        "Sitting on bed legs up",
+        "Holding tiny sunglasses",
+        "Low-angle Y2K pose",
+        "Candid hallway shot"
     ]
 };
 
-/* ------------------ LIGHTING + BACKGROUND ------------------ */
 const lightingIdeas = {
     soft: [
         "Soft window light",
         "Warm morning glow",
         "Cloudy daylight",
         "Soft flash",
-        "Golden hour"
+        "Golden hour",
+        "Curtain-filtered sunlight",
+        "Lamp glow",
+        "Indirect daylight"
     ],
     bold: [
         "Direct flash",
         "Strong side lighting",
         "Neon lights",
         "Shadow contrast",
-        "Backlit glow"
+        "Backlit glow",
+        "Car headlights",
+        "Street lights",
+        "Harsh overhead lighting"
     ]
 };
 
@@ -405,18 +489,23 @@ const backgroundIdeas = {
         "Pastel walls",
         "Curtains",
         "Flower field",
-        "Cozy room"
+        "Cozy room",
+        "Soft blankets",
+        "Minimalist corner",
+        "Window light wall"
     ],
     bold: [
         "Street at night",
         "Parking garage",
         "Neon signs",
         "Dark room",
-        "Metallic surfaces"
+        "Metallic surfaces",
+        "Car interior",
+        "Graffiti wall",
+        "Shadowy hallway"
     ]
 };
 
-/* ------------------ SHOW IDEAS ------------------ */
 function showPhotoIdeas() {
     const poseType = document.getElementById("poseType").value;
     const poseCard = document.getElementById("poseCard");
@@ -449,3 +538,5 @@ function showPhotoIdeas() {
 
 </body>
 </html>
+    
+   
