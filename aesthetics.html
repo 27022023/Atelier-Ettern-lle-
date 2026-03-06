@@ -1,75 +1,458 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aesthetic Library</title>
+<meta charset="UTF-8">
+<title>Aesthetic Library</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 40px 20px;
-            background: #111;
-            color: #f5f5f5;
-            font-family: system-ui, sans-serif;
-        }
-        h1 {
-            color: #f7e7b8;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #d9b56f;
-            margin-top: 30px;
-        }
-        p, ul {
-            max-width: 750px;
-            line-height: 1.7;
-        }
-        ul { padding-left: 20px; }
-    </style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:linear-gradient(135deg,#d9ffe8,#c8f7df,#e8fff3,#f5fff9);
+  font-family:system-ui,sans-serif;
+  color:#1f2b25;
+  padding:40px 16px 60px;
+}
+
+/* back arrow */
+.back-arrow{
+  position:absolute;
+  top:20px;
+  left:20px;
+  font-size:2.4rem;
+  cursor:pointer;
+  color:#1f2b25;
+  text-shadow:0 0 10px rgba(255,255,255,0.7);
+}
+
+/* title */
+h1{
+  font-size:2.4rem;
+  text-align:center;
+  margin-bottom:18px;
+  color:#7bbf9b;
+  text-shadow:0 0 12px rgba(255,255,255,0.6);
+}
+
+/* subtitle */
+.subtitle{
+  text-align:center;
+  font-size:1.05rem;
+  opacity:.85;
+  max-width:700px;
+  margin:0 auto 20px;
+}
+
+/* cards */
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.6),rgba(235,255,245,0.75));
+  border:1px solid rgba(255,255,255,0.8);
+  border-radius:22px;
+  padding:22px 24px;
+  margin:18px auto;
+  max-width:900px;
+  box-shadow:0 0 25px rgba(255,255,255,0.7);
+  backdrop-filter:blur(6px);
+}
+
+.card h2{
+  font-size:1.6rem;
+  color:#7bbf9b;
+  margin-bottom:10px;
+}
+
+.card p,
+.card ul{
+  font-size:1.02rem;
+  line-height:1.7;
+}
+
+.card ul{
+  padding-left:20px;
+}
+
+.card li{
+  margin-bottom:6px;
+}
+
+/* quiz + style finder */
+.quiz-group label,
+.style-group label{
+  font-weight:600;
+}
+
+.quiz-options label,
+.style-options label{
+  display:block;
+  margin-bottom:4px;
+  cursor:pointer;
+}
+
+button{
+  margin-top:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#e0fff0,#bff5d9);
+  font-size:.98rem;
+}
+
+.result-box{
+  margin-top:12px;
+  background:rgba(255,255,255,0.7);
+  border-radius:14px;
+  padding:10px 12px;
+  font-size:.98rem;
+}
+
+select{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,0.1);
+  background:#f3fff8;
+  font-size:.95rem;
+}
+
+@media(max-width:600px){
+  h1{font-size:2rem;}
+  .card{padding:18px 18px;}
+}
+</style>
 </head>
 
 <body>
 
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
 <h1>Aesthetic Library</h1>
+<div class="subtitle">
+  Explore popular aesthetics and learn how to recreate each look through makeup, hair, outfits, colors, and overall vibe.
+</div>
 
-<p>Explore popular aesthetics and learn how to recreate each look through makeup, hair, outfits, and vibes.</p>
+<!-- INTRO -->
+<div class="card">
+  <p>
+    Aesthetics are more than outfits — they’re a whole vibe. This guide breaks down makeup, hair, fashion, colors, accessories,
+    and energy for each aesthetic so you can build your own signature style.
+  </p>
+</div>
 
-<h2>Clean Girl</h2>
-<ul>
-    <li><strong>Makeup:</strong> Dewy skin, fluffy brows, glossy lips.</li>
-    <li><strong>Hair:</strong> Sleek bun or soft waves.</li>
-    <li><strong>Outfits:</strong> Neutrals, basics, gold jewelry.</li>
-</ul>
+<!-- CLEAN GIRL -->
+<div class="card">
+  <h2>Clean Girl</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Dewy skin, fluffy brows, soft blush, glossy lips.</li>
+    <li><strong>Hair:</strong> Sleek bun, claw clip, soft waves.</li>
+    <li><strong>Outfits:</strong> Neutrals, basics, matching sets, gold jewelry.</li>
+    <li><strong>Colors:</strong> White, beige, sage, soft brown.</li>
+    <li><strong>Accessories:</strong> Gold hoops, tote bags, minimal sneakers.</li>
+    <li><strong>Vibe:</strong> Effortless, fresh, organized.</li>
+  </ul>
+</div>
 
-<h2>Coquette</h2>
-<ul>
-    <li><strong>Makeup:</strong> Blushy cheeks, soft pink lips.</li>
+<!-- COQUETTE -->
+<div class="card">
+  <h2>Coquette</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Blushy cheeks, soft pink lips, fluttery lashes.</li>
     <li><strong>Hair:</strong> Ribbons, curls, soft bangs.</li>
-    <li><strong>Outfits:</strong> Lace, bows, pastel colors.</li>
-</ul>
+    <li><strong>Outfits:</strong> Lace, bows, pastel skirts, dainty tops.</li>
+    <li><strong>Colors:</strong> Baby pink, cream, lavender.</li>
+    <li><strong>Accessories:</strong> Pearls, ribbons, heart motifs.</li>
+    <li><strong>Vibe:</strong> Romantic, dreamy, feminine.</li>
+  </ul>
+</div>
 
-<h2>Old Money</h2>
-<ul>
-    <li><strong>Makeup:</strong> Minimal, polished.</li>
-    <li><strong>Hair:</strong> Blowout or sleek ponytail.</li>
-    <li><strong>Outfits:</strong> Blazers, trousers, neutral tones.</li>
-</ul>
+<!-- OLD MONEY -->
+<div class="card">
+  <h2>Old Money</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Minimal, polished, soft matte.</li>
+    <li><strong>Hair:</strong> Blowout, sleek ponytail, soft curls.</li>
+    <li><strong>Outfits:</strong> Blazers, trousers, cashmere, tailored pieces.</li>
+    <li><strong>Colors:</strong> Navy, cream, camel, black.</li>
+    <li><strong>Accessories:</strong> Silk scarves, structured bags, loafers.</li>
+    <li><strong>Vibe:</strong> Elegant, timeless, refined.</li>
+  </ul>
+</div>
 
-<h2>Dark Feminine</h2>
-<ul>
-    <li><strong>Makeup:</strong> Smokey eyes, bold lips.</li>
-    <li><strong>Hair:</strong> Sleek, dramatic styles.</li>
-    <li><strong>Outfits:</strong> Black, deep reds, structured silhouettes.</li>
-</ul>
+<!-- DARK FEMININE -->
+<div class="card">
+  <h2>Dark Feminine</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Smokey eyes, bold lips, sharp liner.</li>
+    <li><strong>Hair:</strong> Sleek straight hair, dramatic waves.</li>
+    <li><strong>Outfits:</strong> Black, deep reds, leather, structured silhouettes.</li>
+    <li><strong>Colors:</strong> Burgundy, black, wine, silver.</li>
+    <li><strong>Accessories:</strong> Statement jewelry, heels, dark nails.</li>
+    <li><strong>Vibe:</strong> Powerful, mysterious, confident.</li>
+  </ul>
+</div>
 
-<h2>Soft Glam</h2>
-<ul>
+<!-- SOFT GLAM -->
+<div class="card">
+  <h2>Soft Glam</h2>
+  <ul>
     <li><strong>Makeup:</strong> Warm tones, lashes, glowing skin.</li>
-    <li><strong>Hair:</strong> Hollywood waves or soft curls.</li>
+    <li><strong>Hair:</strong> Hollywood waves, soft curls, blowouts.</li>
     <li><strong>Outfits:</strong> Satin, neutrals, gold accents.</li>
-</ul>
+    <li><strong>Colors:</strong> Champagne, nude, rose gold.</li>
+    <li><strong>Accessories:</strong> Gold necklaces, soft fabrics, heels.</li>
+    <li><strong>Vibe:</strong> Feminine, polished, radiant.</li>
+  </ul>
+</div>
 
-</body>
+<!-- BOHO -->
+<div class="card">
+  <h2>Boho</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Natural tones, bronzed skin.</li>
+    <li><strong>Hair:</strong> Loose waves, braids, messy buns.</li>
+    <li><strong>Outfits:</strong> Flowy dresses, crochet tops, earthy prints.</li>
+    <li><strong>Colors:</strong> Terracotta, cream, olive, mustard.</li>
+    <li><strong>Accessories:</strong> Layered necklaces, beads, fringe bags.</li>
+    <li><strong>Vibe:</strong> Free‑spirited, earthy, artistic.</li>
+  </ul>
+</div>
+
+<!-- Y2K -->
+<div class="card">
+  <h2>Y2K</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Glossy lips, frosty eyeshadow, blushy cheeks.</li>
+    <li><strong>Hair:</strong> Butterfly clips, high pony, flipped ends.</li>
+    <li><strong>Outfits:</strong> Mini skirts, baby tees, low‑rise jeans.</li>
+    <li><strong>Colors:</strong> Hot pink, baby blue, silver.</li>
+    <li><strong>Accessories:</strong> Chunky rings, tiny bags, sparkles.</li>
+    <li><strong>Vibe:</strong> Fun, bold, nostalgic.</li>
+  </ul>
+</div>
+
+<!-- ACADEMIA -->
+<div class="card">
+  <h2>Dark & Light Academia</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Soft matte, neutral tones.</li>
+    <li><strong>Hair:</strong> Loose curls, messy buns, natural texture.</li>
+    <li><strong>Outfits:</strong> Sweaters, plaid skirts, trousers.</li>
+    <li><strong>Colors:</strong>  
+      <strong>Dark:</strong> Brown, black, forest green.  
+      <strong>Light:</strong> Cream, beige, soft brown.
+    </li>
+    <li><strong>Accessories:</strong> Books, glasses, satchels.</li>
+    <li><strong>Vibe:</strong> Intellectual, cozy, vintage.</li>
+  </ul>
+</div>
+
+<!-- BADDIE -->
+<div class="card">
+  <h2>Baddie</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Full glam, contour, lashes.</li>
+    <li><strong>Hair:</strong> Sleek middle part, long layers, high pony.</li>
+    <li><strong>Outfits:</strong> Bodycon, cargos, crop tops.</li>
+    <li><strong>Colors:</strong> Black, nude, red.</li>
+    <li><strong>Accessories:</strong> Statement jewelry, designer‑inspired pieces.</li>
+    <li><strong>Vibe:</strong> Confident, bold, glamorous.</li>
+  </ul>
+</div>
+
+<!-- SOFT GIRL -->
+<div class="card">
+  <h2>Soft Girl</h2>
+  <ul>
+    <li><strong>Makeup:</strong> Pink blush, glossy lips, sparkly eyes.</li>
+    <li><strong>Hair:</strong> Fluffy curls, braids, ribbons.</li>
+    <li><strong>Outfits:</strong> Pastels, skirts, cozy sweaters.</li>
+    <li><strong>Colors:</strong> Pink, lavender, cream.</li>
+    <li><strong>Accessories:</strong> Hearts, bows, pearls.</li>
+    <li><strong>Vibe:</strong> Cute, gentle, dreamy.</li>
+  </ul>
+</div>
+
+<!-- AESTHETIC QUIZ -->
+<div class="card">
+  <h2>Aesthetic Quiz</h2>
+
+  <div class="quiz-group">
+    <label>1. What vibe do you naturally gravitate toward?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="aq1" value="clean"> Minimal, fresh, organized</label>
+      <label><input type="radio" name="aq1" value="coquette"> Romantic, soft, feminine</label>
+      <label><input type="radio" name="aq1" value="oldmoney"> Elegant, timeless, refined</label>
+      <label><input type="radio" name="aq1" value="darkfem"> Bold, mysterious, powerful</label>
+      <label><input type="radio" name="aq1" value="softglam"> Polished, glowing, feminine</label>
+      <label><input type="radio" name="aq1" value="boho"> Free‑spirited, artistic, earthy</label>
+      <label><input type="radio" name="aq1" value="y2k"> Fun, bold, nostalgic</label>
+      <label><input type="radio" name="aq1" value="academia"> Cozy, intellectual, vintage</label>
+      <label><input type="radio" name="aq1" value="baddie"> Glamorous, confident, bold</label>
+      <label><input type="radio" name="aq1" value="softgirl"> Cute, dreamy, gentle</label>
+    </div>
+  </div>
+
+  <div class="quiz-group">
+    <label>2. How much effort do you like to put into your look?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="aq2" value="low"> Low effort</label>
+      <label><input type="radio" name="aq2" value="medium"> Medium effort</label>
+      <label><input type="radio" name="aq2" value="high"> High effort</label>
+    </div>
+  </div>
+
+  <button id="aestheticQuizBtn">Reveal my aesthetic</button>
+
+  <div class="result-box" id="aestheticQuizResult" style="display:none;"></div>
+</div>
+
+<!-- SIGNATURE STYLE FINDER -->
+<div class="card">
+  <h2>Signature Style Finder</h2>
+  <p>Choose your preferences to discover your personal signature style.</p>
+
+  <div class="style-group">
+    <label>1. What’s your ideal outfit vibe?</label>
+    <div class="style-options">
+      <label><input type="radio" name="sf1" value="minimal"> Minimal & clean</label>
+      <label><input type="radio" name="sf1" value="romantic"> Romantic & soft</label>
+      <label><input type="radio" name="sf1" value="elegant"> Elegant & polished</label>
+      <label><input type="radio" name="sf1" value="bold"> Bold & dramatic</label>
+      <label><input type="radio" name="sf1" value="cozy"> Cozy & vintage</label>
+      <label><input type="radio" name="sf1" value="fun"> Fun & colorful</label>
+    </div>
+  </div>
+
+  <div class="style-group">
+    <label>2. What colors do you feel best in?</label>
+    <select id="sfColors">
+      <option value="">-- Select --</option>
+      <option value="neutrals">Neutrals</option>
+      <option value="pastels">Pastels</option>
+      <option value="dark">Dark tones</option>
+      <option value="warm">Warm tones</option>
+      <option value="bright">Bright colors</option>
+    </select>
+  </div>
+
+  <div class="style-group">
+    <label>3. What’s your go‑to makeup vibe?</label>
+    <select id="sfMakeup">
+      <option value="">-- Select --</option>
+      <option value="natural">Natural</option>
+      <option value="soft">Soft glam</option>
+      <option value="bold">Bold glam</option>
+      <option value="romantic">Romantic</option>
+    </select>
+  </div>
+
+  <button id="styleFinderBtn">Find my signature style</button>
+
+  <div class="result-box" id="styleFinderResult" style="display:none;"></div>
+</div>
+
+<script>
+/* Aesthetic Quiz */
+document.getElementById("aestheticQuizBtn").addEventListener("click", ()=>{
+  const vibe = document.querySelector('input[name="aq1"]:checked');
+  const effort = document.querySelector('input[name="aq2"]:checked');
+  const box = document.getElementById("aestheticQuizResult");
+
+  if(!vibe || !effort){
+    box.style.display = "block";
+    box.innerHTML = "Please answer both questions 💚";
+    return;
+  }
+
+  let result = "";
+
+  const map = {
+    clean:"✨ Clean Girl",
+    coquette:"🎀 Coquette",
+    oldmoney:"💼 Old Money",
+    darkfem:"🖤 Dark Feminine",
+    softglam:"🌟 Soft Glam",
+    boho:"🌿 Boho",
+    y2k:"💖 Y2K",
+    academia:"📚 Academia",
+    baddie:"🔥 Baddie",
+    softgirl:"🌸 Soft Girl"
+  };
+
+  result = map[vibe.value] + " aesthetic";
+
+  if(effort.value === "low"){
+    result += " with a low‑effort twist — simple, repeatable looks suit you best.";
+  } else if(effort.value === "medium"){
+    result += " with a balanced routine — you enjoy looking good without overdoing it.";
+  } else {
+    result += " with high‑effort glam — you love going all out.";
+  }
+
+  box.style.display = "block";
+  box.innerHTML = result;
+});
+
+/* Signature Style Finder */
+document.getElementById("styleFinderBtn").addEventListener("click", ()=>{
+  const vibe = document.querySelector('input[name="sf1"]:checked');
+  const colors = document.getElementById("sfColors").value;
+  const makeup = document.getElementById("sfMakeup").value;
+  const box = document.getElementById("styleFinderResult");
+
+  if(!vibe || !colors || !makeup){
+    box.style.display = "block";
+    box.innerHTML = "Please answer all questions to find your signature style 💚";
+    return;
+  }
+
+  let style = "";
+
+  if(vibe.value === "minimal"){
+    style = "✨ Minimal Chic — clean lines, neutrals, gold jewelry.";
+  }
+  if(vibe.value === "romantic"){
+    style = "🎀 Romantic Soft — lace, pastels, bows, soft silhouettes.";
+  }
+  if(vibe.value === "elegant"){
+    style = "💼 Elegant Classic — blazers, trousers, structured coats.";
+  }
+  if(vibe.value === "bold"){
+    style = "🔥 Statement Glam — bold cuts, strong shapes, standout pieces.";
+  }
+  if(vibe.value === "cozy"){
+    style = "📚 Cozy Academia — knits, plaid, vintage‑inspired pieces.";
+  }
+  if(vibe.value === "fun"){
+    style = "💖 Playful Color — prints, bright tones, fun accessories.";
+  }
+
+  if(colors === "neutrals"){
+    style += " You shine in neutrals — think beige, white, black, and soft browns.";
+  } else if(colors === "pastels"){
+    style += " Pastels flatter you — soft pinks, lilacs, baby blues, and mint.";
+  } else if(colors === "dark"){
+    style += " Dark tones ground your look — black, burgundy, navy, deep green.";
+  } else if(colors === "warm"){
+    style += " Warm tones suit you — camel, rust, terracotta, warm beige.";
+  } else if(colors === "bright"){
+    style += " Bright colors match your energy — hot pink, cobalt, lime, bold red.";
+  }
+
+  if(makeup === "natural"){
+    style += " Pair it with natural makeup: soft base, light mascara, subtle lips.";
+  } else if(makeup === "soft"){
+    style += " Pair it with soft glam: glowing skin, soft shimmer, fluffy lashes.";
+  } else if(makeup === "bold"){
+    style += " Pair it with bold glam: sharp liner, strong lips, defined contour.";
+  } else if(makeup === "romantic"){
+    style += " Pair it with romantic makeup: blushy cheeks, glossy lips, soft eyes.";
+  }
+
+  box.style.display = "block";
+  box.innerHTML = style;
+});
+</script>
+
+</body>     
 </html>
