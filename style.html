@@ -3,116 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Style Helper</title>
+<title>Style Helper Mega</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-        min-height: 100vh;
-        width: 100vw;
-        background: linear-gradient(135deg, #f7dce9, #f3c7da, #f2bcd3);
-        font-family: "Playfair Display", serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 32px 0 40px;
-        color: #2a2a2a;
-    }
+body {
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(135deg, #5a4634, #7a5e47, #c8b39a);
+    font-family: "Playfair Display", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0 40px;
+    color: #2a1f18;
+}
 
-    h1 {
-        font-size: 2rem;
-        margin-bottom: 18px;
-        color: #2a2a2a;
-        text-shadow: 0 0 10px rgba(255,255,255,0.6);
-    }
+/* Back Arrow */
+.back-arrow {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    font-size: 2.1rem;
+    cursor: pointer;
+    color: #d8b46a;
+    text-shadow: 0 0 10px rgba(216,180,106,0.6);
+    z-index: 10;
+}
 
-    .section-label {
-        width: 92%;
-        max-width: 900px;
-        font-size: 1rem;
-        font-weight: 600;
-        margin: 4px 0 8px;
-        color: #3a3a3a;
-    }
+.back-arrow:hover {
+    text-shadow: 0 0 14px rgba(216,180,106,0.9);
+}
 
-    /* Grids */
-    .grid {
-        width: 92%;
-        max-width: 900px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-        gap: 14px;
-        margin-bottom: 20px;
-    }
+h1 {
+    font-size: 2rem;
+    margin-bottom: 18px;
+    color: #f7f2e9;
+    text-shadow: 0 0 10px rgba(216,180,106,0.6);
+}
 
-    .card {
-        background: rgba(255,255,255,0.25);
-        backdrop-filter: blur(8px);
-        border: 2px solid #e8a9c4;
-        border-radius: 16px;
-        padding: 14px;
-        text-align: center;
-        cursor: pointer;
-        transition: 0.2s ease;
-        color: #2a2a2a;
-        font-size: 0.95rem;
-        font-weight: 600;
-    }
+.section-label {
+    width: 92%;
+    max-width: 900px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 4px 0 8px;
+    color: #f7f2e9;
+}
 
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 14px rgba(255,255,255,0.7);
-    }
+/* Grids */
+.grid {
+    width: 92%;
+    max-width: 900px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+}
 
-    /* Results */
-    .results {
-        width: 94%;
-        max-width: 1100px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 16px;
-        margin-top: 10px;
-    }
+.card {
+    background: rgba(247,242,233,0.65);
+    backdrop-filter: blur(6px);
+    border: 2px solid #d8b46a;
+    border-radius: 16px;
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s ease;
+    color: #2a1f18;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
 
-    .result-card {
-        background: rgba(255,255,255,0.25);
-        backdrop-filter: blur(10px);
-        border: 2px solid #e8a9c4;
-        border-radius: 18px;
-        padding: 16px;
-        color: #2a2a2a;
-        font-size: 1rem;
-    }
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 14px rgba(216,180,106,0.7);
+}
 
-    .result-card h2 {
-        font-size: 1.25rem;
-        margin-bottom: 8px;
-        color: #2a2a2a;
-        text-shadow: 0 0 6px rgba(255,255,255,0.7);
-    }
+/* Layout for Tabs + Content */
+.main-container {
+    width: 94%;
+    max-width: 1200px;
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
 
-    .bullet {
-        margin-left: 14px;
-        margin-bottom: 6px;
-        font-size: 0.95rem;
-    }
+/* Vertical Tabs */
+.tabs {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-    .hint {
-        width: 92%;
-        max-width: 900px;
-        font-size: 0.9rem;
-        color: #555;
-        margin-bottom: 10px;
-    }
+.tab {
+    background: rgba(247,242,233,0.55);
+    border: 2px solid #d8b46a;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+    text-align: center;
+}
+
+.tab:hover {
+    box-shadow: 0 0 12px rgba(216,180,106,0.7);
+}
+
+.tab.active {
+    background: rgba(247,242,233,0.8);
+    border-color: #f7f2e9;
+    box-shadow: 0 0 14px rgba(216,180,106,0.9);
+}
+
+/* Content Area */
+.content-area {
+    flex: 1;
+    background: rgba(247,242,233,0.7);
+    backdrop-filter: blur(8px);
+    border: 2px solid #d8b46a;
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.content-area h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #2a1f18;
+}
+
+.bullet {
+    margin-left: 14px;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
 </style>
 </head>
 
 <body>
 
-<h1>Style Helper</h1>
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
+<h1>Style Helper Mega</h1>
 
 <div class="section-label">1. Pick the place</div>
 <div class="grid" id="eventGrid"></div>
@@ -120,368 +157,114 @@
 <div class="section-label">2. Pick the season</div>
 <div class="grid" id="seasonGrid"></div>
 
-<p class="hint">Once you pick a place and a season, your blended style ideas will appear below.</p>
-
-<div class="results">
-    <div class="result-card" id="hairCard"></div>
-    <div class="result-card" id="outfitCard"></div>
-    <div class="result-card" id="accessoryCard"></div>
-    <div class="result-card" id="makeupCard"></div>
+<div class="main-container">
+    <div class="tabs" id="tabs"></div>
+    <div class="content-area" id="contentArea">
+        <h2>Select a category</h2>
+        <p class="bullet">Pick an event, a season, and a category tab.</p>
+    </div>
 </div>
 
 <script>
-/* ------------------ DATA: EVENTS ------------------ */
+/* ------------------ EVENTS ------------------ */
 const events = [
-    "School", "Work", "Coffee Date", "Shopping Day", "Study Session", "Gym", "Errands",
-    "Birthday Party", "Girls' Night", "Picnic", "Brunch", "Concert", "Festival",
-    "Movie Night", "Sleepover", "Club Night",
-    "Wedding Guest", "Graduation", "Anniversary Dinner", "Holiday Party",
-    "Photoshoot", "Date Night", "Family Gathering", "Formal Gala", "Prom", "Travel Day"
+    "School","Work","Coffee Date","Shopping","Study Session","Gym","Errands",
+    "Brunch","Picnic","Concert","Festival","Movie Night","Sleepover","Club Night",
+    "Prom","Gala","Wedding Guest","Graduation","Travel Day","Airport","Beach Day",
+    "Pool Day","Rainy Day","Snow Day","Photoshoot","First Date","Anniversary",
+    "Family Dinner","Christmas Market","Summer BBQ","Hiking","Museum Day",
+    "Library Study Day","Casual Party","Fancy Dinner","School Presentation",
+    "Job Interview"
 ];
 
+/* ------------------ CATEGORIES ------------------ */
+const categories = [
+    "Hair","Outfits","Shoes","Bags","Accessories","Jewelry","Makeup","Nails",
+    "Perfume","Colors","Fabrics","Layering","Weather Tips","Aesthetic Vibe","Avoid"
+];
+
+/* ------------------ BASIC STYLE DATA (expand later) ------------------ */
 const eventStyles = {
     "School": {
-        hair: [
-            "Soft ponytail with loose pieces",
-            "Half-up with claw clip",
-            "Loose waves with minimal styling"
-        ],
-        outfit: [
-            "Jeans + cozy sweater",
-            "Graphic tee + wide-leg pants",
-            "Hoodie + leggings"
-        ],
-        accessories: [
-            "Simple studs",
-            "Mini backpack",
-            "Scrunchie on wrist"
-        ],
-        makeup: [
-            "Very natural base",
-            "Mascara only",
-            "Tinted lip balm"
-        ]
+        Hair: ["Soft ponytail","Half-up clip","Loose waves"],
+        Outfits: ["Jeans + sweater","Graphic tee + pants","Hoodie + leggings"],
+        Shoes: ["Sneakers","Flat boots"],
+        Bags: ["Mini backpack","Tote bag"],
+        Accessories: ["Studs","Scrunchie"],
+        Jewelry: ["Small hoops","Simple necklace"],
+        Makeup: ["Natural base","Mascara","Lip balm"],
+        Nails: ["Clear gloss","Soft pink"],
+        Perfume: ["Light floral"],
+        Colors: ["Beige","Brown","Cream"],
+        Fabrics: ["Cotton","Knit"],
+        Layering: ["Light cardigan"],
+        Weather: ["Check temperature"],
+        Vibe: ["Soft academia"],
+        Avoid: ["Heavy glam","Heels"]
     },
-    "Work": {
-        hair: [
-            "Low bun",
-            "Straight hair with middle part",
-            "Soft blowout"
-        ],
-        outfit: [
-            "Blazer + trousers",
-            "Blouse + midi skirt",
-            "Knit top + tailored pants"
-        ],
-        accessories: [
-            "Gold hoops",
-            "Structured tote bag",
-            "Delicate necklace"
-        ],
-        makeup: [
-            "Soft matte base",
-            "Neutral eyeshadow",
-            "Nude lipstick"
-        ]
-    },
-    "Coffee Date": {
-        hair: [
-            "Loose curls with face-framing pieces",
-            "Half-up bow hairstyle",
-            "Soft waves with pearl clips"
-        ],
-        outfit: [
-            "Floral dress + cardigan",
-            "Jeans + cute blouse",
-            "Pastel sweater + skirt"
-        ],
-        accessories: [
-            "Mini shoulder bag",
-            "Dainty rings",
-            "Pearl hair clips"
-        ],
-        makeup: [
-            "Dewy base + blush",
-            "Glossy lips",
-            "Soft shimmer on eyes"
-        ]
-    },
-    "Brunch": {
-        hair: [
-            "Soft blowout",
-            "Low messy bun with tendrils",
-            "Side-swept curls"
-        ],
-        outfit: [
-            "Satin mini dress",
-            "Pleated skirt + knit top",
-            "Wide-leg pants + fitted top"
-        ],
-        accessories: [
-            "Layered necklaces",
-            "Sunglasses",
-            "Small shoulder bag"
-        ],
-        makeup: [
-            "Glowy skin",
-            "Soft pink blush",
-            "Glossy lips"
-        ]
-    },
-    "Concert": {
-        hair: [
-            "High pony with volume",
-            "Braided ponytail",
-            "Messy waves"
-        ],
-        outfit: [
-            "Cargo pants + fitted top",
-            "Leather jacket + mini skirt",
-            "Graphic tee + parachute pants"
-        ],
-        accessories: [
-            "Chunky rings",
-            "Crossbody bag",
-            "Statement earrings"
-        ],
-        makeup: [
-            "Bold eyeliner",
-            "Smokey eye",
-            "Glossy lips"
-        ]
-    },
-    "Festival": {
-        hair: [
-            "Braided pigtails",
-            "Bubble braids",
-            "Half-up with butterfly clips"
-        ],
-        outfit: [
-            "Crop top + shorts",
-            "Sheer top + bralette",
-            "Y2K low-rise jeans + baby tee"
-        ],
-        accessories: [
-            "Body chain",
-            "Heart-shaped sunglasses",
-            "Layered necklaces"
-        ],
-        makeup: [
-            "Glitter accents",
-            "Colorful eyeliner",
-            "Glowy bronzed skin"
-        ]
-    },
-    "Prom": {
-        hair: [
-            "Hollywood curls",
-            "Elegant low bun",
-            "Half-up glam waves"
-        ],
-        outfit: [
-            "Long satin dress",
-            "Sparkly gown",
-            "Fitted formal dress"
-        ],
-        accessories: [
-            "Statement earrings",
-            "Clutch bag",
-            "Delicate bracelet"
-        ],
-        makeup: [
-            "Full glam eyes",
-            "Highlighter on cheekbones",
-            "Bold or nude lip"
-        ]
-    },
-    "Formal Gala": {
-        hair: [
-            "Sleek low bun",
-            "Sculpted updo",
-            "Side-swept waves"
-        ],
-        outfit: [
-            "Floor-length gown",
-            "Structured dress with slit",
-            "Chic jumpsuit"
-        ],
-        accessories: [
-            "Elegant drop earrings",
-            "Metallic clutch",
-            "Fine bracelet"
-        ],
-        makeup: [
-            "Defined contour",
-            "Smokey eye",
-            "Red or deep berry lip"
-        ]
-    },
-    "Holiday Party": {
-        hair: [
-            "Soft curls",
-            "Half-up with bow",
-            "Sleek straight hair"
-        ],
-        outfit: [
-            "Velvet dress",
-            "Sequin top + trousers",
-            "Knit dress + boots"
-        ],
-        accessories: [
-            "Sparkly earrings",
-            "Metallic belt",
-            "Festive hair clip"
-        ],
-        makeup: [
-            "Red lip",
-            "Shimmer eyeshadow",
-            "Glowy highlight"
-        ]
-    },
-    "Date Night": {
-        hair: [
-            "Loose romantic curls",
-            "Slicked-back ponytail",
-            "Soft waves"
-        ],
-        outfit: [
-            "Little black dress",
-            "Satin slip dress",
-            "Jeans + corset top"
-        ],
-        accessories: [
-            "Gold hoops",
-            "Mini bag",
-            "Delicate necklace"
-        ],
-        makeup: [
-            "Soft glam eyes",
-            "Rosy blush",
-            "Glossy or satin lip"
-        ]
-    },
-    // Fallback for others
     "default": {
-        hair: [
-            "Soft waves",
-            "Low ponytail",
-            "Loose curls"
-        ],
-        outfit: [
-            "Jeans + cute top",
-            "Knit sweater + skirt",
-            "Casual dress"
-        ],
-        accessories: [
-            "Simple hoops",
-            "Crossbody bag",
-            "Rings"
-        ],
-        makeup: [
-            "Natural base",
-            "Mascara + blush",
-            "Tinted gloss"
-        ]
+        Hair: ["Soft waves"],
+        Outfits: ["Jeans + cute top"],
+        Shoes: ["Sneakers"],
+        Bags: ["Crossbody"],
+        Accessories: ["Hoops"],
+        Jewelry: ["Rings"],
+        Makeup: ["Natural"],
+        Nails: ["Gloss"],
+        Perfume: ["Fresh"],
+        Colors: ["Neutral"],
+        Fabrics: ["Cotton"],
+        Layering: ["Light jacket"],
+        Weather: ["Check temperature"],
+        Vibe: ["Casual cute"],
+        Avoid: ["Too formal"]
     }
 };
 
-/* ------------------ DATA: SEASONS ------------------ */
-const seasons = ["Spring", "Summer", "Fall", "Winter"];
+/* ------------------ SEASONS ------------------ */
+const seasons = ["Spring","Summer","Fall","Winter"];
 
 const seasonStyles = {
-    "Spring": {
-        hair: [
-            "Soft waves with ribbon bows",
-            "Half-up curls with floral clips",
-            "Low ponytail with loose tendrils"
-        ],
-        outfit: [
-            "Floral mini dress + cardigan",
-            "Pleated skirt + lace top",
-            "Light denim + pastel sweater"
-        ],
-        accessories: [
-            "Pearl hair clips",
-            "Pastel scrunchies",
-            "Dainty gold jewelry"
-        ],
-        makeup: [
-            "Dewy base + soft blush",
-            "Pink shimmer eyeshadow",
-            "Glossy lips"
-        ]
-    },
     "Summer": {
-        hair: [
-            "High pony with volume",
-            "Beach waves",
-            "Half-up with claw clip"
-        ],
-        outfit: [
-            "Baby tee + denim shorts",
-            "Tube top + cargo skirt",
-            "Flowy sundress"
-        ],
-        accessories: [
-            "Heart-shaped sunglasses",
-            "Anklets",
-            "Layered necklaces"
-        ],
-        makeup: [
-            "Glowy bronzed skin",
-            "Peach blush",
-            "Glossy lips"
-        ]
+        Hair: ["High pony","Beach waves","Claw clip"],
+        Outfits: ["Baby tee + shorts","Sundress","Tank top"],
+        Shoes: ["Sandals","Sneakers"],
+        Bags: ["Mini bag","Canvas tote"],
+        Accessories: ["Sunglasses","Anklets"],
+        Jewelry: ["Gold hoops"],
+        Makeup: ["Bronzed skin","Gloss"],
+        Nails: ["Peach","White"],
+        Perfume: ["Citrus"],
+        Colors: ["White","Beige","Pastels"],
+        Fabrics: ["Linen","Cotton"],
+        Layering: ["Light shirt"],
+        Weather: ["Stay cool"],
+        Vibe: ["Light & cute"],
+        Avoid: ["Sweaters","Heavy jackets"]
     },
-    "Fall": {
-        hair: [
-            "Soft blowout",
-            "Low messy bun",
-            "Ribbon-tied ponytail"
-        ],
-        outfit: [
-            "Oversized sweater + tights",
-            "Long skirt + knit top",
-            "Leather jacket + mini skirt"
-        ],
-        accessories: [
-            "Gold hoops",
-            "Chunky rings",
-            "Tote bag"
-        ],
-        makeup: [
-            "Warm brown eyeshadow",
-            "Mauve blush",
-            "Soft matte lips"
-        ]
-    },
-    "Winter": {
-        hair: [
-            "Sleek straight hair",
-            "High-fashion sculpted bun",
-            "Hollywood curls"
-        ],
-        outfit: [
-            "Faux fur jacket + mini dress",
-            "All-black outfit with silver jewelry",
-            "Metallic skirt + knit top"
-        ],
-        accessories: [
-            "Statement earrings",
-            "Faux fur bag",
-            "Pearl headband"
-        ],
-        makeup: [
-            "Bold eyeliner",
-            "Red lip",
-            "Silver shimmer eyeshadow"
-        ]
+    "default": {
+        Hair: ["Soft waves"],
+        Outfits: ["Seasonal outfit"],
+        Shoes: ["Seasonal shoes"],
+        Bags: ["Crossbody"],
+        Accessories: ["Simple jewelry"],
+        Jewelry: ["Rings"],
+        Makeup: ["Natural"],
+        Nails: ["Neutral"],
+        Perfume: ["Fresh"],
+        Colors: ["Neutral"],
+        Fabrics: ["Cotton"],
+        Layering: ["Light jacket"],
+        Weather: ["Check temperature"],
+        Vibe: ["Cute"],
+        Avoid: ["Weather-inappropriate items"]
     }
 };
 
 /* ------------------ STATE ------------------ */
 let selectedEvent = null;
 let selectedSeason = null;
+let selectedCategory = null;
 
 /* ------------------ HELPERS ------------------ */
 function getEventData(ev) {
@@ -489,17 +272,14 @@ function getEventData(ev) {
 }
 
 function getSeasonData(season) {
-    return seasonStyles[season];
+    return seasonStyles[season] || seasonStyles["default"];
 }
 
-function blendLists(eventList, seasonList, max = 6) {
-    const combined = [...eventList, ...seasonList];
-    // Remove duplicates
-    const unique = [...new Set(combined)];
-    return unique.slice(0, max);
+function blend(eventList, seasonList) {
+    return [...new Set([...eventList, ...seasonList])];
 }
 
-/* ------------------ BUILD GRIDS ------------------ */
+/* ------------------ BUILD EVENT GRID ------------------ */
 function loadEventGrid() {
     const grid = document.getElementById("eventGrid");
     grid.innerHTML = "";
@@ -512,12 +292,12 @@ function loadEventGrid() {
         card.onclick = () => {
             selectedEvent = ev;
             document.querySelectorAll("#eventGrid .card").forEach(c => {
-                c.style.borderColor = "#e8a9c4";
+                c.style.borderColor = "#d8b46a";
                 c.style.boxShadow = "none";
             });
-            card.style.borderColor = "#ffffff";
-            card.style.boxShadow = "0 0 14px rgba(255,255,255,0.9)";
-            updateStyleIdeas();
+            card.style.borderColor = "#f7f2e9";
+            card.style.boxShadow = "0 0 14px rgba(216,180,106,0.9)";
+            updateContent();
         };
 
         grid.appendChild(card);
@@ -536,12 +316,12 @@ function loadSeasonGrid() {
         card.onclick = () => {
             selectedSeason = season;
             document.querySelectorAll("#seasonGrid .card").forEach(c => {
-                c.style.borderColor = "#e8a9c4";
+                c.style.borderColor = "#d8b46a";
                 c.style.boxShadow = "none";
             });
-            card.style.borderColor = "#ffffff";
-            card.style.boxShadow = "0 0 14px rgba(255,255,255,0.9)";
-            updateStyleIdeas();
+            card.style.borderColor = "#f7f2e9";
+            card.style.boxShadow = "0 0 14px rgba(216,180,106,0.9)";
+            updateContent();
         };
 
         grid.appendChild(card);
@@ -551,47 +331,46 @@ function loadSeasonGrid() {
 loadEventGrid();
 loadSeasonGrid();
 
-/* ------------------ UPDATE RESULTS ------------------ */
-function updateStyleIdeas() {
-    const hairCard = document.getElementById("hairCard");
-    const outfitCard = document.getElementById("outfitCard");
-    const accessoryCard = document.getElementById("accessoryCard");
-    const makeupCard = document.getElementById("makeupCard");
+/* ------------------ BUILD TABS ------------------ */
+function loadTabs() {
+    const tabContainer = document.getElementById("tabs");
+    tabContainer.innerHTML = "";
 
-    if (!selectedEvent || !selectedSeason) {
-        hairCard.innerHTML = `<h2>Hairstyles</h2><div class="bullet">• Pick a place and a season to see ideas.</div>`;
-        outfitCard.innerHTML = `<h2>Outfits</h2><div class="bullet">• Pick a place and a season to see ideas.</div>`;
-        accessoryCard.innerHTML = `<h2>Accessories</h2><div class="bullet">• Pick a place and a season to see ideas.</div>`;
-        makeupCard.innerHTML = `<h2>Makeup</h2><div class="bullet">• Pick a place and a season to see ideas.</div>`;
+    categories.forEach(cat => {
+        const tab = document.createElement("div");
+        tab.classList.add("tab");
+        tab.textContent = cat;
+
+        tab.onclick = () => {
+            selectedCategory = cat;
+            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            updateContent();
+        };
+
+        tabContainer.appendChild(tab);
+    });
+}
+
+loadTabs();
+
+/* ------------------ UPDATE CONTENT ------------------ */
+function updateContent() {
+    const content = document.getElementById("contentArea");
+
+    if (!selectedEvent || !selectedSeason || !selectedCategory) {
+        content.innerHTML = `<h2>Select a category</h2><p class="bullet">Pick an event, a season, and a category tab.</p>`;
         return;
     }
 
-    const evData = getEventData(selectedEvent);
-    const seasonData = getSeasonData(selectedSeason);
+    const evData = getEventData(selectedEvent)[selectedCategory] || [];
+    const seasonData = getSeasonData(selectedSeason)[selectedCategory] || [];
 
-    const blendedHair = blendLists(evData.hair, seasonData.hair);
-    const blendedOutfit = blendLists(evData.outfit, seasonData.outfit);
-    const blendedAccessories = blendLists(evData.accessories, seasonData.accessories);
-    const blendedMakeup = blendLists(evData.makeup, seasonData.makeup);
+    const finalList = blend(evData, seasonData);
 
-    hairCard.innerHTML = `
-        <h2>Hairstyles</h2>
-        ${blendedHair.map(h => `<div class="bullet">• ${h}</div>`).join("")}
-    `;
-
-    outfitCard.innerHTML = `
-        <h2>Outfits</h2>
-        ${blendedOutfit.map(o => `<div class="bullet">• ${o}</div>`).join("")}
-    `;
-
-    accessoryCard.innerHTML = `
-        <h2>Accessories</h2>
-        ${blendedAccessories.map(a => `<div class="bullet">• ${a}</div>`).join("")}
-    `;
-
-    makeupCard.innerHTML = `
-        <h2>Makeup</h2>
-        ${blendedMakeup.map(m => `<div class="bullet">• ${m}</div>`).join("")}
+    content.innerHTML = `
+        <h2>${selectedCategory}</h2>
+        ${finalList.map(i => `<div class="bullet">• ${i}</div>`).join("")}
     `;
 }
 </script>
