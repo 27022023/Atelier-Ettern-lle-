@@ -1,332 +1,495 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habit Tracker</title>
+<meta charset="UTF-8">
+<title>Wellness Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
 
-        body {
-            min-height: 100vh;
-            width: 100vw;
-            background: linear-gradient(135deg, #f7e7c9, #f8dcb8);
-            font-family: "Playfair Display", serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-        }
+body{
+  min-height:100vh;
+  width:100vw;
+  background:linear-gradient(135deg,#4b0f1f,#6d1a2f,#8a243d,#b33a52);
+  font-family:"Playfair Display",serif;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:40px 20px;
+  color:#f7e7c9;
+}
 
-        .back-arrow {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            font-size: 2.2rem;
-            cursor: pointer;
-            color: #f5d487;
-            text-shadow: 0 0 10px rgba(247,231,201,0.6);
-        }
+/* back arrow */
+.back-arrow{
+  position:fixed;
+  top:20px;
+  left:20px;
+  font-size:2.2rem;
+  cursor:pointer;
+  color:#f7e7c9;
+  text-shadow:0 0 10px rgba(247,231,201,0.6);
+}
 
-        h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            color: #f5d487;
-            text-shadow: 0 0 12px rgba(247,231,201,0.6);
-        }
+/* title */
+h1{
+  font-size:2.4rem;
+  margin-bottom:10px;
+  color:#f7e7c9;
+  text-shadow:0 0 12px rgba(247,231,201,0.6);
+}
 
-        .streak {
-            font-size: 1.2rem;
-            color: #f5d487;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+/* section card */
+.card{
+  width:85%;
+  max-width:650px;
+  background:#1a0a0f;
+  border:2px solid #f7e7c9;
+  border-radius:18px;
+  padding:20px;
+  margin-top:30px;
+}
 
-        .flame {
-            font-size: 1.5rem;
-            transition: 0.3s ease;
-        }
+.card-title{
+  font-size:1.6rem;
+  margin-bottom:10px;
+  color:#f5d487;
+}
 
-        .habit-container {
-            width: 85%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
+/* inputs */
+input, select, textarea{
+  padding:12px;
+  border-radius:12px;
+  border:2px solid #f7e7c9;
+  background:#1a0a0f;
+  color:#f7e7c9;
+  font-size:1.1rem;
+}
 
-        .habit-card {
-            background: black;
-            border: 2px solid #f7e7c9;
-            border-radius: 18px;
-            padding: 20px;
-            color: #f7e7c9;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            position: relative;
-        }
+textarea{
+  resize:none;
+}
 
-        .delete-icon {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            font-size: 1.3rem;
-            cursor: pointer;
-            color: #f5d487;
-            transition: 0.2s ease;
-        }
+/* buttons */
+.btn{
+  background:#f5d487;
+  color:black;
+  padding:12px;
+  border-radius:12px;
+  font-size:1.1rem;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+  width:100%;
+  margin-top:10px;
+  box-shadow:0 0 10px rgba(247,231,201,0.6);
+}
 
-        .delete-icon:hover {
-            transform: scale(1.15);
-            color: #f4c76c;
-        }
+.btn:hover{
+  transform:scale(1.03);
+  box-shadow:0 0 20px rgba(247,231,201,0.8);
+}
 
-        .habit-title {
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+/* habit tracker */
+.habit-card{
+  background:#1a0a0f;
+  border:2px solid #f7e7c9;
+  border-radius:18px;
+  padding:20px;
+  margin-top:20px;
+  position:relative;
+}
 
-        .progress-bar {
-            width: 100%;
-            height: 14px;
-            background: #333;
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid #f7e7c9;
-        }
+.delete-icon{
+  position:absolute;
+  top:12px;
+  right:12px;
+  font-size:1.3rem;
+  cursor:pointer;
+  color:#f5d487;
+}
 
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: #f5d487;
-            transition: width 0.3s ease;
-        }
+.progress-bar{
+  width:100%;
+  height:14px;
+  background:#3a1a22;
+  border-radius:10px;
+  overflow:hidden;
+  border:1px solid #f7e7c9;
+}
 
-        .habit-btn {
-            background: #f5d487;
-            color: black;
-            padding: 10px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s ease;
-            box-shadow: 0 0 10px rgba(247,231,201,0.6);
-        }
+.progress-fill{
+  height:100%;
+  width:0%;
+  background:#f5d487;
+  transition:width 0.3s ease;
+}
 
-        .habit-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(247,231,201,0.8);
-        }
+/* to-do */
+.todo-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #f7e7c9;
+}
 
-        .message {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
+.todo-complete{
+  text-decoration:line-through;
+  opacity:0.6;
+}
 
-        /* Weekly Summary */
-        .summary-card {
-            margin-top: 40px;
-            width: 85%;
-            max-width: 600px;
-            background: black;
-            border: 2px solid #f7e7c9;
-            border-radius: 18px;
-            padding: 20px;
-            color: #f7e7c9;
-        }
+.todo-delete{
+  cursor:pointer;
+  color:#f5d487;
+  font-size:1.3rem;
+}
 
-        .summary-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #f5d487;
-        }
+/* mood tracker */
+.mood-options{
+  display:flex;
+  gap:15px;
+  font-size:2rem;
+  cursor:pointer;
+}
 
-        /* Custom Habit Input */
-        .custom-input {
-            width: 85%;
-            max-width: 600px;
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-        }
+.mood-selected{
+  transform:scale(1.3);
+}
 
-        .custom-input input {
-            flex: 1;
-            padding: 12px;
-            border-radius: 12px;
-            border: 2px solid #f7e7c9;
-            background: black;
-            color: #f7e7c9;
-            font-size: 1.1rem;
-        }
+/* calendar */
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:8px;
+  margin-top:10px;
+}
 
-        .add-btn {
-            background: #f5d487;
-            color: black;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 10px rgba(247,231,201,0.6);
-        }
-    </style>
+.calendar-day{
+  padding:10px;
+  background:#3a1a22;
+  border-radius:10px;
+  text-align:center;
+  cursor:pointer;
+  border:1px solid #f7e7c9;
+}
+
+.calendar-day:hover{
+  background:#5a2230;
+}
+</style>
 </head>
 
 <body>
 
-    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
-    <h1>Habit Tracker</h1>
+<h1>Wellness Dashboard</h1>
 
-    <div class="streak">
-        <span id="flame" class="flame">🔥</span>
-        <span id="streakText">Day 1 streak</span>
-    </div>
+<!-- HABIT TRACKER -->
+<div class="card">
+  <div class="card-title">Habit Tracker</div>
 
-    <div class="habit-container" id="habitContainer"></div>
+  <div id="habitContainer"></div>
 
-    <div class="custom-input">
-        <input id="customHabitInput" type="text" placeholder="Add your own habit...">
-        <button class="add-btn" onclick="addCustomHabit()">Add</button>
-    </div>
+  <div style="display:flex;gap:10px;margin-top:15px;">
+    <input id="customHabitInput" placeholder="Add a habit...">
+    <button class="btn" style="width:auto;padding:10px 20px;" onclick="addCustomHabit()">Add</button>
+  </div>
+</div>
 
-    <div class="summary-card">
-        <div class="summary-title">Weekly Summary</div>
-        <div id="weeklySummary"></div>
-    </div>
+<!-- TO-DO LIST -->
+<div class="card">
+  <div class="card-title">To‑Do List</div>
+
+  <div style="display:flex;gap:10px;">
+    <input id="todoInput" placeholder="Add a task...">
+    <button class="btn" style="width:auto;padding:10px 20px;" onclick="addTodo()">Add</button>
+  </div>
+
+  <div id="todoList" style="margin-top:15px;"></div>
+</div>
+
+<!-- JOURNAL -->
+<div class="card">
+  <div class="card-title">Daily Journal</div>
+  <textarea id="journalBox" style="width:100%;height:150px;" placeholder="Write your thoughts..."></textarea>
+</div>
+
+<!-- SLEEP TRACKER -->
+<div class="card">
+  <div class="card-title">Sleep Tracker</div>
+
+  <label>Hours Slept</label>
+  <input id="sleepHours" type="number" min="0" max="24" placeholder="e.g., 7.5">
+
+  <label style="margin-top:10px;">Sleep Quality</label>
+  <select id="sleepQuality">
+    <option value="">-- Select --</option>
+    <option>Excellent</option>
+    <option>Good</option>
+    <option>Okay</option>
+    <option>Poor</option>
+  </select>
+
+  <label style="margin-top:10px;">Notes</label>
+  <textarea id="sleepNotes" style="width:100%;height:100px;"></textarea>
+
+  <button class="btn" onclick="saveSleep()">Save Sleep Log</button>
+
+  <div id="sleepSummary" style="margin-top:15px;"></div>
+</div>
+
+<!-- MOOD TRACKER -->
+<div class="card">
+  <div class="card-title">Mood Tracker</div>
+
+  <div class="mood-options" id="moodOptions">
+    <span onclick="setMood('😄')">😄</span>
+    <span onclick="setMood('😊')">😊</span>
+    <span onclick="setMood('😐')">😐</span>
+    <span onclick="setMood('😔')">😔</span>
+    <span onclick="setMood('😫')">😫</span>
+  </div>
+
+  <div id="moodDisplay" style="margin-top:10px;font-size:1.2rem;"></div>
+</div>
+
+<!-- CALENDAR -->
+<div class="card">
+  <div class="card-title">Monthly Calendar</div>
+
+  <div id="calendarGrid" class="calendar-grid"></div>
+
+  <textarea id="calendarNote" style="width:100%;height:100px;margin-top:15px;" placeholder="Click a date to add a note..."></textarea>
+</div>
 
 <script>
-    const defaultHabits = [
-        { id: "water", title: "💧 Water Intake" },
-        { id: "sleep", title: "😴 Sleep Hours" },
-        { id: "workout", title: "🏋️‍♀️ Workout" },
-        { id: "mood", title: "🌈 Mood" },
-        { id: "todo", title: "✨ To‑Do Progress" },
-        { id: "goals", title: "⭐ Daily Goals" }
-    ];
+/* ---------------- HABITS ---------------- */
 
-    let habits = JSON.parse(localStorage.getItem("habits")) || defaultHabits;
-    let progress = JSON.parse(localStorage.getItem("progress")) || {};
-    let streak = JSON.parse(localStorage.getItem("streak")) || 1;
-    let lastDate = localStorage.getItem("lastDate") || "";
-    let weekly = JSON.parse(localStorage.getItem("weekly")) || {};
+const defaultHabits=[
+  {id:"water",title:"💧 Water Intake"},
+  {id:"sleep",title:"😴 Sleep Hours"},
+  {id:"workout",title:"🏋️‍♀️ Workout"},
+  {id:"mood",title:"🌈 Mood"},
+  {id:"todo",title:"✨ To‑Do Progress"},
+  {id:"goals",title:"⭐ Daily Goals"}
+];
 
-    const today = new Date().toDateString();
+let habits=JSON.parse(localStorage.getItem("habits"))||defaultHabits;
+let progress=JSON.parse(localStorage.getItem("progress"))||{};
 
-    if (lastDate !== today) {
-        if (lastDate && new Date(lastDate) < new Date(today)) {
-            streak++;
-        }
-        progress = {};
-        lastDate = today;
-        localStorage.setItem("lastDate", today);
-    }
+function renderHabits(){
+  const container=document.getElementById("habitContainer");
+  container.innerHTML="";
 
-    localStorage.setItem("streak", streak);
+  habits.forEach(h=>{
+    const value=progress[h.id]||0;
 
-    function updateStreakDisplay() {
-        document.getElementById("streakText").textContent = `Day ${streak} streak`;
+    container.innerHTML+=`
+      <div class="habit-card">
+        <div class="delete-icon" onclick="deleteHabit('${h.id}')">🗑️</div>
+        <div style="font-size:1.3rem;margin-bottom:5px;">${h.title}</div>
+        <div class="progress-bar"><div id="${h.id}Fill" class="progress-fill" style="width:${value}%"></div></div>
+        <button class="btn" onclick="increase('${h.id}')">Add progress</button>
+      </div>
+    `;
+  });
+}
 
-        const flame = document.getElementById("flame");
-        if (streak <= 2) flame.style.color = "#f7e7c9";
-        else if (streak <= 5) flame.style.color = "#f5d487";
-        else flame.style.color = "#f4c76c";
-    }
+function increase(id){
+  progress[id]=(progress[id]||0)+10;
+  if(progress[id]>100) progress[id]=100;
+  document.getElementById(id+"Fill").style.width=progress[id]+"%";
+  localStorage.setItem("progress",JSON.stringify(progress));
+}
 
-    function renderHabits() {
-        const container = document.getElementById("habitContainer");
-        container.innerHTML = "";
+function deleteHabit(id){
+  habits=habits.filter(h=>h.id!==id);
+  delete progress[id];
+  localStorage.setItem("habits",JSON.stringify(habits));
+  localStorage.setItem("progress",JSON.stringify(progress));
+  renderHabits();
+}
 
-        habits.forEach(habit => {
-            const value = progress[habit.id] || 0;
+function addCustomHabit(){
+  const input=document.getElementById("customHabitInput");
+  const name=input.value.trim();
+  if(!name) return;
 
-            container.innerHTML += `
-                <div class="habit-card">
-                    <div class="delete-icon" onclick="deleteHabit('${habit.id}')">🗑️</div>
-                    <div class="habit-title">${habit.title}</div>
-                    <div class="progress-bar"><div id="${habit.id}Fill" class="progress-fill" style="width:${value}%"></div></div>
-                    <button class="habit-btn" onclick="increase('${habit.id}')">Add progress</button>
-                    <div id="${habit.id}Msg" class="message"></div>
-                </div>
-            `;
-        });
-    }
+  const id=name.toLowerCase().replace(/ /g,"_");
+  habits.push({id,title:"✨ "+name});
+  localStorage.setItem("habits",JSON.stringify(habits));
 
-    function deleteHabit(id) {
-        habits = habits.filter(h => h.id !== id);
-        delete progress[id];
-        localStorage.setItem("habits", JSON.stringify(habits));
-        localStorage.setItem("progress", JSON.stringify(progress));
-        renderHabits();
-    }
+  input.value="";
+  renderHabits();
+}
 
-    function increase(id) {
-        progress[id] = (progress[id] || 0) + 10;
-        if (progress[id] > 100) progress[id] = 100;
+/* ---------------- TO-DO ---------------- */
 
-        document.getElementById(id + "Fill").style.width = progress[id] + "%";
+let todos=JSON.parse(localStorage.getItem("todos"))||[];
 
-        const messages = [
-            "You're doing amazing ✨",
-            "Keep going, you're glowing 💛",
-            "Small steps = big progress 🌼",
-            "Proud of you already 🌟",
-            "You're building healthy habits 💕"
-        ];
+function renderTodos(){
+  const list=document.getElementById("todoList");
+  list.innerHTML="";
 
-        document.getElementById(id + "Msg").textContent =
-            messages[Math.floor(Math.random() * messages.length)];
+  todos.forEach((t,i)=>{
+    list.innerHTML+=`
+      <div class="todo-item">
+        <span class="${t.done?'todo-complete':''}" onclick="toggleTodo(${i})">${t.text}</span>
+        <span class="todo-delete" onclick="deleteTodo(${i})">🗑️</span>
+      </div>
+    `;
+  });
+}
 
-        localStorage.setItem("progress", JSON.stringify(progress));
-    }
+function addTodo(){
+  const input=document.getElementById("todoInput");
+  const text=input.value.trim();
+  if(!text) return;
 
-    function addCustomHabit() {
-        const input = document.getElementById("customHabitInput");
-        const name = input.value.trim();
-        if (!name) return;
+  todos.push({text,done:false});
+  localStorage.setItem("todos",JSON.stringify(todos));
 
-        const id = name.toLowerCase().replace(/ /g, "_");
+  input.value="";
+  renderTodos();
+}
 
-        habits.push({ id, title: "✨ " + name });
-        localStorage.setItem("habits", JSON.stringify(habits));
+function toggleTodo(i){
+  todos[i].done=!todos[i].done;
+  localStorage.setItem("todos",JSON.stringify(todos));
+  renderTodos();
+}
 
-        input.value = "";
-        renderHabits();
-    }
+function deleteTodo(i){
+  todos.splice(i,1);
+  localStorage.setItem("todos",JSON.stringify(todos));
+  renderTodos();
+}
 
-    function updateWeeklySummary() {
-        weekly[today] = Object.values(progress).reduce((a, b) => a + b, 0) / habits.length;
-        localStorage.setItem("weekly", JSON.stringify(weekly));
+/* ---------------- JOURNAL ---------------- */
 
-        const summary = document.getElementById("weeklySummary");
-        const values = Object.values(weekly);
+let journal=JSON.parse(localStorage.getItem("journal"))||{};
+const journalBox=document.getElementById("journalBox");
+const journalDate=new Date().toDateString();
 
-        const avg = values.length ? (values.reduce((a, b) => a + b, 0) / values.length).toFixed(1) : 0;
+journalBox.value=journal[journalDate]||"";
 
-        summary.innerHTML = `
-            <div>Average completion: ${avg}%</div>
-            <div>Best day: ${Object.keys(weekly).sort((a, b) => weekly[b] - weekly[a])[0] || "N/A"}</div>
-            <div>Total habits completed: ${values.reduce((a, b) => a + b, 0).toFixed(0)}</div>
-        `;
-    }
+journalBox.addEventListener("input",()=>{
+  journal[journalDate]=journalBox.value;
+  localStorage.setItem("journal",JSON.stringify(journal));
+});
 
-    updateStreakDisplay();
-    renderHabits();
-    updateWeeklySummary();
+/* ---------------- SLEEP TRACKER ---------------- */
+
+let sleepData=JSON.parse(localStorage.getItem("sleepData"))||{};
+const today=new Date().toDateString();
+
+if(sleepData[today]){
+  document.getElementById("sleepHours").value=sleepData[today].hours||"";
+  document.getElementById("sleepQuality").value=sleepData[today].quality||"";
+  document.getElementById("sleepNotes").value=sleepData[today].notes||"";
+}
+
+function saveSleep(){
+  const hours=parseFloat(document.getElementById("sleepHours").value);
+  const quality=document.getElementById("sleepQuality").value;
+  const notes=document.getElementById("sleepNotes").value;
+
+  if(!hours||!quality){
+    alert("Please fill in hours and quality.");
+    return;
+  }
+
+  sleepData[today]={hours,quality,notes};
+  localStorage.setItem("sleepData",JSON.stringify(sleepData));
+
+  updateSleepSummary();
+}
+
+function updateSleepSummary(){
+  const box=document.getElementById("sleepSummary");
+  const entries=Object.values(sleepData);
+
+  if(entries.length===0){
+    box.innerHTML="No sleep data yet.";
+    return;
+  }
+
+  const avg=(entries.reduce((a,b)=>a+b.hours,0)/entries.length).toFixed(1);
+  const best=entries.sort((a,b)=>b.hours-a.hours)[0];
+
+  box.innerHTML=`
+    <div>Average hours: ${avg} hrs</div>
+    <div>Best night: ${best.hours} hrs (${best.quality})</div>
+    <div>Total nights logged: ${entries.length}</div>
+  `;
+}
+
+updateSleepSummary();
+
+/* ---------------- MOOD TRACKER ---------------- */
+
+let mood=localStorage.getItem("mood")||"";
+const moodDisplay=document.getElementById("moodDisplay");
+
+if(mood){
+  moodDisplay.textContent="Today's mood: "+mood;
+}
+
+function setMood(m){
+  mood=m;
+  localStorage.setItem("mood",m);
+  moodDisplay.textContent="Today's mood: "+m;
+}
+
+/* ---------------- CALENDAR ---------------- */
+
+let calendarNotes=JSON.parse(localStorage.getItem("calendarNotes"))||{};
+const calendarGrid=document.getElementById("calendarGrid");
+const noteBox=document.getElementById("calendarNote");
+let selectedDate=null;
+
+function renderCalendar(){
+  const now=new Date();
+  const year=now.getFullYear();
+  const month=now.getMonth();
+
+  const firstDay=new Date(year,month,1).getDay();
+  const days=new Date(year,month+1,0).getDate();
+
+  calendarGrid.innerHTML="";
+
+  for(let i=0;i<firstDay;i++){
+    calendarGrid.innerHTML+=`<div></div>`;
+  }
+
+  for(let d=1;d<=days;d++){
+    calendarGrid.innerHTML+=`
+      <div class="calendar-day" onclick="selectDate(${d})">${d}</div>
+    `;
+  }
+}
+
+function selectDate(day){
+  const now=new Date();
+  selectedDate=`${now.getFullYear()}-${now.getMonth()+1}-${day}`;
+  noteBox.value=calendarNotes[selectedDate]||"";
+}
+
+noteBox.addEventListener("input",()=>{
+  if(selectedDate){
+    calendarNotes[selectedDate]=noteBox.value;
+    localStorage.setItem("calendarNotes",JSON.stringify(calendarNotes));
+  }
+});
+
+/* INIT */
+renderHabits();
+renderTodos();
+renderCalendar();
 </script>
 
 </body>
