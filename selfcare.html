@@ -131,6 +131,17 @@ h1{
   opacity:.85;
 }
 
+/* add idea button */
+.add-idea-btn{
+  margin-top:10px;
+  font-size:.95rem;
+  padding:8px 12px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#fdfbff,#dcd8ff);
+}
+
 /* reflection */
 textarea{
   width:100%;
@@ -151,7 +162,7 @@ textarea{
   margin-top:6px;
 }
 
-/* modal */
+/* modal base */
 .modal-overlay{
   position:fixed;
   inset:0;
@@ -225,9 +236,116 @@ textarea{
   text-shadow:0 0 10px rgba(255,255,255,0.7);
 }
 
+/* mood calendar */
+.calendar-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+
+.calendar-title{
+  font-size:1.1rem;
+  font-weight:600;
+}
+
+.calendar-nav button{
+  border:none;
+  background:rgba(255,255,255,.9);
+  border-radius:999px;
+  padding:4px 10px;
+  cursor:pointer;
+  font-size:.9rem;
+}
+
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+  margin-top:8px;
+  font-size:.85rem;
+}
+
+.calendar-day-name{
+  text-align:center;
+  opacity:.7;
+  font-size:.8rem;
+}
+
+.calendar-cell{
+  background:rgba(255,255,255,.96);
+  border-radius:12px;
+  min-height:46px;
+  padding:4px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:.15s;
+}
+
+.calendar-cell:hover{
+  box-shadow:0 0 10px rgba(255,255,255,1);
+  transform:translateY(-1px);
+}
+
+.calendar-date{
+  font-size:.8rem;
+  margin-bottom:2px;
+}
+
+.mood-dot{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+}
+
+/* mood colors */
+.mood-happy{background:#ffeaa7;}   /* soft yellow */
+.mood-neutral{background:#dcd6ff;} /* lavender */
+.mood-sad{background:#c7e4ff;}     /* baby blue */
+.mood-stressed{background:#f3b1c4;}/* dusty rose */
+.mood-tired{background:#e0e0e0;}   /* pale grey */
+
+/* mood picker modal */
+.mood-picker-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:8px;
+}
+
+.mood-btn{
+  flex:1 1 45%;
+  min-width:100px;
+  border:none;
+  border-radius:14px;
+  padding:8px 10px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-size:.95rem;
+}
+
+.mood-btn span.emoji{
+  font-size:1.2rem;
+}
+
+.mood-btn.happy{background:#fff6cf;}
+.mood-btn.neutral{background:#eee9ff;}
+.mood-btn.sad{background:#e3f2ff;}
+.mood-btn.stressed{background:#ffd6e0;}
+.mood-btn.tired{background:#f0f0f0;}
+
 @media(max-width:720px){
   .week-grid{
     grid-template-columns:repeat(3,1fr);
+  }
+  .calendar-grid{
+    gap:4px;
   }
 }
 </style>
@@ -235,8 +353,7 @@ textarea{
 
 <body>
 
-<!-- BACK ARROW -->
-<div class="back-arrow" onclick="window.location.href='services.html'">←</div>
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
 <h1>Self‑Care Planner 🫧</h1>
 <div class="subtitle">Soft spa‑day energy, tiny rituals, and a place to pour your thoughts.</div>
@@ -257,6 +374,18 @@ textarea{
     <div class="week-grid" id="weekGrid"></div>
   </div>
 
+  <!-- Mood calendar -->
+  <div class="card">
+    <div class="calendar-header">
+      <div class="calendar-title" id="calendarTitle">Mood calendar</div>
+      <div class="calendar-nav">
+        <button id="prevMonthBtn">←</button>
+        <button id="nextMonthBtn">→</button>
+      </div>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+  </div>
+
   <!-- Reflection -->
   <div class="card">
     <h2 style="font-size:1.3rem;">Self‑reflection</h2>
@@ -267,12 +396,13 @@ textarea{
 
 </div>
 
-<!-- Modal -->
+<!-- Weekly planner modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h3 id="modalTitle">Self‑care for Monday</h3>
     <label for="modalSelect">Pick a self‑care idea</label>
     <select id="modalSelect"></select>
+    <button class="add-idea-btn" id="addIdeaBtn">+ Add your own idea</button>
     <div class="modal-buttons">
       <button class="cancel" id="cancelModal">Cancel</button>
       <button class="save" id="saveModal">Save</button>
@@ -280,8 +410,36 @@ textarea{
   </div>
 </div>
 
+<!-- Mood picker modal -->
+<div class="modal-overlay" id="moodModalOverlay">
+  <div class="modal">
+    <h3 id="moodModalTitle">Mood for this day</h3>
+    <p style="font-size:.9rem;opacity:.8;">Choose how you felt that day.</p>
+    <div class="mood-picker-buttons">
+      <button class="mood-btn happy" data-mood="happy">
+        <span class="emoji">😊</span><span>Happy</span>
+      </button>
+      <button class="mood-btn neutral" data-mood="neutral">
+        <span class="emoji">😐</span><span>Neutral</span>
+      </button>
+      <button class="mood-btn sad" data-mood="sad">
+        <span class="emoji">😔</span><span>Sad</span>
+      </button>
+      <button class="mood-btn stressed" data-mood="stressed">
+        <span class="emoji">😡</span><span>Stressed</span>
+      </button>
+      <button class="mood-btn tired" data-mood="tired">
+        <span class="emoji">😴</span><span>Tired</span>
+      </button>
+    </div>
+    <div class="modal-buttons" style="margin-top:14px;">
+      <button class="cancel" id="cancelMoodModal">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
-/* ------------------ MOODS ------------------ */
+/* ---------- MOODS + SUGGESTIONS ---------- */
 const moodsData = [
   { id:"calm", label:"Calm", emoji:"🫧", ideas:[
     "Warm bath with lavender oil",
@@ -342,10 +500,11 @@ function selectMood(id){
   });
 }
 
-/* ------------------ WEEKLY PLANNER ------------------ */
+/* ---------- WEEKLY PLANNER + CUSTOM IDEAS ---------- */
 const weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 const weekGrid = document.getElementById("weekGrid");
 let weekPlan = JSON.parse(localStorage.getItem("selfcare_weekPlan") || "{}");
+let customIdeas = JSON.parse(localStorage.getItem("selfcare_customIdeas") || "[]");
 
 weekDays.forEach((name, index)=>{
   const dayDiv = document.createElement("div");
@@ -372,12 +531,13 @@ function refreshWeekGrid(){
   localStorage.setItem("selfcare_weekPlan", JSON.stringify(weekPlan));
 }
 
-/* ------------------ MODAL ------------------ */
+/* modal elements */
 const modalOverlay = document.getElementById("modalOverlay");
 const modalTitle = document.getElementById("modalTitle");
 const modalSelect = document.getElementById("modalSelect");
 const cancelModal = document.getElementById("cancelModal");
 const saveModal = document.getElementById("saveModal");
+const addIdeaBtn = document.getElementById("addIdeaBtn");
 let currentDayIndex = null;
 
 function openDayModal(dayIndex){
@@ -385,14 +545,12 @@ function openDayModal(dayIndex){
   modalTitle.textContent = `Self‑care for ${weekDays[dayIndex]}`;
   modalSelect.innerHTML = "";
 
-  /* CLEAR OPTION */
   const clearOpt = document.createElement("option");
   clearOpt.value = "";
   clearOpt.textContent = "— Clear this day —";
   modalSelect.appendChild(clearOpt);
 
-  /* Add all ideas */
-  const allIdeas = moodsData.flatMap(m=>m.ideas);
+  const allIdeas = moodsData.flatMap(m=>m.ideas).concat(customIdeas);
   allIdeas.forEach(text=>{
     const opt = document.createElement("option");
     opt.value = text;
@@ -414,18 +572,144 @@ modalOverlay.onclick = e => { if(e.target === modalOverlay) closeModal(); };
 saveModal.onclick = () => {
   if(currentDayIndex == null) return;
   const val = modalSelect.value;
-
   if(val === ""){
     delete weekPlan[currentDayIndex];
   } else {
     weekPlan[currentDayIndex] = val;
   }
-
   refreshWeekGrid();
   closeModal();
 };
 
-/* ------------------ REFLECTION AUTOSAVE ------------------ */
+addIdeaBtn.onclick = () => {
+  const idea = prompt("Write your self‑care idea:");
+  if(!idea) return;
+  const trimmed = idea.trim();
+  if(!trimmed) return;
+  if(!customIdeas.includes(trimmed)){
+    customIdeas.push(trimmed);
+    localStorage.setItem("selfcare_customIdeas", JSON.stringify(customIdeas));
+  }
+  const opt = document.createElement("option");
+  opt.value = trimmed;
+  opt.textContent = trimmed;
+  modalSelect.appendChild(opt);
+  modalSelect.value = trimmed;
+};
+
+/* ---------- MOOD CALENDAR ---------- */
+const calendarTitle = document.getElementById("calendarTitle");
+const calendarGrid = document.getElementById("calendarGrid");
+const prevMonthBtn = document.getElementById("prevMonthBtn");
+const nextMonthBtn = document.getElementById("nextMonthBtn");
+
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+let moodData = JSON.parse(localStorage.getItem("selfcare_moodCalendar") || "{}");
+let selectedDateKey = null;
+
+const moodModalOverlay = document.getElementById("moodModalOverlay");
+const moodModalTitle = document.getElementById("moodModalTitle");
+const cancelMoodModal = document.getElementById("cancelMoodModal");
+
+function getMonthEmoji(month){
+  // 0-based month
+  if([2,3,4].includes(month)) return "🌸"; // Mar–May
+  if([5,6,7].includes(month)) return "☀️"; // Jun–Aug
+  if([8,9].includes(month)) return "🍂";   // Sep–Oct
+  if([10,11,0,1].includes(month)) return "❄️"; // Nov–Feb
+  return "✨";
+}
+
+function renderCalendar(){
+  calendarGrid.innerHTML = "";
+  const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const emoji = getMonthEmoji(currentMonth);
+  calendarTitle.textContent = `${emoji} ${monthNames[currentMonth]} ${currentYear}`;
+
+  const dayNames = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  dayNames.forEach(d=>{
+    const dn = document.createElement("div");
+    dn.className = "calendar-day-name";
+    dn.textContent = d;
+    calendarGrid.appendChild(dn);
+  });
+
+  const firstDay = new Date(currentYear, currentMonth, 1);
+  let startDay = firstDay.getDay(); // 0=Sun
+  if(startDay === 0) startDay = 7;  // make Monday=1
+  const daysInMonth = new Date(currentYear, currentMonth+1, 0).getDate();
+
+  for(let i=1;i<startDay;i++){
+    const empty = document.createElement("div");
+    calendarGrid.appendChild(empty);
+  }
+
+  for(let d=1; d<=daysInMonth; d++){
+    const cell = document.createElement("div");
+    cell.className = "calendar-cell";
+    const dateDiv = document.createElement("div");
+    dateDiv.className = "calendar-date";
+    dateDiv.textContent = d;
+    cell.appendChild(dateDiv);
+
+    const dateKey = `${currentYear}-${String(currentMonth+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    const mood = moodData[dateKey];
+    if(mood){
+      const dot = document.createElement("div");
+      dot.className = "mood-dot mood-" + mood;
+      cell.appendChild(dot);
+    }
+
+    cell.onclick = () => openMoodPicker(dateKey, d);
+    calendarGrid.appendChild(cell);
+  }
+}
+
+prevMonthBtn.onclick = () => {
+  currentMonth--;
+  if(currentMonth < 0){
+    currentMonth = 11;
+    currentYear--;
+  }
+  renderCalendar();
+};
+
+nextMonthBtn.onclick = () => {
+  currentMonth++;
+  if(currentMonth > 11){
+    currentMonth = 0;
+    currentYear++;
+  }
+  renderCalendar();
+};
+
+function openMoodPicker(dateKey, dayNumber){
+  selectedDateKey = dateKey;
+  moodModalTitle.textContent = `Mood for ${dayNumber}`;
+  moodModalOverlay.style.display = "flex";
+}
+
+function closeMoodModal(){
+  moodModalOverlay.style.display = "none";
+  selectedDateKey = null;
+}
+
+cancelMoodModal.onclick = closeMoodModal;
+moodModalOverlay.onclick = e => { if(e.target === moodModalOverlay) closeMoodModal(); };
+
+document.querySelectorAll(".mood-btn").forEach(btn=>{
+  btn.onclick = () => {
+    if(!selectedDateKey) return;
+    const mood = btn.dataset.mood;
+    moodData[selectedDateKey] = mood;
+    localStorage.setItem("selfcare_moodCalendar", JSON.stringify(moodData));
+    renderCalendar();
+    closeMoodModal();
+  };
+});
+
+/* ---------- REFLECTION AUTOSAVE ---------- */
 const reflectionBox = document.getElementById("reflectionBox");
 const refStatus = document.getElementById("refStatus");
 const REF_KEY = "selfcare_reflection";
@@ -443,10 +727,11 @@ reflectionBox.addEventListener("input", ()=>{
   }, 500);
 });
 
-/* Default mood */
+/* ---------- INIT ---------- */
 selectMood("calm");
+renderCalendar();
+refreshWeekGrid();
 </script>
 
 </body>
 </html>
-  
