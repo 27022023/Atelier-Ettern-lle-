@@ -1,72 +1,558 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Makeup Guide</title>
+<meta charset="UTF-8">
+<title>Makeup Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 40px 20px;
-            background: #111;
-            color: #f5f5f5;
-            font-family: system-ui, sans-serif;
-        }
-        h1 {
-            color: #f7e7b8;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #d9b56f;
-            margin-top: 30px;
-        }
-        p, ul {
-            max-width: 750px;
-            line-height: 1.7;
-        }
-        ul { padding-left: 20px; }
-    </style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:linear-gradient(135deg,#ffe1d6,#ffd4c2,#ffe8d6,#fff3ea);
+  font-family:system-ui,sans-serif;
+  color:#3a2b22;
+  padding:40px 16px 60px;
+}
+
+/* back arrow */
+.back-arrow{
+  position:absolute;
+  top:20px;
+  left:20px;
+  font-size:2.4rem;
+  cursor:pointer;
+  color:#3a2b22;
+  text-shadow:0 0 10px rgba(255,255,255,0.7);
+}
+
+/* title */
+h1{
+  font-size:2.4rem;
+  text-align:center;
+  margin-bottom:18px;
+  color:#d9a06f;
+  text-shadow:0 0 12px rgba(255,255,255,0.6);
+}
+
+/* subtitle */
+.subtitle{
+  text-align:center;
+  font-size:1.05rem;
+  opacity:.85;
+  max-width:700px;
+  margin:0 auto 20px;
+}
+
+/* cards */
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.6),rgba(255,235,215,0.75));
+  border:1px solid rgba(255,255,255,0.8);
+  border-radius:22px;
+  padding:22px 24px;
+  margin:18px auto;
+  max-width:900px;
+  box-shadow:0 0 25px rgba(255,255,255,0.7);
+  backdrop-filter:blur(6px);
+}
+
+.card h2{
+  font-size:1.6rem;
+  color:#d9a06f;
+  margin-bottom:10px;
+}
+
+.card p,
+.card ul{
+  font-size:1.02rem;
+  line-height:1.7;
+}
+
+.card ul{
+  padding-left:20px;
+}
+
+.card li{
+  margin-bottom:6px;
+}
+
+/* quiz + generator */
+.quiz-group,
+.generator-group{
+  margin:10px 0 14px;
+}
+
+.quiz-group label,
+.generator-group label{
+  display:block;
+  margin-bottom:4px;
+  font-weight:600;
+}
+
+.quiz-options label{
+  display:block;
+  margin-bottom:4px;
+  cursor:pointer;
+}
+
+.quiz-button,
+.generator-button{
+  margin-top:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ffe9d0,#f7d2b2);
+  font-size:.98rem;
+}
+
+.quiz-result,
+.generator-result{
+  margin-top:12px;
+  background:rgba(255,255,255,0.7);
+  border-radius:14px;
+  padding:10px 12px;
+  font-size:.98rem;
+}
+
+select{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,0.1);
+  background:#fff7f2;
+  font-size:.95rem;
+}
+
+@media(max-width:600px){
+  h1{font-size:2rem;}
+  .card{padding:18px 18px;}
+}
+</style>
 </head>
 
 <body>
 
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
 <h1>Makeup Guide</h1>
+<div class="subtitle">
+  A peachy‑soft guide to makeup basics, flattering techniques, and aesthetic looks for every vibe.
+</div>
 
-<p>Learn the basics of makeup, from everyday looks to glam, and discover techniques that flatter your unique features.</p>
+<!-- INTRO -->
+<div class="card">
+  <p>
+    Makeup is about enhancing what you already have — not hiding anything. This guide walks you through techniques for your
+    features, beginner routines, glam looks, and aesthetic styles so you can build your signature makeup vibe.
+  </p>
+</div>
 
-<h2>Makeup for Eye Shapes</h2>
-<ul>
-    <li><strong>Hooded Eyes:</strong> Focus shadow above the crease, lift the outer corner.</li>
-    <li><strong>Round Eyes:</strong> Winged liner elongates the shape.</li>
-    <li><strong>Monolid:</strong> Gradient shadows and smoked liner add depth.</li>
-    <li><strong>Downturned:</strong> Upward wings create lift.</li>
-</ul>
+<!-- EYE SHAPES -->
+<div class="card">
+  <h2>Makeup for Eye Shapes</h2>
+  <ul>
+    <li><strong>Hooded Eyes:</strong> Place shadow above the crease, keep shimmer on the lid, lift the outer corner.</li>
+    <li><strong>Round Eyes:</strong> Winged liner elongates; darker outer corners add definition.</li>
+    <li><strong>Monolid:</strong> Gradient shadows, smoked liner, and soft wings add depth.</li>
+    <li><strong>Downturned:</strong> Upward wings and lifted outer shadow create balance.</li>
+    <li><strong>Almond:</strong> Most styles work — emphasize the natural shape with soft wings.</li>
+  </ul>
+</div>
 
-<h2>Blush Placement</h2>
-<ul>
+<!-- FACE SHAPES -->
+<div class="card">
+  <h2>Makeup for Face Shapes</h2>
+  <ul>
+    <li><strong>Round:</strong> Lifted blush + contour under cheekbones.</li>
+    <li><strong>Oval:</strong> Balanced blush on the apples or slightly upward.</li>
+    <li><strong>Square:</strong> Soft, blended contour to round edges.</li>
+    <li><strong>Heart:</strong> Blush low on cheeks to balance a wider forehead.</li>
+    <li><strong>Long:</strong> Horizontal blush placement to visually shorten the face.</li>
+  </ul>
+</div>
+
+<!-- BLUSH -->
+<div class="card">
+  <h2>Blush Placement</h2>
+  <ul>
     <li><strong>High on cheekbones:</strong> Sculpted, lifted look.</li>
     <li><strong>Apples of cheeks:</strong> Youthful and soft.</li>
-    <li><strong>Across nose:</strong> Sun‑kissed effect.</li>
-</ul>
+    <li><strong>Across nose:</strong> Sun‑kissed, cute, soft‑girl vibe.</li>
+    <li><strong>Under eye “W blush”:</strong> Korean makeup style, soft and innocent.</li>
+  </ul>
+</div>
 
-<h2>Contour Basics</h2>
-<ul>
+<!-- CONTOUR -->
+<div class="card">
+  <h2>Contour Basics</h2>
+  <ul>
     <li><strong>Cheekbones:</strong> Under the bone for definition.</li>
     <li><strong>Jawline:</strong> Lightly along the edge for structure.</li>
-    <li><strong>Nose:</strong> Soft lines for subtle shaping.</li>
-</ul>
+    <li><strong>Nose:</strong> Soft lines only — blend upward, not outward.</li>
+    <li><strong>Forehead:</strong> Light contour near hairline for balance.</li>
+  </ul>
+</div>
 
-<h2>Beginner Makeup Kit</h2>
-<ul>
+<!-- LIPS -->
+<div class="card">
+  <h2>Lip Shapes & Lip‑Liner Tips</h2>
+  <ul>
+    <li><strong>Small lips:</strong> Overline slightly at the cupid’s bow + center of bottom lip.</li>
+    <li><strong>Uneven lips:</strong> Balance by overlining only the smaller side.</li>
+    <li><strong>Full lips:</strong> Soft gradient or blurred edges look stunning.</li>
+    <li><strong>Thin upper lip:</strong> Overline top lip only for natural fullness.</li>
+  </ul>
+</div>
+
+<!-- BASE MAKEUP -->
+<div class="card">
+  <h2>Base Makeup Guide</h2>
+  <ul>
+    <li><strong>Foundation:</strong> Use a damp sponge for natural finish; brush for fuller coverage.</li>
+    <li><strong>Concealer:</strong> Inner corner + outer corner for a lifted effect.</li>
+    <li><strong>Powder:</strong> Press, don’t swipe — especially under the eyes.</li>
+    <li><strong>Setting spray:</strong> Use before and after makeup for longevity.</li>
+  </ul>
+</div>
+
+<!-- SHADE MATCHING -->
+<div class="card">
+  <h2>Shade Matching Tips</h2>
+  <ul>
+    <li>Match foundation to your neck, not your hand.</li>
+    <li>Check in natural light.</li>
+    <li>Identify undertone: warm (yellow), cool (pink), neutral (mix).</li>
+    <li>Test 2–3 shades along the jawline.</li>
+  </ul>
+</div>
+
+<!-- BEGINNER KIT -->
+<div class="card">
+  <h2>Beginner Makeup Kit</h2>
+  <ul>
     <li>Tinted moisturizer or foundation</li>
+    <li>Concealer</li>
+    <li>Blush (cream or powder)</li>
+    <li>Mascara</li>
+    <li>Brow gel</li>
+    <li>Lip gloss or lipstick</li>
+    <li>Neutral eyeshadow palette</li>
+  </ul>
+</div>
+
+<!-- BRUSHES -->
+<div class="card">
+  <h2>Tools & Brushes Guide</h2>
+  <ul>
+    <li><strong>Foundation brush:</strong> Full coverage, smooth finish.</li>
+    <li><strong>Sponge:</strong> Natural, blended look.</li>
+    <li><strong>Fluffy eyeshadow brush:</strong> Blending.</li>
+    <li><strong>Flat brush:</strong> Packing shimmer.</li>
+    <li><strong>Angled brush:</strong> Liner or brows.</li>
+    <li><strong>Blush brush:</strong> Soft, diffused color.</li>
+  </ul>
+</div>
+
+<!-- MAKEUP BY AESTHETIC -->
+<div class="card">
+  <h2>Makeup by Aesthetic</h2>
+
+  <p><strong>Clean Girl:</strong> Dewy skin, fluffy brows, soft blush, glossy lips.</p>
+  <p><strong>Soft Girl:</strong> Pastel tones, pink blush, gradient lips, sparkly eyes.</p>
+  <p><strong>Baddie:</strong> Full glam, sharp contour, bold lashes, matte lips.</p>
+  <p><strong>Luxury:</strong> Neutral tones, soft glam, gold shimmer, satin lips.</p>
+</div>
+
+<!-- ROUTINES -->
+<div class="card">
+  <h2>Makeup Routines</h2>
+
+  <p><strong>Beginner Everyday Look:</strong></p>
+  <ul>
     <li>Concealer</li>
     <li>Blush</li>
     <li>Mascara</li>
     <li>Brow gel</li>
-    <li>Lip gloss or lipstick</li>
-</ul>
+    <li>Lip gloss</li>
+  </ul>
+
+  <p><strong>Intermediate Soft Glam:</strong></p>
+  <ul>
+    <li>Foundation</li>
+    <li>Concealer</li>
+    <li>Bronzer + blush</li>
+    <li>Soft eyeshadow</li>
+    <li>Winged liner</li>
+    <li>Lip liner + gloss</li>
+  </ul>
+
+  <p><strong>Full Glam:</strong></p>
+  <ul>
+    <li>Full‑coverage base</li>
+    <li>Contour + highlight</li>
+    <li>Smokey or shimmer eyes</li>
+    <li>False lashes</li>
+    <li>Defined lips</li>
+  </ul>
+</div>
+
+<!-- MAKEUP BAG CHECKLIST -->
+<div class="card">
+  <h2>Makeup Bag Checklist</h2>
+  <p>Everything you need for a complete, functional makeup bag:</p>
+  <ul>
+    <li>Everyday foundation or tinted moisturizer</li>
+    <li>Concealer</li>
+    <li>Setting powder</li>
+    <li>Blush (cream or powder)</li>
+    <li>Bronzer</li>
+    <li>Highlighter</li>
+    <li>Neutral eyeshadow palette</li>
+    <li>Mascara</li>
+    <li>Brow pencil or gel</li>
+    <li>Lip liner</li>
+    <li>Everyday lip gloss</li>
+    <li>Statement lipstick</li>
+    <li>Setting spray</li>
+    <li>Beauty sponge or foundation brush</li>
+    <li>Blush brush</li>
+    <li>Eyeshadow blending brush</li>
+  </ul>
+</div>
+
+<!-- PRODUCT RECOMMENDATIONS -->
+<div class="card">
+  <h2>Makeup Product Recommendations</h2>
+  <p><strong>Note:</strong> These are just examples — always choose shades and formulas that work for you.</p>
+
+  <ul>
+    <li><strong>Tinted Moisturizer / Light Base:</strong> 
+      Drugstore: e.l.f. Halo Glow, Maybelline Fit Me Tinted Moisturizer. 
+      High‑end: NARS Pure Radiant Tinted Moisturizer, Rare Beauty Tinted Moisturizer.
+    </li>
+    <li><strong>Foundation:</strong> 
+      Drugstore: L’Oréal True Match, Maybelline Fit Me. 
+      High‑end: NARS Sheer Glow, Fenty Pro Filt’r.
+    </li>
+    <li><strong>Concealer:</strong> 
+      Drugstore: Maybelline Instant Age Rewind, NYX Bare With Me. 
+      High‑end: NARS Radiant Creamy, Too Faced Born This Way.
+    </li>
+    <li><strong>Cream Blush:</strong> 
+      Drugstore: e.l.f. Putty Blush, Milani Cheek Kiss. 
+      High‑end: Rare Beauty Soft Pinch, Fenty Cheeks Out.
+    </li>
+    <li><strong>Powder Blush:</strong> 
+      Drugstore: Essence The Blush, NYX Sweet Cheeks. 
+      High‑end: NARS Orgasm, Benefit Dandelion.
+    </li>
+    <li><strong>Bronzer:</strong> 
+      Drugstore: Physician’s Formula Butter Bronzer, e.l.f. Putty Bronzer. 
+      High‑end: Benefit Hoola, Fenty Sun Stalk’r.
+    </li>
+    <li><strong>Highlighter:</strong> 
+      Drugstore: Wet n Wild Megaglo, Revolution Highlighter. 
+      High‑end: Becca (if available), Rare Beauty Positive Light.
+    </li>
+    <li><strong>Mascara:</strong> 
+      Drugstore: Maybelline Lash Sensational, L’Oréal Lash Paradise. 
+      High‑end: Too Faced Better Than Sex, Benefit Roller Lash.
+    </li>
+    <li><strong>Brow Gel/Pencil:</strong> 
+      Drugstore: e.l.f. Wow Brow, NYX Micro Brow. 
+      High‑end: Benefit Gimme Brow, Anastasia Brow Wiz.
+    </li>
+    <li><strong>Lip Gloss:</strong> 
+      Drugstore: NYX Butter Gloss, Essence Shine Shine Shine. 
+      High‑end: Fenty Gloss Bomb, Dior Lip Oil.
+    </li>
+    <li><strong>Lip Liner:</strong> 
+      Drugstore: NYX Slim Lip Pencil, Essence Lip Liner. 
+      High‑end: Charlotte Tilbury Lip Cheat, MAC Lip Pencil.
+    </li>
+  </ul>
+</div>
+
+<!-- MAKEUP AESTHETIC QUIZ -->
+<div class="card">
+  <h2>Makeup Aesthetic Quiz</h2>
+
+  <div class="quiz-group">
+    <label>1. What kind of vibe do you want?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="q1" value="clean"> Clean, fresh, minimal</label>
+      <label><input type="radio" name="q1" value="soft"> Cute, pastel, dreamy</label>
+      <label><input type="radio" name="q1" value="baddie"> Bold, glam, dramatic</label>
+      <label><input type="radio" name="q1" value="luxury"> Elegant, expensive, soft glam</label>
+    </div>
+  </div>
+
+  <div class="quiz-group">
+    <label>2. What’s your preferred makeup intensity?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="q2" value="light"> Light & natural</label>
+      <label><input type="radio" name="q2" value="medium"> Medium glam</label>
+      <label><input type="radio" name="q2" value="full"> Full glam</label>
+    </div>
+  </div>
+
+  <button class="quiz-button" id="makeupQuizBtn">Reveal my aesthetic</button>
+
+  <div class="quiz-result" id="makeupQuizResult" style="display:none;"></div>
+</div>
+
+<!-- BUILD MY MAKEUP ROUTINE GENERATOR -->
+<div class="card">
+  <h2>Build My Makeup Routine Generator</h2>
+  <p>Select your level and get a full routine with steps + product ideas.</p>
+
+  <div class="generator-group">
+    <label for="routineLevel">Choose your routine level:</label>
+    <select id="routineLevel">
+      <option value="">-- Select level --</option>
+      <option value="beginner">Beginner</option>
+      <option value="everyday">Everyday</option>
+      <option value="clean">Clean Girl</option>
+      <option value="soft">Soft Glam</option>
+      <option value="full">Full Glam</option>
+    </select>
+  </div>
+
+  <button class="generator-button" id="routineBtn">Generate my routine</button>
+
+  <div class="generator-result" id="routineResult" style="display:none;"></div>
+</div>
+
+<script>
+/* Makeup aesthetic quiz */
+document.getElementById("makeupQuizBtn").addEventListener("click", ()=>{
+  const vibe = document.querySelector('input[name="q1"]:checked');
+  const intensity = document.querySelector('input[name="q2"]:checked');
+  const resultBox = document.getElementById("makeupQuizResult");
+
+  if(!vibe || !intensity){
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "Please answer both questions 🍑";
+    return;
+  }
+
+  let result = "";
+
+  if(vibe.value === "clean"){
+    result = "✨ Clean Girl Makeup: dewy skin, fluffy brows, soft blush, glossy lips.";
+  } 
+  else if(vibe.value === "soft"){
+    result = "🌸 Soft Girl Makeup: pastel tones, pink blush, sparkly eyes, gradient lips.";
+  } 
+  else if(vibe.value === "baddie"){
+    result = "🔥 Baddie Makeup: full glam, sharp contour, bold lashes, matte lips.";
+  } 
+  else if(vibe.value === "luxury"){
+    result = "💎 Luxury Makeup: neutral tones, gold shimmer, soft glam, satin lips.";
+  }
+
+  resultBox.style.display = "block";
+  resultBox.innerHTML = result;
+});
+
+/* Routine generator */
+document.getElementById("routineBtn").addEventListener("click", ()=>{
+  const level = document.getElementById("routineLevel").value;
+  const box = document.getElementById("routineResult");
+
+  if(!level){
+    box.style.display = "block";
+    box.innerHTML = "Choose a routine level to generate your routine 💄";
+    return;
+  }
+
+  let html = "";
+
+  if(level === "beginner"){
+    html = `
+      <p><strong>Beginner Routine:</strong></p>
+      <ol>
+        <li>Apply <strong>tinted moisturizer</strong> (e.g., Maybelline Fit Me / e.l.f. Halo Glow).</li>
+        <li>Use <strong>concealer</strong> only where needed (NYX Bare With Me / Maybelline Age Rewind).</li>
+        <li>Add a little <strong>cream blush</strong> to cheeks (Milani Cheek Kiss / Rare Beauty Soft Pinch).</li>
+        <li>Brush through brows with <strong>brow gel</strong> (e.l.f. Wow Brow / Benefit Gimme Brow).</li>
+        <li>Apply <strong>mascara</strong> (L’Oréal Lash Paradise / Maybelline Lash Sensational).</li>
+        <li>Finish with a <strong>lip gloss</strong> (NYX Butter Gloss / Fenty Gloss Bomb).</li>
+      </ol>
+    `;
+  }
+
+  if(level === "everyday"){
+    html = `
+      <p><strong>Everyday Routine:</strong></p>
+      <ol>
+        <li>Apply <strong>light foundation or tinted moisturizer</strong> (L’Oréal True Match / NARS Tinted Moisturizer).</li>
+        <li>Conceal under eyes and blemishes with <strong>concealer</strong> (NYX / NARS Radiant Creamy).</li>
+        <li>Set T‑zone with <strong>translucent powder</strong> (e.l.f. HD Powder / Laura Mercier).</li>
+        <li>Add <strong>bronzer</strong> to cheeks and forehead (Physician’s Formula / Benefit Hoola).</li>
+        <li>Apply <strong>blush</strong> on cheeks (Essence The Blush / Rare Beauty).</li>
+        <li>Lightly fill brows with <strong>brow pencil or gel</strong>.</li>
+        <li>Use <strong>mascara</strong> and a neutral <strong>lipstick or gloss</strong>.</li>
+      </ol>
+    `;
+  }
+
+  if(level === "clean"){
+    html = `
+      <p><strong>Clean Girl Routine:</strong></p>
+      <ol>
+        <li>Start with <strong>hydrating primer</strong> or moisturizer.</li>
+        <li>Apply <strong>sheer base</strong> (tinted moisturizer like e.l.f. Halo Glow / Rare Beauty).</li>
+        <li>Spot conceal only where needed.</li>
+        <li>Use <strong>cream blush</strong> high on cheekbones for a lifted look.</li>
+        <li>Brush brows up with <strong>clear or tinted brow gel</strong>.</li>
+        <li>Add a tiny bit of <strong>cream highlighter</strong> on cheekbones and nose.</li>
+        <li>Apply <strong>mascara</strong> lightly.</li>
+        <li>Finish with <strong>glossy lips</strong> or lip oil (Essence / Dior / Fenty).</li>
+      </ol>
+    `;
+  }
+
+  if(level === "soft"){
+    html = `
+      <p><strong>Soft Glam Routine:</strong></p>
+      <ol>
+        <li>Apply <strong>medium‑coverage foundation</strong> (Maybelline Fit Me / NARS Sheer Glow).</li>
+        <li>Brighten under eyes with <strong>concealer</strong>.</li>
+        <li>Set lightly with <strong>powder</strong> in T‑zone.</li>
+        <li>Add <strong>bronzer</strong> to warm up the face.</li>
+        <li>Use <strong>pink or peach blush</strong> on cheeks and a little on the nose.</li>
+        <li>Apply <strong>soft shimmer eyeshadow</strong> on lids, matte shade in crease.</li>
+        <li>Add a <strong>small winged liner</strong> (pencil or liquid).</li>
+        <li>Use <strong>mascara</strong> or natural false lashes.</li>
+        <li>Line lips with <strong>lip liner</strong> (NYX / Charlotte Tilbury) and add gloss.</li>
+      </ol>
+    `;
+  }
+
+  if(level === "full"){
+    html = `
+      <p><strong>Full Glam Routine:</strong></p>
+      <ol>
+        <li>Apply <strong>full‑coverage foundation</strong> (Fenty Pro Filt’r / NARS Soft Matte).</li>
+        <li>Use <strong>concealer</strong> to highlight under eyes, forehead, chin.</li>
+        <li>Cream <strong>contour</strong> under cheekbones, jawline, and sides of nose.</li>
+        <li>Set with <strong>powder</strong> (bake under eyes if you like).</li>
+        <li>Layer <strong>powder bronzer + blush</strong> for intensity.</li>
+        <li>Apply <strong>highlighter</strong> on cheekbones, nose, inner corners.</li>
+        <li>Create a <strong>smokey or shimmer eye look</strong> with deeper outer corners.</li>
+        <li>Add <strong>winged liner</strong> and <strong>false lashes</strong>.</li>
+        <li>Line lips with <strong>lip liner</strong> and fill with matte or satin lipstick.</li>
+        <li>Finish with a strong <strong>setting spray</strong> (drugstore: e.l.f. / NYX; high‑end: Urban Decay All Nighter).</li>
+      </ol>
+    `;
+  }
+
+  box.style.display = "block";
+  box.innerHTML = html;
+});
+</script>
 
 </body>
-</html>
+    </html>
+    
