@@ -1,297 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Analysis</title>
+<meta charset="UTF-8">
+<title>Color Analysis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
 
-        body {
-            min-height: 100vh;
-            width: 100vw;
-            background: linear-gradient(135deg, #f7e7c9, #f8dcb8);
-            font-family: "Playfair Display", serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 32px 0 40px;
-        }
+body{
+  min-height:100vh;
+  width:100vw;
+  background:linear-gradient(135deg,#0a0f2d,#0f1a3d,#13224f);
+  font-family:"Playfair Display",serif;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:32px 0 40px;
+  color:#f7e7c9;
+}
 
-        .back-arrow {
-            position: fixed;
-            top: 18px;
-            left: 18px;
-            font-size: 2.1rem;
-            cursor: pointer;
-            color: #f5d487;
-            text-shadow: 0 0 10px rgba(247,231,201,0.6);
-            z-index: 10;
-        }
+/* back arrow */
+.back-arrow{
+  position:fixed;
+  top:18px;
+  left:18px;
+  font-size:2.1rem;
+  cursor:pointer;
+  color:#f5d487;
+  text-shadow:0 0 10px rgba(247,231,201,0.6);
+  z-index:10;
+}
 
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 18px;
-            color: #f5d487;
-            text-shadow: 0 0 12px rgba(247,231,201,0.6);
-        }
+/* title */
+h1{
+  font-size:2.2rem;
+  margin-bottom:18px;
+  color:#f5d487;
+  text-shadow:0 0 12px rgba(247,231,201,0.6);
+}
 
-        .form-container {
-            width: 90%;
-            max-width: 700px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 22px;
-        }
+/* form */
+.form-container{
+  width:90%;
+  max-width:700px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-bottom:22px;
+}
 
-        .input-field {
-            background: black;
-            border: 2px solid #f7e7c9;
-            border-radius: 18px;
-            padding: 10px 14px;
-            color: #f7e7c9;
-            font-size: 1rem;
-        }
+.input-field{
+  background:#0d122f;
+  border:2px solid #f7e7c9;
+  border-radius:18px;
+  padding:10px 14px;
+  color:#f7e7c9;
+  font-size:1rem;
+}
 
-        .input-field select {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: #f7e7c9;
-            font-size: 1rem;
-            outline: none;
-        }
+.input-field select{
+  width:100%;
+  background:transparent;
+  border:none;
+  color:#f7e7c9;
+  font-size:1rem;
+  outline:none;
+}
 
-        .analyze-btn {
-            margin-top: 10px;
-            background: #f5d487;
-            color: black;
-            padding: 12px 18px;
-            border-radius: 16px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s ease;
-            box-shadow: 0 0 10px rgba(247,231,201,0.6);
-            align-self: center;
-        }
+/* button */
+.analyze-btn{
+  margin-top:10px;
+  background:#f5d487;
+  color:black;
+  padding:12px 18px;
+  border-radius:16px;
+  font-size:1.1rem;
+  font-weight:600;
+  cursor:pointer;
+  border:none;
+  transition:0.2s ease;
+  box-shadow:0 0 10px rgba(247,231,201,0.6);
+  align-self:center;
+}
 
-        .analyze-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(247,231,201,0.8);
-        }
+.analyze-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(247,231,201,0.8);
+}
 
-        .results {
-            margin-top: 22px;
-            width: 94%;
-            max-width: 1100px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-        }
+/* results */
+.results{
+  margin-top:22px;
+  width:94%;
+  max-width:1100px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:18px;
+}
 
-        .result-card {
-            background: black;
-            border: 2px solid #f7e7c9;
-            border-radius: 18px;
-            padding: 14px 16px;
-            color: #f7e7c9;
-            font-size: 1rem;
-        }
+.result-card{
+  background:#0d122f;
+  border:2px solid #f7e7c9;
+  border-radius:18px;
+  padding:16px 18px;
+  color:#f7e7c9;
+  font-size:1rem;
+}
 
-        .result-card h2 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-            color: #f5d487;
-        }
+.result-card h2{
+  font-size:1.4rem;
+  margin-bottom:8px;
+  color:#f5d487;
+}
 
-        .section-title {
-            font-size: 1.05rem;
-            margin-top: 10px;
-            margin-bottom: 4px;
-            color: #f7e7c9;
-        }
+.section-title{
+  font-size:1.1rem;
+  margin-top:12px;
+  margin-bottom:4px;
+  color:#f5d487;
+}
 
-        .bullet {
-            margin-left: 14px;
-            margin-bottom: 4px;
-            font-size: 0.95rem;
-        }
+.bullet{
+  margin-left:14px;
+  margin-bottom:4px;
+  font-size:0.95rem;
+}
 
-        /* Silvery-blue palette boxes */
-        .palette-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
+/* palette */
+.palette-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
 
-        .swatch {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
-            border: 2px solid #dbe7f5;
-            background: #c9d9f2;
-            box-shadow: 0 0 8px rgba(200,220,255,0.4);
-        }
-    </style>
+.swatch{
+  width:48px;
+  height:48px;
+  border-radius:10px;
+  border:2px solid #dbe7f5;
+  background:#c9d9f2;
+  box-shadow:0 0 8px rgba(200,220,255,0.4);
+}
+</style>
 </head>
 
 <body>
 
-    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
 
-    <h1>Color Analysis</h1>
+<h1>Color Analysis</h1>
 
-    <div class="form-container">
+<div class="form-container">
+  <div class="input-field">
+    <select id="skinTone">
+      <option disabled selected>Skin Tone Depth</option>
+      <option>Fair</option>
+      <option>Light</option>
+      <option>Medium</option>
+      <option>Tan</option>
+      <option>Deep</option>
+    </select>
+  </div>
 
-        <div class="input-field">
-            <select id="skinTone">
-                <option disabled selected>Skin Tone Depth</option>
-                <option>Fair</option>
-                <option>Light</option>
-                <option>Medium</option>
-                <option>Tan</option>
-                <option>Deep</option>
-            </select>
-        </div>
+  <div class="input-field">
+    <select id="undertone">
+      <option disabled selected>Undertone</option>
+      <option>Cool</option>
+      <option>Neutral</option>
+      <option>Warm</option>
+    </select>
+  </div>
 
-        <div class="input-field">
-            <select id="undertone">
-                <option disabled selected>Undertone</option>
-                <option>Cool</option>
-                <option>Neutral</option>
-                <option>Warm</option>
-            </select>
-        </div>
+  <div class="input-field">
+    <select id="hairDepth">
+      <option disabled selected>Hair Depth</option>
+      <option>Light</option>
+      <option>Medium</option>
+      <option>Dark</option>
+    </select>
+  </div>
 
-        <div class="input-field">
-            <select id="hairDepth">
-                <option disabled selected>Hair Depth</option>
-                <option>Light</option>
-                <option>Medium</option>
-                <option>Dark</option>
-            </select>
-        </div>
+  <div class="input-field">
+    <select id="eyeClarity">
+      <option disabled selected>Eye Clarity</option>
+      <option>Soft</option>
+      <option>Muted</option>
+      <option>Bright</option>
+      <option>Deep</option>
+    </select>
+  </div>
 
-        <div class="input-field">
-            <select id="eyeClarity">
-                <option disabled selected>Eye Clarity</option>
-                <option>Soft</option>
-                <option>Muted</option>
-                <option>Bright</option>
-                <option>Deep</option>
-            </select>
-        </div>
+  <button class="analyze-btn" onclick="showSeason()">Show my season</button>
+</div>
 
-        <button class="analyze-btn" onclick="showSeason()">Show my season</button>
-    </div>
+<div id="resultsWrapper" class="results">
+  <div class="result-card" id="seasonCard"></div>
+  <div class="result-card" id="paletteCard"></div>
+  <div class="result-card" id="detailsCard"></div>
+  <div class="result-card" id="outfitCard"></div>
+  <div class="result-card" id="makeupCard"></div>
+  <div class="result-card" id="hairCard"></div>
+  <div class="result-card" id="matchingCard"></div>
+</div>
 
-    <div id="resultsWrapper" class="results">
-        <div class="result-card" id="seasonCard"></div>
-        <div class="result-card" id="paletteCard"></div>
-    </div>
 <script>
-function showSeason() {
-    const skinTone = document.getElementById("skinTone").value;
-    const undertone = document.getElementById("undertone").value;
-    const hairDepth = document.getElementById("hairDepth").value;
-    const eyeClarity = document.getElementById("eyeClarity").value;
+function showSeason(){
+  const skinTone=document.getElementById("skinTone").value;
+  const undertone=document.getElementById("undertone").value;
+  const hairDepth=document.getElementById("hairDepth").value;
+  const eyeClarity=document.getElementById("eyeClarity").value;
 
-    const seasonCard = document.getElementById("seasonCard");
-    const paletteCard = document.getElementById("paletteCard");
+  const seasonCard=document.getElementById("seasonCard");
+  const paletteCard=document.getElementById("paletteCard");
+  const detailsCard=document.getElementById("detailsCard");
+  const outfitCard=document.getElementById("outfitCard");
+  const makeupCard=document.getElementById("makeupCard");
+  const hairCard=document.getElementById("hairCard");
+  const matchingCard=document.getElementById("matchingCard");
 
-    if (!skinTone || !undertone || !hairDepth || !eyeClarity) {
-        seasonCard.innerHTML = `<h2>Your Season</h2><div class="bullet">• Please fill out all fields.</div>`;
-        paletteCard.innerHTML = `<h2>Palette</h2><div class="bullet">• No palette available.</div>`;
-        return;
-    }
+  if(!skinTone||!undertone||!hairDepth||!eyeClarity){
+    seasonCard.innerHTML=`<h2>Your Season</h2><div class="bullet">• Please fill out all fields.</div>`;
+    paletteCard.innerHTML=`<h2>Palette</h2><div class="bullet">• No palette available.</div>`;
+    detailsCard.innerHTML="";
+    outfitCard.innerHTML="";
+    makeupCard.innerHTML="";
+    hairCard.innerHTML="";
+    matchingCard.innerHTML="";
+    return;
+  }
 
-    /* ------------------ 12-SEASON LOGIC ------------------ */
+  /* Determine season */
+  let temperature=undertone==="Cool"?"cool":undertone==="Warm"?"warm":"neutral";
+  let value=(skinTone==="Fair"||skinTone==="Light")?"light":(skinTone==="Medium")?"medium":"deep";
+  let chroma=(eyeClarity==="Bright")?"bright":(eyeClarity==="Soft"||eyeClarity==="Muted")?"soft":"deep";
 
-    let temperature = undertone === "Cool" ? "cool" : undertone === "Warm" ? "warm" : "neutral";
-    let value = (skinTone === "Fair" || skinTone === "Light") ? "light" :
-                (skinTone === "Medium") ? "medium" : "deep";
-    let chroma = (eyeClarity === "Bright") ? "bright" :
-                 (eyeClarity === "Soft" || eyeClarity === "Muted") ? "soft" : "deep";
+  let season="";
 
-    let season = "";
+  if(temperature==="cool"){
+    if(value==="light") season=(chroma==="soft")?"Light Summer":"Cool Summer";
+    else if(value==="medium") season=(chroma==="soft")?"Soft Summer":"True Summer";
+    else season=(chroma==="deep")?"Deep Winter":"Cool Winter";
+  }
 
-    if (temperature === "cool") {
-        if (value === "light") {
-            season = (chroma === "soft") ? "Light Summer" : "Cool Summer";
-        } else if (value === "medium") {
-            season = (chroma === "soft") ? "Soft Summer" : "True Summer";
-        } else {
-            season = (chroma === "deep") ? "Deep Winter" : "Cool Winter";
-        }
-    }
+  if(temperature==="warm"){
+    if(value==="light") season=(chroma==="bright")?"Warm Spring":"Light Spring";
+    else if(value==="medium") season=(chroma==="bright")?"True Spring":"Soft Autumn";
+    else season=(chroma==="deep")?"Deep Autumn":"Warm Autumn";
+  }
 
-    if (temperature === "warm") {
-        if (value === "light") {
-            season = (chroma === "bright") ? "Warm Spring" : "Light Spring";
-        } else if (value === "medium") {
-            season = (chroma === "bright") ? "True Spring" : "Soft Autumn";
-        } else {
-            season = (chroma === "deep") ? "Deep Autumn" : "Warm Autumn";
-        }
-    }
+  if(temperature==="neutral"){
+    if(value==="light") season=(chroma==="soft")?"Light Summer":"Light Spring";
+    else if(value==="medium") season=(chroma==="soft")?"Soft Summer":"Soft Autumn";
+    else season=(chroma==="deep")?"Deep Winter":"Deep Autumn";
+  }
 
-    if (temperature === "neutral") {
-        if (value === "light") {
-            season = (chroma === "soft") ? "Light Summer" : "Light Spring";
-        } else if (value === "medium") {
-            season = (chroma === "soft") ? "Soft Summer" : "Soft Autumn";
-        } else {
-            season = (chroma === "deep") ? "Deep Winter" : "Deep Autumn";
-        }
-    }
+  /* Palettes */
+  const palettes={
+    "Light Summer":["#dbe7f5","#c9d9f2","#bcd1f0","#e8d7ec","#f5e9f7"],
+    "Cool Summer":["#b7c7e2","#a6b8d8","#c3d1e9","#d9e3f2","#e8eef7"],
+    "Soft Summer":["#c4cbd4","#b7c0cc","#d1d7df","#e2e6eb","#f0f2f5"],
+    "True Summer":["#b0c4de","#9bb7d1","#c7d4e8","#dfe7f2","#eef3f8"],
 
-    /* ------------------ PALETTE COLORS ------------------ */
+    "Light Spring":["#f7e7c9","#f5d9a6","#f2cfa1","#ffe7cc","#fff2dd"],
+    "Warm Spring":["#f4c27a","#f2b56b","#e8a45c","#ffd8a8","#ffe6c7"],
+    "True Spring":["#f5b14c","#f29d38","#e88c2a","#ffd199","#ffe3c2"],
 
-    const palettes = {
-        "Light Summer": ["#dbe7f5", "#c9d9f2", "#bcd1f0", "#e8d7ec", "#f5e9f7"],
-        "Cool Summer": ["#b7c7e2", "#a6b8d8", "#c3d1e9", "#d9e3f2", "#e8eef7"],
-        "Soft Summer": ["#c4cbd4", "#b7c0cc", "#d1d7df", "#e2e6eb", "#f0f2f5"],
-        "True Summer": ["#b0c4de", "#9bb7d1", "#c7d4e8", "#dfe7f2", "#eef3f8"],
+    "Soft Autumn":["#d4b89c","#c9a98a","#bfa07f","#e2cdb8","#f0e3d6"],
+    "Warm Autumn":["#c48a4a","#b97c3d","#a96f33","#e2b892","#f2d8bf"],
+    "Deep Autumn":["#8b5a2b","#7a4f26","#6a4420","#c49a6c","#e0c3a3"],
 
-        "Light Spring": ["#f7e7c9", "#f5d9a6", "#f2cfa1", "#ffe7cc", "#fff2dd"],
-        "Warm Spring": ["#f4c27a", "#f2b56b", "#e8a45c", "#ffd8a8", "#ffe6c7"],
-        "True Spring": ["#f5b14c", "#f29d38", "#e88c2a", "#ffd199", "#ffe3c2"],
+    "Cool Winter":["#bcd0ff","#a8c0ff","#94b0ff","#d6e0ff","#e8eeff"],
+    "Deep Winter":["#4a4e69","#2e3147","#1c1f33","#6b6f8c","#8d92b3"]
+  };
 
-        "Soft Autumn": ["#d4b89c", "#c9a98a", "#bfa07f", "#e2cdb8", "#f0e3d6"],
-        "Warm Autumn": ["#c48a4a", "#b97c3d", "#a96f33", "#e2b892", "#f2d8bf"],
-        "Deep Autumn": ["#8b5a2b", "#7a4f26", "#6a4420", "#c49a6c", "#e0c3a3"],
+  const chosenPalette=palettes[season]||["#c9d9f2"];
 
-        "Cool Winter": ["#bcd0ff", "#a8c0ff", "#94b0ff", "#d6e0ff", "#e8eeff"],
-        "Deep Winter": ["#4a4e69", "#2e3147", "#1c1f33", "#6b6f8c", "#8d92b3"]
-    };
+  /* Season card */
+  seasonCard.innerHTML=`
+    <h2>Your Season</h2>
+    <div class="bullet">• <strong>${season}</strong></div>
+    <div class="bullet">• Temperature: ${temperature}</div>
+    <div class="bullet">• Value: ${value}</div>
+    <div class="bullet">• Chroma: ${chroma}</div>
+  `;
 
-    const chosenPalette = palettes[season] || ["#c9d9f2"];
+  /* Palette card */
+  paletteCard.innerHTML=`
+    <h2>Palette</h2>
+    <div class="palette-row">
+      ${chosenPalette.map(c=>`<div class="swatch" style="background:${c};"></div>`).join("")}
+    </div>
+  `;
 
-    /* ------------------ OUTPUT ------------------ */
+  /* Detailed info */
+  const info={
+    "Light Summer":{
+      metals:"Silver, white gold, platinum",
+      makeup:"Cool pink blush, mauve lips, soft taupe eyeshadow",
+      hair:"Ash blonde, cool beige blonde",
+      avoid:"Black, harsh neons, warm oranges",
+      celebs:"Amanda Seyfried, Saoirse Ronan",
+      outfits:"Soft pastels, airy fabrics, light denim, watercolor florals",
+      makeupFull:"Blush: cool pink • Lips: mauve, rose • Eyes: taupe, lavender • Liner: grey • Highlight: cool champagne",
+      hairFull:"Ash blonde, cool beige, icy highlights",
+      matching:"Soft navy + lavender + cool beige"
+    },
 
-    seasonCard.innerHTML = `
-        <h2>Your Season</h2>
-        <div class="bullet">• <strong>${season}</strong></div>
-        <div class="bullet">• Temperature: ${temperature}</div>
-        <div class="bullet">• Value: ${value}</div>
-        <div class="bullet">• Chroma: ${chroma}</div>
-    `;
+    "Cool Summer":{
+      metals:"Silver, rose gold",
+      makeup:"Berry lips, cool pink blush, grey-taupe eyes",
+      hair:"Ash brown, cool blonde",
+      avoid:"Warm browns, mustard, tomato red",
+      celebs:"Emily Blunt, Taylor Swift",
+      outfits:"Soft navy, dusty rose, cool grey, muted florals",
+      makeupFull:"Blush: cool pink • Lips: berry • Eyes: grey, mauve • Liner: charcoal",
+      hairFull:"Ash brown, cool blonde, silver highlights",
+      matching:"Navy + soft pink + silver"
+    },
 
-    paletteCard.innerHTML = `
-        <h2>Palette</h2>
-        <div class="palette-row">
-            ${chosenPalette.map(color => `<div class="swatch" style="background:${color}; border-color:#dbe7f5;"></div>`).join("")}
-        </div>
-    `;
-}
-</script>
+    "Soft Summer":{
+      metals:"Brushed silver, muted gold",
+      makeup:"Dusty rose, mauve, soft browns",
+      hair:"Soft brown, muted blonde",
+      avoid:"High contrast black/white, neon colors",
+      celebs:"Jennifer Aniston, Gigi Hadid",
+      outfits:"Muted blues, dusty lavender, soft grey, gentle prints",
+      makeupFull:"Blush: dusty rose • Lips: mauve • Eyes: taupe • Liner: soft brown",
+      hairFull:"Soft brown, muted blonde, low-contrast highlights",
+      matching:"Dusty lavender + grey + soft navy"
+    },
 
-</body>
-</html>
+    "True Summer":{
+      metals:"Silver, white gold",
+      makeup:"Cool pinks, berry tones, navy eyeliner",
+      hair:"Cool brown, ash blonde",
+      avoid:"Warm oranges, camel, olive",
+      celebs:"Mandy Moore, Anne Hathaway",
+      outfits:"Navy, cool pink, soft white, cool florals",
+      makeupFull:"Blush: cool pink • Lips: berry • Eyes: navy, grey • Liner: navy",
+      hairFull:"Cool brown, ash blonde",
+      matching:"Navy + berry + white"
+    },
+
+    "Light Spring":{
+      metals:"Gold, champagne gold",
+      makeup:"Peach blush, coral lips, warm neutrals",
+      hair:"Golden blonde, strawberry blonde",
+      avoid:"Black, icy colors",
+      celebs:"Reese Witherspoon",
+      outfits:"Warm pastels, ivory, light camel, soft florals",
+      makeupFull:"Blush: peach • Lips: coral • Eyes: warm neutrals",
+      hairFull:"Golden blonde, strawberry blonde",
+      matching:"Ivory + coral + camel"
+    },
+
+    "Warm Spring":{
+      metals:"Gold, copper",
+      makeup:"Warm peach, coral, apricot",
+      hair:"Golden blonde, warm brown",
+      avoid:"Cool greys, icy blues",
+      celebs:"Nicole Kidman",
+      outfits:"Warm beige, coral, golden yellow, soft teal",
+      makeupFull:"Blush: apricot • Lips: warm coral • Eyes: golden brown",
+      hairFull:"Warm blonde, golden brown",
+      matching:"Warm beige + coral + gold"
+    },
+
+    "True Spring":{
+      metals:"Gold",
+      makeup:"Warm coral, peach, golden shimmer",
+      hair:"Warm brown, golden blonde",
+      avoid:"Cool jewel tones",
+      celebs:"Blake Lively",
+      outfits:"Camel, ivory, coral, warm turquoise",
+      makeupFull:"Blush: peach • Lips: coral • Eyes: warm gold",
+      hairFull:"Warm brown, golden blonde",
+      matching:"Camel + ivory + coral"
+    },
+
+    "Soft Autumn":{
+      metals:"Antique gold, bronze",
+      makeup:"Warm rose, terracotta, soft browns",
+      hair:"Warm brown, muted copper",
+      avoid:"Black, icy colors",
+      celebs:"Jennifer Lopez",
+      outfits:"Warm taupe, olive, terracotta, muted prints",
+      makeupFull:"Blush: warm rose • Lips: terracotta • Eyes: olive brown",
+      hairFull:"Warm brown, muted copper",
+      matching:"Olive + warm taupe + terracotta"
+    },
+
+    "Warm Autumn":{
+      metals:"Gold, copper",
+      makeup:"Terracotta, warm brown, peach",
+      hair:"Copper, warm brown",
+      avoid:"Cool blues, fuchsia",
+      celebs:"Julia Roberts",
+      outfits:"Camel, rust, olive, warm prints",
+      makeupFull:"Blush: terracotta • Lips: warm red • Eyes: copper",
+      hairFull:"Copper, warm brown",
+      matching:"Camel + rust + olive"
+    },
+
+    "Deep Autumn":{
+      metals:"Gold, bronze",
+      makeup:"Deep reds, warm browns, espresso liner",
+      hair:"Dark brown, auburn",
+      avoid:"Pastels, icy tones",
+      celebs:"Eva Longoria",
+      outfits:"Dark olive, espresso, deep teal, warm jewel tones",
+      makeupFull:"Blush: warm berry • Lips: brick red • Eyes: espresso",
+      hairFull:"Dark brown, auburn",
+      matching:"Espresso + deep teal + gold"
+    },
+
+    "Cool Winter":{
+      metals:"Silver, platinum",
+      makeup:"Blue-red lipstick, cool pink blush, charcoal eyes",
+      hair:"Jet black, cool brown",
+      avoid:"Warm oranges, camel",
+      celebs:"Lucy Liu",
+      outfits:"Black, white, icy blue, cool jewel tones",
+      makeupFull:"Blush: cool pink • Lips: blue-red • Eyes: charcoal",
+      hairFull:"Jet black, cool brown",
+      matching:"Black + icy blue + white"
+    },
+
+    "Deep Winter":{
+      metals:"Silver, white gold",
+      makeup:"Deep berry, plum, bold eyeliner",
+      hair:"Black, deep cool brown",
+      avoid:"Warm muted tones",
+      celebs:"Kim Kardashian",
+      outfits:"Black, deep plum, emerald, sapphire",
+      makeupFull:"Blush: plum • Lips: berry • Eyes: navy/black",
+      hairFull
+          
+                
