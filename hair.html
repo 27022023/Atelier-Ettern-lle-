@@ -1,72 +1,611 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hair Guide</title>
+<meta charset="UTF-8">
+<title>Hair Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 40px 20px;
-            background: #111;
-            color: #f5f5f5;
-            font-family: system-ui, sans-serif;
-        }
-        h1 {
-            color: #f7e7b8;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #d9b56f;
-            margin-top: 30px;
-        }
-        p, ul {
-            max-width: 750px;
-            line-height: 1.7;
-        }
-        ul { padding-left: 20px; }
-    </style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:linear-gradient(135deg,#ffd1d1,#ffb8b8,#ffe4e4,#fff5f5);
+  font-family:system-ui,sans-serif;
+  color:#3a2b2b;
+  padding:40px 16px 60px;
+}
+
+/* back arrow */
+.back-arrow{
+  position:absolute;
+  top:20px;
+  left:20px;
+  font-size:2.4rem;
+  cursor:pointer;
+  color:#3a2b2b;
+  text-shadow:0 0 10px rgba(255,255,255,0.7);
+}
+
+/* title */
+h1{
+  font-size:2.4rem;
+  text-align:center;
+  margin-bottom:18px;
+  color:#d98a8a;
+  text-shadow:0 0 12px rgba(255,255,255,0.6);
+}
+
+/* subtitle */
+.subtitle{
+  text-align:center;
+  font-size:1.05rem;
+  opacity:.85;
+  max-width:700px;
+  margin:0 auto 20px;
+}
+
+/* cards */
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.6),rgba(255,225,225,0.75));
+  border:1px solid rgba(255,255,255,0.8);
+  border-radius:22px;
+  padding:22px 24px;
+  margin:18px auto;
+  max-width:900px;
+  box-shadow:0 0 25px rgba(255,255,255,0.7);
+  backdrop-filter:blur(6px);
+}
+
+.card h2{
+  font-size:1.6rem;
+  color:#d98a8a;
+  margin-bottom:10px;
+}
+
+.card p,
+.card ul{
+  font-size:1.02rem;
+  line-height:1.7;
+}
+
+.card ul{
+  padding-left:20px;
+}
+
+.card li{
+  margin-bottom:6px;
+}
+
+/* selects, buttons, results */
+.generator-group label,
+.quiz-group label{
+  font-weight:600;
+}
+
+select{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,0.1);
+  background:#fff7f7;
+  font-size:.95rem;
+}
+
+button{
+  margin-top:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ffdcdc,#f7b2b2);
+  font-size:.98rem;
+}
+
+.result-box{
+  margin-top:12px;
+  background:rgba(255,255,255,0.7);
+  border-radius:14px;
+  padding:10px 12px;
+  font-size:.98rem;
+}
+
+.quiz-options label{
+  display:block;
+  margin-bottom:4px;
+  cursor:pointer;
+}
+
+@media(max-width:600px){
+  h1{font-size:2rem;}
+  .card{padding:18px 18px;}
+}
+</style>
 </head>
 
 <body>
 
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
 <h1>Hair Guide</h1>
+<div class="subtitle">
+  A soft coral‑rose guide to understanding your hair, caring for it, and styling it beautifully.
+</div>
 
-<p>Understand your hair type, learn how to care for it, and discover routines that keep your hair healthy and beautiful.</p>
+<!-- INTRO -->
+<div class="card">
+  <p>
+    Healthy hair starts with understanding your hair type, porosity, density, and routine. This guide gives you everything:
+    care tips, styling ideas, product recommendations, a hair aesthetic quiz, a haircut finder, and a custom routine generator.
+  </p>
+</div>
 
-<h2>Hair Types</h2>
-<ul>
+<!-- HAIR TYPES -->
+<div class="card">
+  <h2>Hair Types</h2>
+  <ul>
     <li><strong>Type 1 (Straight):</strong> Smooth, shiny, can get oily quickly.</li>
     <li><strong>Type 2 (Wavy):</strong> Loose waves, needs lightweight moisture.</li>
     <li><strong>Type 3 (Curly):</strong> Defined curls, needs hydration and curl creams.</li>
     <li><strong>Type 4 (Coily):</strong> Tight coils, needs rich moisture and oils.</li>
-</ul>
+  </ul>
+</div>
 
-<h2>Haircare Basics</h2>
-<ul>
+<!-- POROSITY -->
+<div class="card">
+  <h2>Hair Porosity</h2>
+  <ul>
+    <li><strong>Low Porosity:</strong> Water-resistant, needs lightweight products + heat to absorb moisture.</li>
+    <li><strong>Medium Porosity:</strong> Balanced, absorbs moisture well.</li>
+    <li><strong>High Porosity:</strong> Absorbs fast but loses moisture quickly; needs rich creams + oils.</li>
+  </ul>
+</div>
+
+<!-- DENSITY -->
+<div class="card">
+  <h2>Hair Density</h2>
+  <ul>
+    <li><strong>Low Density:</strong> Hair looks thin; avoid heavy products.</li>
+    <li><strong>Medium Density:</strong> Most styles work well.</li>
+    <li><strong>High Density:</strong> Thick hair; needs strong hold + moisture.</li>
+  </ul>
+</div>
+
+<!-- THICKNESS -->
+<div class="card">
+  <h2>Hair Strand Thickness</h2>
+  <ul>
+    <li><strong>Fine:</strong> Lightweight products, avoid heavy oils.</li>
+    <li><strong>Medium:</strong> Balanced products.</li>
+    <li><strong>Coarse:</strong> Rich creams + oils for softness.</li>
+  </ul>
+</div>
+
+<!-- HAIRCARE BASICS -->
+<div class="card">
+  <h2>Haircare Basics</h2>
+  <ul>
     <li><strong>Shampoo:</strong> Focus on the scalp.</li>
     <li><strong>Conditioner:</strong> Focus on mid‑lengths and ends.</li>
-    <li><strong>Heat Protection:</strong> Essential before styling.</li>
-    <li><strong>Trims:</strong> Every 8–12 weeks to prevent split ends.</li>
-</ul>
+    <li><strong>Heat Protection:</strong> Always before styling.</li>
+    <li><strong>Trims:</strong> Every 8–12 weeks.</li>
+    <li><strong>Clarify:</strong> Once a month to remove buildup.</li>
+  </ul>
+</div>
 
-<h2>How to Repair Damaged Hair</h2>
-<ul>
-    <li>Use protein treatments weekly.</li>
+<!-- ROUTINES FOR EACH HAIR TYPE -->
+<div class="card">
+  <h2>Routines for Each Hair Type</h2>
+
+  <p><strong>Straight Hair:</strong></p>
+  <ul>
+    <li>Lightweight shampoo + conditioner</li>
+    <li>Dry shampoo between washes</li>
+    <li>Light oils only on ends</li>
+  </ul>
+
+  <p><strong>Wavy Hair:</strong></p>
+  <ul>
+    <li>Moisturizing shampoo</li>
+    <li>Leave‑in conditioner</li>
+    <li>Light curl cream or mousse</li>
+  </ul>
+
+  <p><strong>Curly Hair:</strong></p>
+  <ul>
+    <li>Sulfate‑free shampoo</li>
+    <li>Deep condition weekly</li>
+    <li>Curl cream + gel for definition</li>
+  </ul>
+
+  <p><strong>Coily Hair:</strong></p>
+  <ul>
+    <li>Co‑wash between shampoos</li>
+    <li>Rich leave‑ins + butters</li>
+    <li>Protective styles to retain length</li>
+  </ul>
+</div>
+
+<!-- DAMAGE REPAIR -->
+<div class="card">
+  <h2>How to Repair Damaged Hair</h2>
+  <ul>
+    <li>Protein treatments weekly.</li>
     <li>Deep condition regularly.</li>
     <li>Reduce heat styling.</li>
     <li>Use satin pillowcases.</li>
-</ul>
+    <li>Trim split ends.</li>
+  </ul>
+</div>
 
-<h2>Hair Growth Tips</h2>
-<ul>
+<!-- GROWTH TIPS -->
+<div class="card">
+  <h2>Hair Growth Tips</h2>
+  <ul>
     <li>Scalp massages increase circulation.</li>
     <li>Keep ends moisturized.</li>
     <li>Avoid tight hairstyles.</li>
     <li>Stay consistent with routine.</li>
-</ul>
+  </ul>
+</div>
+
+<!-- PRODUCT RECOMMENDATIONS -->
+<div class="card">
+  <h2>Product Recommendations</h2>
+  <p><strong>Shampoo:</strong><br>
+    Drugstore: OGX, Maui Moisture<br>
+    High‑end: Olaplex No.4, Kerastase Bain Hydration
+  </p>
+
+  <p><strong>Conditioner:</strong><br>
+    Drugstore: Garnier Hair Food, SheaMoisture<br>
+    High‑end: Olaplex No.5, Kerastase Nutritive
+  </p>
+
+  <p><strong>Leave‑In:</strong><br>
+    Drugstore: Cantu, Not Your Mother’s<br>
+    High‑end: Ouai Leave‑In, Briogeo Rosarco
+  </p>
+
+  <p><strong>Curl Cream:</strong><br>
+    Drugstore: SheaMoisture Curl Enhancing Smoothie<br>
+    High‑end: Moroccanoil Curl Defining Cream
+  </p>
+
+  <p><strong>Heat Protectant:</strong><br>
+    Drugstore: Tresemmé, Got2B<br>
+    High‑end: GHD, Kerastase Thermique
+  </p>
+
+  <p><strong>Hair Oil:</strong><br>
+    Drugstore: Garnier Sleek Oil, OGX Argan Oil<br>
+    High‑end: Moroccanoil Treatment, Kerastase Elixir Ultime
+  </p>
+</div>
+
+<!-- HAIRSTYLE IDEAS -->
+<div class="card">
+  <h2>Hairstyle Ideas</h2>
+
+  <p><strong>Clean Girl:</strong></p>
+  <ul>
+    <li>Slick bun</li>
+    <li>Claw clip twist</li>
+    <li>Sleek middle part</li>
+  </ul>
+
+  <p><strong>Soft Girl:</strong></p>
+  <ul>
+    <li>Loose braids</li>
+    <li>Ribbons in hair</li>
+    <li>Fluffy curls</li>
+  </ul>
+
+  <p><strong>Baddie:</strong></p>
+  <ul>
+    <li>High ponytail</li>
+    <li>Long layers</li>
+    <li>Sleek straight hair</li>
+  </ul>
+
+  <p><strong>Luxury:</strong></p>
+  <ul>
+    <li>Blowout</li>
+    <li>Soft curls</li>
+    <li>Polished low bun</li>
+  </ul>
+
+  <p><strong>Curly/Coily:</strong></p>
+  <ul>
+    <li>Wash‑and‑go</li>
+    <li>Twist‑outs</li>
+    <li>Defined curls</li>
+  </ul>
+
+  <p><strong>Protective Styles:</strong></p>
+  <ul>
+    <li>Box braids</li>
+    <li>Twists</li>
+    <li>Braided buns</li>
+  </ul>
+
+  <p><strong>Short Hair:</strong></p>
+  <ul>
+    <li>Soft waves</li>
+    <li>Pixie styling</li>
+    <li>Mini claw clips</li>
+  </ul>
+
+  <p><strong>Long Hair:</strong></p>
+  <ul>
+    <li>Curtain bangs</li>
+    <li>Layered waves</li>
+    <li>Half‑up styles</li>
+  </ul>
+</div>
+
+<!-- HAIR AESTHETIC QUIZ -->
+<div class="card">
+  <h2>Hair & Hairstyle Aesthetic Quiz</h2>
+
+  <div class="quiz-group">
+    <label>1. What vibe do you want your hair to give?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="hq1" value="clean"> Clean, sleek, put‑together</label>
+      <label><input type="radio" name="hq1" value="soft"> Cute, romantic, soft</label>
+      <label><input type="radio" name="hq1" value="baddie"> Bold, glam, statement</label>
+      <label><input type="radio" name="hq1" value="luxury"> Polished, expensive, elegant</label>
+    </div>
+  </div>
+
+  <div class="quiz-group">
+    <label>2. How much effort do you want to put in daily?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="hq2" value="low"> Low effort</label>
+      <label><input type="radio" name="hq2" value="medium"> Medium effort</label>
+      <label><input type="radio" name="hq2" value="high"> High effort</label>
+    </div>
+  </div>
+
+  <button id="hairQuizBtn">Reveal my hair aesthetic</button>
+
+  <div class="result-box" id="hairQuizResult" style="display:none;"></div>
+</div>
+
+<!-- HAIRCUT FINDER -->
+<div class="card">
+  <h2>Haircut Finder (by Face Shape)</h2>
+  <p>Select your face shape to see haircut ideas that usually flatter it.</p>
+
+  <div class="generator-group">
+    <label for="faceShape">Face shape:</label>
+    <select id="faceShape">
+      <option value="">-- Select face shape --</option>
+      <option value="round">Round</option>
+      <option value="oval">Oval</option>
+      <option value="square">Square</option>
+      <option value="heart">Heart</option>
+      <option value="long">Long / Rectangular</option>
+    </select>
+  </div>
+
+  <button id="cutBtn">Show haircut ideas</button>
+
+  <div class="result-box" id="cutResult" style="display:none;"></div>
+</div>
+
+<!-- BUILD MY HAIR ROUTINE GENERATOR -->
+<div class="card">
+  <h2>Build My Hair Routine Generator</h2>
+  <p>Select your level and get a full routine with steps + product ideas.</p>
+
+  <div class="generator-group">
+    <label for="hairLevel">Choose your routine level:</label>
+    <select id="hairLevel">
+      <option value="">-- Select level --</option>
+      <option value="beginner">Beginner</option>
+      <option value="everyday">Everyday</option>
+      <option value="clean">Clean Girl</option>
+      <option value="soft">Soft Glam Hair</option>
+      <option value="full">Full Glam Hair</option>
+    </select>
+  </div>
+
+  <button id="hairBtn">Generate my routine</button>
+
+  <div class="result-box" id="hairResult" style="display:none;"></div>
+</div>
+
+<script>
+/* Hair aesthetic quiz */
+document.getElementById("hairQuizBtn").addEventListener("click", ()=>{
+  const vibe = document.querySelector('input[name="hq1"]:checked');
+  const effort = document.querySelector('input[name="hq2"]:checked');
+  const box = document.getElementById("hairQuizResult");
+
+  if(!vibe || !effort){
+    box.style.display = "block";
+    box.innerHTML = "Please answer both questions 💕";
+    return;
+  }
+
+  let result = "";
+
+  if(vibe.value === "clean"){
+    result = "✨ Clean Girl Hair: sleek buns, claw clip styles, smooth blowouts, minimal frizz.";
+  } else if(vibe.value === "soft"){
+    result = "🌸 Soft Girl Hair: loose waves, braids, ribbons, fluffy curls, soft layers.";
+  } else if(vibe.value === "baddie"){
+    result = "🔥 Baddie Hair: high ponies, long layers, sleek middle parts, bold volume.";
+  } else if(vibe.value === "luxury"){
+    result = "💎 Luxury Hair: polished blowouts, soft curls, low buns, shiny, healthy‑looking hair.";
+  }
+
+  if(effort.value === "low"){
+    result += " You prefer low effort, so focus on simple styles you can repeat easily.";
+  } else if(effort.value === "medium"){
+    result += " You’re okay with medium effort, so mix air‑dry days with styled days.";
+  } else if(effort.value === "high"){
+    result += " You’re down for high effort, so experiment with blowouts, curls, and detailed styles.";
+  }
+
+  box.style.display = "block";
+  box.innerHTML = result;
+});
+
+/* Haircut finder */
+document.getElementById("cutBtn").addEventListener("click", ()=>{
+  const shape = document.getElementById("faceShape").value;
+  const box = document.getElementById("cutResult");
+
+  if(!shape){
+    box.style.display = "block";
+    box.innerHTML = "Choose your face shape to see haircut ideas ✂️";
+    return;
+  }
+
+  let html = "";
+
+  if(shape === "round"){
+    html = `
+      <p><strong>Round Face Haircuts:</strong></p>
+      <ul>
+        <li>Long layers that start below the chin</li>
+        <li>Side parts to add angles</li>
+        <li>Long bobs (lob) slightly longer in the front</li>
+      </ul>
+    `;
+  }
+
+  if(shape === "oval"){
+    html = `
+      <p><strong>Oval Face Haircuts:</strong></p>
+      <ul>
+        <li>Most cuts work well</li>
+        <li>Blunt bobs or long layers</li>
+        <li>Curtain bangs for softness</li>
+      </ul>
+    `;
+  }
+
+  if(shape === "square"){
+    html = `
+      <p><strong>Square Face Haircuts:</strong></p>
+      <ul>
+        <li>Soft layers around the face</li>
+        <li>Wavy styles to soften angles</li>
+        <li>Side‑swept bangs</li>
+      </ul>
+    `;
+  }
+
+  if(shape === "heart"){
+    html = `
+      <p><strong>Heart Face Haircuts:</strong></p>
+      <ul>
+        <li>Chin‑length bobs or lobs</li>
+        <li>Soft side bangs</li>
+        <li>Layers that add volume near the jawline</li>
+      </ul>
+    `;
+  }
+
+  if(shape === "long"){
+    html = `
+      <p><strong>Long / Rectangular Face Haircuts:</strong></p>
+      <ul>
+        <li>Curtain bangs to shorten the face visually</li>
+        <li>Medium length with layers</li>
+        <li>Waves and curls for width</li>
+      </ul>
+    `;
+  }
+
+  box.style.display = "block";
+  box.innerHTML = html;
+});
+
+/* Hair routine generator */
+document.getElementById("hairBtn").addEventListener("click", ()=>{
+  const level = document.getElementById("hairLevel").value;
+  const box = document.getElementById("hairResult");
+
+  if(!level){
+    box.style.display = "block";
+    box.innerHTML = "Choose a routine level to generate your routine 💗";
+    return;
+  }
+
+  let html = "";
+
+  if(level === "beginner"){
+    html = `
+      <p><strong>Beginner Routine:</strong></p>
+      <ol>
+        <li>Shampoo scalp (OGX / Olaplex No.4).</li>
+        <li>Condition mid‑lengths + ends (Garnier Hair Food / Olaplex No.5).</li>
+        <li>Apply leave‑in conditioner (Cantu / Ouai).</li>
+        <li>Use heat protectant if styling (Tresemmé / GHD).</li>
+        <li>Finish with light oil on ends (OGX / Moroccanoil).</li>
+      </ol>
+    `;
+  }
+
+  if(level === "everyday"){
+    html = `
+      <p><strong>Everyday Routine:</strong></p>
+      <ol>
+        <li>Shampoo + condition with moisturizing products.</li>
+        <li>Detangle with leave‑in (Not Your Mother’s / Briogeo).</li>
+        <li>Apply styling cream or mousse depending on hair type.</li>
+        <li>Use heat protectant before blow‑drying.</li>
+        <li>Finish with oil or serum for shine.</li>
+      </ol>
+    `;
+  }
+
+  if(level === "clean"){
+    html = `
+      <p><strong>Clean Girl Routine:</strong></p>
+      <ol>
+        <li>Wash with smoothing shampoo + conditioner.</li>
+        <li>Apply leave‑in for sleekness.</li>
+        <li>Blow‑dry with a round brush for smooth finish.</li>
+        <li>Use a small amount of oil for shine.</li>
+        <li>Style into slick bun or claw clip.</li>
+      </ol>
+    `;
+  }
+
+  if(level === "soft"){
+    html = `
+      <p><strong>Soft Glam Hair Routine:</strong></p>
+      <ol>
+        <li>Wash with hydrating shampoo + conditioner.</li>
+        <li>Apply leave‑in + curl cream or volumizing mousse.</li>
+        <li>Blow‑dry with diffuser or round brush.</li>
+        <li>Add soft waves with curling iron.</li>
+        <li>Finish with lightweight oil + flexible hairspray.</li>
+      </ol>
+    `;
+  }
+
+  if(level === "full"){
+    html = `
+      <p><strong>Full Glam Hair Routine:</strong></p>
+      <ol>
+        <li>Wash with strengthening shampoo + conditioner (Olaplex / Kerastase).</li>
+        <li>Apply leave‑in + heat protectant.</li>
+        <li>Blow‑dry smooth with round brush.</li>
+        <li>Use curling iron or rollers for volume.</li>
+        <li>Set with hairspray + shine serum.</li>
+      </ol>
+    `;
+  }
+
+  box.style.display = "block";
+  box.innerHTML = html;
+});
+</script>
 
 </body>
-</html>
+          </html>
+    
