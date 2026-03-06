@@ -1,68 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Glow‑Up Challenges</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 40px 20px;
-            background: #111;
-            color: #f5f5f5;
-            font-family: system-ui, sans-serif;
-        }
-        h1 {
-            color: #f7e7b8;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #d9b56f;
-            margin-top: 30px;
-        }
-        p, ul {
-            max-width: 750px;
-            line-height: 1.7;
-        }
-        ul {
-            padding-left: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Glow‑Up Challenges</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:linear-gradient(135deg,#fff7c2,#ffeaa7,#ffe7b3,#fff3d1);
+  font-family:system-ui,sans-serif;
+  color:#3a2f1b;
+  padding:40px 16px 60px;
+}
+
+/* back arrow */
+.back-arrow{
+  position:absolute;
+  top:20px;
+  left:20px;
+  font-size:2.4rem;
+  cursor:pointer;
+  color:#3a2f1b;
+  text-shadow:0 0 10px rgba(255,255,255,0.7);
+}
+
+/* title */
+h1{
+  font-size:2.4rem;
+  text-align:center;
+  margin-bottom:18px;
+  color:#d4a84f;
+  text-shadow:0 0 12px rgba(255,255,255,0.6);
+}
+
+/* subtitle */
+.subtitle{
+  text-align:center;
+  font-size:1.05rem;
+  opacity:.85;
+  max-width:700px;
+  margin:0 auto 20px;
+}
+
+/* cards */
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.6),rgba(255,245,200,0.75));
+  border:1px solid rgba(255,255,255,0.8);
+  border-radius:22px;
+  padding:22px 24px;
+  margin:18px auto;
+  max-width:900px;
+  box-shadow:0 0 25px rgba(255,255,255,0.7);
+  backdrop-filter:blur(6px);
+}
+
+.card h2{
+  font-size:1.6rem;
+  color:#c89b3c;
+  margin-bottom:10px;
+}
+
+.card p,
+.card ul{
+  font-size:1.02rem;
+  line-height:1.7;
+}
+
+.card ul{
+  padding-left:20px;
+}
+
+.card li{
+  margin-bottom:6px;
+}
+
+/* section dividers */
+.section-title{
+  font-size:1.4rem;
+  margin-top:20px;
+  color:#c89b3c;
+  font-weight:600;
+}
+
+@media(max-width:600px){
+  h1{font-size:2rem;}
+  .card{padding:18px 18px;}
+}
+</style>
 </head>
+
 <body>
 
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
 <h1>Glow‑Up Challenges</h1>
+<div class="subtitle">
+  A warm, golden guide to leveling up your habits, confidence, lifestyle, and energy.
+</div>
 
-<p>Build confidence, improve your habits, and transform your lifestyle with simple daily tasks.</p>
+<!-- INTRO -->
+<div class="card">
+  <p>
+    Glow‑ups aren’t about perfection — they’re about small, consistent habits that make you feel more confident, refreshed,
+    and aligned with your best self. These challenges are gentle, fun, and designed to help you build momentum.
+  </p>
+</div>
 
-<h2>7‑Day Glow‑Up</h2>
-<ul>
-    <li><strong>Day 1:</strong> Deep clean your space.</li>
-    <li><strong>Day 2:</strong> Hydrate + eat something fresh.</li>
-    <li><strong>Day 3:</strong> Skincare reset.</li>
-    <li><strong>Day 4:</strong> Move your body for 20 minutes.</li>
-    <li><strong>Day 5:</strong> Hair care day.</li>
+<!-- 7 DAY GLOW UP -->
+<div class="card">
+  <h2>7‑Day Glow‑Up</h2>
+  <ul>
+    <li><strong>Day 1:</strong> Deep clean your space — fresh environment, fresh mind.</li>
+    <li><strong>Day 2:</strong> Hydrate + eat something fresh and colorful.</li>
+    <li><strong>Day 3:</strong> Skincare reset — cleanse, moisturize, SPF.</li>
+    <li><strong>Day 4:</strong> Move your body for 20 minutes (walk, stretch, dance).</li>
+    <li><strong>Day 5:</strong> Hair care day — wash, mask, or oil treatment.</li>
     <li><strong>Day 6:</strong> Digital detox for 2 hours.</li>
-    <li><strong>Day 7:</strong> Dress up for no reason.</li>
-</ul>
+    <li><strong>Day 7:</strong> Dress up for no reason — feel cute for YOU.</li>
+  </ul>
+</div>
 
-<h2>Confidence Boost Tasks</h2>
-<ul>
+<!-- 30 DAY GLOW UP -->
+<div class="card">
+  <h2>30‑Day Glow‑Up</h2>
+  <p>A month of small habits that build big confidence.</p>
+  <ul>
+    <li>Drink a full glass of water every morning.</li>
+    <li>Make your bed daily.</li>
+    <li>Stretch for 5 minutes.</li>
+    <li>Read 5 pages of something inspiring.</li>
+    <li>Plan your outfits the night before.</li>
+    <li>Clean one small area daily.</li>
+    <li>Take a 10‑minute walk.</li>
+    <li>Practice mindful breathing.</li>
+    <li>Limit doom‑scrolling.</li>
+    <li>Do one thing that makes you feel pretty.</li>
+  </ul>
+</div>
+
+<!-- CONFIDENCE BOOST -->
+<div class="card">
+  <h2>Confidence Boost Tasks</h2>
+  <ul>
     <li>Practice good posture for 5 minutes.</li>
     <li>Say one positive thing about yourself.</li>
     <li>Take a selfie you love.</li>
-    <li>Walk with intention.</li>
-    <li>Do one small thing that scares you.</li>
-</ul>
+    <li>Walk with intention — shoulders back, chin up.</li>
+    <li>Do one small thing outside your comfort zone.</li>
+  </ul>
+</div>
 
-<h2>Lifestyle Glow‑Up</h2>
-<ul>
+<!-- LIFESTYLE GLOW UP -->
+<div class="card">
+  <h2>Lifestyle Glow‑Up</h2>
+  <ul>
     <li>Drink 1 extra glass of water.</li>
     <li>Stretch for 5 minutes.</li>
     <li>Clean your phone screen.</li>
     <li>Plan tomorrow’s outfit.</li>
     <li>Go to bed 20 minutes earlier.</li>
-</ul>
+    <li>Organize your bag or desk.</li>
+    <li>Open your windows for fresh air.</li>
+  </ul>
+</div>
+
+<!-- MENTAL GLOW UP -->
+<div class="card">
+  <h2>Mental Glow‑Up</h2>
+  <p>These are gentle, lifestyle‑based habits that support a calmer, clearer mindset.</p>
+  <ul>
+    <li>Write down 3 things you’re grateful for.</li>
+    <li>Spend 10 minutes offline doing something relaxing.</li>
+    <li>Say “no” to something draining.</li>
+    <li>Do a small act of kindness.</li>
+    <li>Spend time in nature or sunlight.</li>
+  </ul>
+</div>
+
+<!-- SOCIAL GLOW UP -->
+<div class="card">
+  <h2>Social Glow‑Up</h2>
+  <ul>
+    <li>Compliment someone genuinely.</li>
+    <li>Send a message to someone you appreciate.</li>
+    <li>Practice active listening.</li>
+    <li>Smile at someone you pass.</li>
+    <li>Set healthy boundaries when needed.</li>
+  </ul>
+</div>
+
+<!-- STYLE GLOW UP -->
+<div class="card">
+  <h2>Style Glow‑Up</h2>
+  <ul>
+    <li>Pick a signature color.</li>
+    <li>Find your go‑to hairstyle.</li>
+    <li>Choose one accessory that elevates your outfit.</li>
+    <li>Declutter old clothes.</li>
+    <li>Try a new makeup or nail look.</li>
+  </ul>
+</div>
+
+<!-- MORNING ROUTINE -->
+<div class="card">
+  <h2>Morning Glow‑Up Routine</h2>
+  <ul>
+    <li>Drink water first thing.</li>
+    <li>Open your blinds for natural light.</li>
+    <li>Do a 2‑minute stretch.</li>
+    <li>Wash your face + SPF.</li>
+    <li>Eat something nourishing.</li>
+  </ul>
+</div>
+
+<!-- NIGHT ROUTINE -->
+<div class="card">
+  <h2>Night Glow‑Up Routine</h2>
+  <ul>
+    <li>Put your phone away 20 minutes before bed.</li>
+    <li>Do a simple skincare routine.</li>
+    <li>Journal or brain‑dump your thoughts.</li>
+    <li>Prepare your outfit for tomorrow.</li>
+    <li>Go to bed at a consistent time.</li>
+  </ul>
+</div>
 
 </body>
 </html>
