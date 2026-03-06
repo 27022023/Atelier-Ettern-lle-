@@ -430,7 +430,8 @@ function showSeason(){
       matching:"Black + icy blue + white"
     },
 
-    "Deep Winter":{
+    "
+       "Deep Winter":{
       metals:"Silver, white gold",
       makeup:"Deep berry, plum, bold eyeliner",
       hair:"Black, deep cool brown",
@@ -438,6 +439,129 @@ function showSeason(){
       celebs:"Kim Kardashian",
       outfits:"Black, deep plum, emerald, sapphire",
       makeupFull:"Blush: plum • Lips: berry • Eyes: navy/black",
-      hairFull
-          
+      hairFull:"Black, deep cool brown",
+      matching:"Black + emerald + silver"
+    }
+  };
+
+  const d = info[season];
+
+  /* DETAILS CARD */
+  detailsCard.innerHTML = `
+    <h2>More About Your Season</h2>
+
+    <div class="section-title">Best Metals</div>
+    <div class="bullet">• ${d.metals}</div>
+
+    <div class="section-title">Makeup Shades</div>
+    <div class="bullet">• ${d.makeup}</div>
+
+    <div class="section-title">Hair Colors</div>
+    <div class="bullet">• ${d.hair}</div>
+
+    <div class="section-title">Avoid These Colors</div>
+    <div class="bullet">• ${d.avoid}</div>
+
+    <div class="section-title">Celebrity Examples</div>
+    <div class="bullet">• ${d.celebs}</div>
+  `;
+
+  /* OUTFIT GUIDE */
+  outfitCard.innerHTML = `
+    <h2>Outfit Guide</h2>
+
+    <div class="section-title">Best Clothing Colors</div>
+    <div class="bullet">• ${d.outfits}</div>
+
+    <div class="section-title">Best Neutrals</div>
+    <div class="bullet">• ${chosenPalette[0]}, ${chosenPalette[1]}</div>
+
+    <div class="section-title">Patterns & Fabrics</div>
+    <div class="bullet">• Soft florals, subtle prints, or bold contrast depending on season</div>
+
+    <div class="section-title">Contrast Level</div>
+    <div class="bullet">• ${
+      season.includes("Winter") ? "High contrast outfits suit you best." :
+      season.includes("Autumn") ? "Medium contrast looks are ideal." :
+      season.includes("Summer") ? "Soft, low-contrast outfits flatter you." :
+      "Warm, bright contrast works beautifully."
+    }</div>
+  `;
+
+  /* MAKEUP GUIDE */
+  makeupCard.innerHTML = `
+    <h2>Makeup Palette</h2>
+
+    <div class="section-title">Blush</div>
+    <div class="bullet">• ${d.makeupFull.split("•")[0].replace("Blush:", "")}</div>
+
+    <div class="section-title">Lips</div>
+    <div class="bullet">• ${d.makeupFull.split("•")[1].replace("Lips:", "")}</div>
+
+    <div class="section-title">Eyeshadow</div>
+    <div class="bullet">• ${d.makeupFull.split("•")[2].replace("Eyes:", "")}</div>
+
+    <div class="section-title">Eyeliner</div>
+    <div class="bullet">• ${d.makeupFull.split("•")[3].replace("Liner:", "")}</div>
+
+    <div class="section-title">Highlighter</div>
+    <div class="bullet">• ${
+      season.includes("Winter") ? "Cool champagne" :
+      season.includes("Summer") ? "Soft pearl" :
+      season.includes("Spring") ? "Warm gold" :
+      "Golden champagne"
+    }</div>
+  `;
+
+  /* HAIR GUIDE */
+  hairCard.innerHTML = `
+    <h2>Hair Color Guide</h2>
+
+    <div class="section-title">Best Hair Colors</div>
+    <div class="bullet">• ${d.hairFull}</div>
+
+    <div class="section-title">Highlights</div>
+    <div class="bullet">• ${
+      season.includes("Winter") ? "Icy blonde, cool ash" :
+      season.includes("Summer") ? "Soft ash, muted beige" :
+      season.includes("Spring") ? "Golden blonde, honey" :
+      "Caramel, warm gold"
+    }</div>
+
+    <div class="section-title">Avoid</div>
+    <div class="bullet">• ${d.avoid}</div>
+  `;
+
+  /* COLOR MATCHING GUIDE */
+  matchingCard.innerHTML = `
+    <h2>Wardrobe Color Matching</h2>
+
+    <div class="section-title">Best Color Combinations</div>
+    <div class="bullet">• ${d.matching}</div>
+
+    <div class="section-title">Monochrome Looks</div>
+    <div class="bullet">• ${
+      season.includes("Winter") ? "Deep jewel tones layered together" :
+      season.includes("Summer") ? "Soft gradients of cool pastels" :
+      season.includes("Spring") ? "Warm light tones with golden accents" :
+      "Rich earthy tones in layered warmth"
+    }</div>
+
+    <div class="section-title">3‑Color Outfit Formula</div>
+    <div class="bullet">• Neutral base + Season accent + Metallic detail</div>
+
+    <div class="section-title">Your Best Neutrals</div>
+    <div class="bullet">• ${
+      season.includes("Winter") ? "Black, white, charcoal" :
+      season.includes("Summer") ? "Soft navy, dove grey" :
+      season.includes("Spring") ? "Ivory, warm beige" :
+      "Camel, espresso, olive"
+    }</div>
+  `;
+}
+</script>
+
+</body>
+</html>
+
                 
