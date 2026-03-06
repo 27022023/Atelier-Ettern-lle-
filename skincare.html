@@ -1,63 +1,547 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Skincare Helper</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 40px 20px;
-            background: #111;
-            color: #f5f5f5;
-            font-family: system-ui, sans-serif;
-        }
-        h1 {
-            color: #f7e7b8;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #d9b56f;
-            margin-top: 30px;
-        }
-        p, ul {
-            max-width: 750px;
-            line-height: 1.7;
-        }
-        ul {
-            padding-left: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Skincare Helper</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:linear-gradient(135deg,#dcd2ff,#e8e0ff,#f3eaff);
+  font-family:system-ui,sans-serif;
+  color:#2b244d;
+  padding:40px 16px 60px;
+}
+
+/* back arrow */
+.back-arrow{
+  position:absolute;
+  top:20px;
+  left:20px;
+  font-size:2.4rem;
+  cursor:pointer;
+  color:#2b244d;
+  text-shadow:0 0 10px rgba(255,255,255,0.7);
+}
+
+/* title */
+h1{
+  font-size:2.4rem;
+  text-align:center;
+  margin-bottom:18px;
+  color:#f7e7b8;
+  text-shadow:0 0 12px rgba(255,255,255,0.6);
+}
+
+/* subtitle */
+.subtitle{
+  text-align:center;
+  font-size:1.05rem;
+  opacity:.85;
+  max-width:700px;
+  margin:0 auto 20px;
+}
+
+/* cards */
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.55),rgba(255,245,220,0.7));
+  border:1px solid rgba(255,255,255,0.8);
+  border-radius:22px;
+  padding:22px 24px;
+  margin:18px auto;
+  max-width:900px;
+  box-shadow:0 0 25px rgba(255,255,255,0.7);
+  backdrop-filter:blur(6px);
+}
+
+.card h2{
+  font-size:1.6rem;
+  color:#d9b56f;
+  margin-bottom:10px;
+}
+
+.card p,
+.card ul{
+  font-size:1.02rem;
+  line-height:1.7;
+}
+
+.card ul{
+  padding-left:20px;
+}
+
+.card li{
+  margin-bottom:6px;
+}
+
+/* tip box */
+.tip-box{
+  background:rgba(255,255,255,0.7);
+  border-left:4px solid #d9b56f;
+  padding:12px 14px;
+  border-radius:12px;
+  margin-top:12px;
+  font-size:.98rem;
+}
+
+/* accordion */
+.accordion{
+  margin-top:10px;
+}
+
+.accordion-item{
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:10px;
+  background:rgba(255,255,255,0.6);
+}
+
+.accordion-header{
+  width:100%;
+  text-align:left;
+  padding:10px 14px;
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:1.02rem;
+}
+
+.accordion-header span.label{
+  font-weight:600;
+}
+
+.accordion-header span.icon{
+  font-size:1.1rem;
+  opacity:.7;
+}
+
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .25s ease;
+  padding:0 14px 0;
+}
+
+.accordion-content-inner{
+  padding-bottom:12px;
+  padding-top:4px;
+}
+
+/* product lists */
+.product-list{
+  margin-top:6px;
+}
+
+.product-list li{
+  margin-bottom:6px;
+}
+
+/* small label */
+.small-label{
+  font-size:.9rem;
+  opacity:.8;
+}
+
+/* quiz */
+.quiz-group{
+  margin:10px 0 14px;
+}
+
+.quiz-group label{
+  display:block;
+  margin-bottom:4px;
+  font-weight:600;
+}
+
+.quiz-options{
+  margin-top:4px;
+}
+
+.quiz-options label{
+  display:block;
+  margin-bottom:4px;
+  cursor:pointer;
+}
+
+.quiz-button{
+  margin-top:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#fdf6d8,#f0e0b0);
+  font-size:.98rem;
+}
+
+.quiz-result{
+  margin-top:12px;
+  background:rgba(255,255,255,0.7);
+  border-radius:14px;
+  padding:10px 12px;
+  font-size:.98rem;
+}
+
+/* responsive */
+@media(max-width:600px){
+  h1{font-size:2rem;}
+  .card{padding:18px 18px;}
+}
+</style>
 </head>
+
 <body>
 
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
 <h1>Skincare Helper</h1>
+<div class="subtitle">
+  A soft, champagne‑gold guide to understanding your skin, building routines, and choosing products that actually make sense.
+</div>
 
-<p>Learn how to understand your skin type, build routines, and choose the right ingredients for glowing, healthy skin.</p>
+<!-- INTRO -->
+<div class="card">
+  <p>
+    This page is your calm skincare cheat‑sheet. It won’t diagnose anything or replace a professional, but it will help you
+    understand your skin type, build a simple routine, and recognize ingredients and products that might fit your vibe.
+  </p>
+  <div class="tip-box">
+    🌸 <strong>Reminder:</strong> If your skin is very reactive, painful, or you’re unsure what’s happening, it’s always best
+    to talk to a dermatologist or doctor.
+  </div>
+</div>
 
-<h2>Skin Types</h2>
-<ul>
-    <li><strong>Normal:</strong> Balanced, minimal issues.</li>
-    <li><strong>Dry:</strong> Tight, flaky, needs hydration.</li>
-    <li><strong>Oily:</strong> Shiny, acne‑prone, needs oil control.</li>
-    <li><strong>Combination:</strong> Oily T‑zone, dry cheeks.</li>
-    <li><strong>Sensitive:</strong> Easily irritated, needs gentle care.</li>
-</ul>
+<!-- MINI SKIN QUIZ + BUILD MY ROUTINE -->
+<div class="card">
+  <h2>Mini Skin Quiz & Routine Generator</h2>
+  <p>Answer a few quick questions and get a gentle, non‑medical routine suggestion.</p>
 
-<h2>Basic Routine</h2>
-<ul>
-    <li><strong>Morning:</strong> Cleanser → Moisturizer → SPF</li>
-    <li><strong>Night:</strong> Cleanser → Treatment (optional) → Moisturizer</li>
-</ul>
+  <div class="quiz-group">
+    <label>1. How does your skin usually feel after cleansing?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="q_feel" value="dry"> Tight, dry, or rough</label>
+      <label><input type="radio" name="q_feel" value="oily"> Shiny or greasy quickly</label>
+      <label><input type="radio" name="q_feel" value="combo"> Oily in T‑zone, normal/dry elsewhere</label>
+      <label><input type="radio" name="q_feel" value="sensitive"> Often red, stings, or burns</label>
+    </div>
+  </div>
 
-<h2>Popular Ingredients</h2>
-<ul>
-    <li><strong>Niacinamide:</strong> Brightens, reduces redness.</li>
-    <li><strong>Hyaluronic Acid:</strong> Deep hydration.</li>
-    <li><strong>Retinol:</strong> Anti‑aging, acne control.</li>
-    <li><strong>AHA/BHA:</strong> Exfoliation and glow.</li>
-    <li><strong>Ceramides:</strong> Strengthen skin barrier.</li>
-</ul>
+  <div class="quiz-group">
+    <label>2. What is your main goal right now?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="q_goal" value="hydration"> More hydration / less dryness</label>
+      <label><input type="radio" name="q_goal" value="acne"> Fewer breakouts / clearer pores</label>
+      <label><input type="radio" name="q_goal" value="glow"> More glow / brightness</label>
+      <label><input type="radio" name="q_goal" value="calm"> Less redness / calmer skin</label>
+    </div>
+  </div>
+
+  <button class="quiz-button" id="generateRoutineBtn">Build my routine</button>
+
+  <div class="quiz-result" id="quizResult" style="display:none;"></div>
+</div>
+
+<!-- SKIN TYPES -->
+<div class="card">
+  <h2>Skin Types</h2>
+  <p>Knowing your skin type helps you choose textures and ingredients that feel good instead of irritating.</p>
+  <ul>
+    <li><strong>Normal:</strong> Balanced, minimal issues, not too oily or dry.</li>
+    <li><strong>Dry:</strong> Feels tight, flaky, rough; craves moisture and gentle formulas.</li>
+    <li><strong>Oily:</strong> Shiny, especially in the T‑zone; prone to clogged pores and breakouts.</li>
+    <li><strong>Combination:</strong> Oily T‑zone, normal or dry cheeks; needs mixed textures.</li>
+    <li><strong>Sensitive:</strong> Easily red, stings or burns with harsh products; needs very gentle care.</li>
+  </ul>
+
+  <div class="tip-box">
+    🌿 <strong>Quick test:</strong> Wash your face with a gentle cleanser, wait 30 minutes with no products:
+    if it feels tight → dry; shiny → oily; both → combination; fine → normal.
+  </div>
+</div>
+
+<!-- BASIC ROUTINE -->
+<div class="card">
+  <h2>Basic Routine</h2>
+  <p>Start simple. You can always add more later once your skin feels stable.</p>
+  <ul>
+    <li><strong>Morning:</strong> Gentle cleanser → Moisturizer → SPF (every single day).</li>
+    <li><strong>Night:</strong> Cleanser → Treatment (optional) → Moisturizer.</li>
+  </ul>
+
+  <div class="tip-box">
+    ✨ <strong>SPF is your best anti‑aging product.</strong> It helps prevent dark spots, fine lines, and irritation from UV.
+  </div>
+</div>
+
+<!-- INGREDIENTS -->
+<div class="card">
+  <h2>Popular Ingredients</h2>
+  <p>These ingredients show up everywhere. Here’s what they’re usually used for:</p>
+  <ul>
+    <li><strong>Niacinamide:</strong> Brightens, helps with redness, supports barrier.</li>
+    <li><strong>Hyaluronic Acid:</strong> Attracts water, boosts hydration.</li>
+    <li><strong>Retinol:</strong> Targets fine lines, texture, and breakouts (can be irritating).</li>
+    <li><strong>AHA/BHA:</strong> Chemical exfoliants for glow and smoother texture.</li>
+    <li><strong>Ceramides:</strong> Help repair and protect the skin barrier.</li>
+  </ul>
+
+  <div class="tip-box">
+    💛 <strong>Introduce actives slowly.</strong> Start 1–2× per week and watch how your skin reacts.
+  </div>
+</div>
+
+<!-- BUILD YOUR ROUTINE (ACCORDION BY SKIN TYPE) -->
+<div class="card">
+  <h2>Build Your Routine by Skin Type</h2>
+  <p>Here’s a calm starting point. Think of this as a template, not a rulebook.</p>
+
+  <div class="accordion">
+
+    <!-- Dry -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">Dry Skin</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <p><span class="small-label">Goal: comfort, moisture, barrier repair.</span></p>
+          <ul class="product-list">
+            <li><strong>Cleanser (type):</strong> Creamy, non‑foaming hydrating cleanser.<br>
+                <strong>Examples:</strong> CeraVe Hydrating Cleanser, La Roche‑Posay Toleriane Hydrating Cleanser.</li>
+            <li><strong>Moisturizer (type):</strong> Rich cream with ceramides and oils.<br>
+                <strong>Examples:</strong> CeraVe Moisturizing Cream, La Roche‑Posay Lipikar Baume.</li>
+            <li><strong>Extras:</strong> Hyaluronic acid serum, overnight hydrating mask.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Oily -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">Oily / Acne‑Prone Skin</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <p><span class="small-label">Goal: balance oil, keep pores clear, avoid stripping.</span></p>
+          <ul class="product-list">
+            <li><strong>Cleanser (type):</strong> Gentle gel cleanser, not harsh or squeaky‑clean.<br>
+                <strong>Examples:</strong> CeraVe Foaming Cleanser, La Roche‑Posay Effaclar (gentle versions).</li>
+            <li><strong>Moisturizer (type):</strong> Lightweight gel or lotion, non‑comedogenic.<br>
+                <strong>Examples:</strong> Neutrogena Hydro Boost (fragrance‑free), La Roche‑Posay Effaclar Mat.</li>
+            <li><strong>Treatment (type):</strong> 2% BHA (salicylic acid) or niacinamide serum.<br>
+                <strong>Examples:</strong> Paula’s Choice 2% BHA, The Ordinary Niacinamide 10% + Zinc 1%.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Combination -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">Combination Skin</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <p><span class="small-label">Goal: hydrate dry areas, control shine in T‑zone.</span></p>
+          <ul class="product-list">
+            <li><strong>Cleanser (type):</strong> Gentle gel or lotion cleanser.<br>
+                <strong>Examples:</strong> CeraVe Hydrating or Foaming (depending on how oily you are).</li>
+            <li><strong>Moisturizer (type):</strong> Light lotion overall, richer cream only on dry areas.</li>
+            <li><strong>Treatment (type):</strong> BHA on T‑zone, hydrating serum on cheeks.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sensitive -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">Sensitive Skin</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <p><span class="small-label">Goal: calm, protect, avoid fragrance and strong actives.</span></p>
+          <ul class="product-list">
+            <li><strong>Cleanser (type):</strong> Very gentle, fragrance‑free, non‑foaming.<br>
+                <strong>Examples:</strong> La Roche‑Posay Toleriane Dermo‑Cleanser, Avene Extremely Gentle Cleanser.</li>
+            <li><strong>Moisturizer (type):</strong> Barrier‑repair cream with ceramides and soothing ingredients.<br>
+                <strong>Examples:</strong> CeraVe Moisturizing Cream, La Roche‑Posay Cicaplast Baume.</li>
+            <li><strong>Extras:</strong> Avoid too many actives at once; patch test everything new.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- INGREDIENT‑BASED RECS -->
+<div class="card">
+  <h2>Ingredient‑Based Suggestions</h2>
+  <p>Here are some common goals and what people often look for:</p>
+
+  <div class="accordion">
+
+    <!-- Brightening -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">For Brightening & Redness</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <ul class="product-list">
+            <li><strong>Type:</strong> Niacinamide serum, gentle vitamin C.<br>
+                <strong>Examples:</strong> The Ordinary Niacinamide 10% + Zinc 1%, La Roche‑Posay Pure Vitamin C (for some skin types).</li>
+            <li><strong>Tip:</strong> Start with niacinamide if vitamin C feels too strong.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Texture / Acne -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">For Texture & Breakouts</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <ul class="product-list">
+            <li><strong>Type:</strong> BHA (salicylic acid), gentle retinoid (if tolerated).<br>
+                <strong>Examples:</strong> Paula’s Choice 2% BHA, Differin (adapalene) for some people.</li>
+            <li><strong>Tip:</strong> Use only at night, not every day at first.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barrier repair -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">For Barrier Repair & Dryness</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <ul class="product-list">
+            <li><strong>Type:</strong> Ceramide cream, simple hydrating serum, occlusive balm at night.<br>
+                <strong>Examples:</strong> CeraVe Moisturizing Cream, La Roche‑Posay Cicaplast, simple hyaluronic acid serum.</li>
+            <li><strong>Tip:</strong> When your barrier is upset, pause strong actives and focus on moisture.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EXTRA GLOW TIPS -->
+<div class="card">
+  <h2>Extra Glow Tips</h2>
+  <ul>
+    <li>Change pillowcases regularly to avoid buildup.</li>
+    <li>Don’t scrub your face harshly — your barrier will hate it.</li>
+    <li>Limit exfoliation to 1–2× per week unless a professional says otherwise.</li>
+    <li>Apply products on slightly damp skin for extra hydration.</li>
+    <li>Consistency beats perfection — a simple routine done daily is powerful.</li>
+  </ul>
+</div>
+
+<script>
+/* accordion logic */
+document.querySelectorAll('.accordion-header').forEach(header=>{
+  header.addEventListener('click',()=>{
+    const item = header.parentElement;
+    const content = item.querySelector('.accordion-content');
+    const icon = header.querySelector('.icon');
+    const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+
+    if(isOpen){
+      content.style.maxHeight = '0px';
+      icon.textContent = '+';
+    }else{
+      content.style.maxHeight = content.scrollHeight + 'px';
+      icon.textContent = '−';
+    }
+  });
+});
+
+/* quiz + routine generator */
+const generateBtn = document.getElementById('generateRoutineBtn');
+const quizResult = document.getElementById('quizResult');
+
+generateBtn.addEventListener('click', ()=>{
+  const feel = document.querySelector('input[name="q_feel"]:checked');
+  const goal = document.querySelector('input[name="q_goal"]:checked');
+
+  if(!feel || !goal){
+    quizResult.style.display = 'block';
+    quizResult.innerHTML = "Please answer both questions so I can suggest a routine.";
+    return;
+  }
+
+  const skin = feel.value;
+  const target = goal.value;
+
+  let title = "";
+  let routine = "";
+  let products = "";
+
+  if(skin === "dry"){
+    title = "Suggested routine for dry skin";
+    routine = "Morning: creamy hydrating cleanser → rich moisturizer → SPF.\nNight: gentle cleanser → hydrating serum → thick moisturizer.";
+    products =
+      "<strong>Product types:</strong> creamy cleanser, ceramide cream, hyaluronic acid serum.<br>" +
+      "<strong>Examples:</strong> CeraVe Hydrating Cleanser, CeraVe Moisturizing Cream, La Roche‑Posay Lipikar Baume.";
+  }else if(skin === "oily"){
+    title = "Suggested routine for oily / acne‑prone skin";
+    routine = "Morning: gentle gel cleanser → lightweight gel moisturizer → SPF.\nNight: gel cleanser → BHA or niacinamide → light moisturizer.";
+    products =
+      "<strong>Product types:</strong> gel cleanser, oil‑free moisturizer, 2% BHA, niacinamide serum.<br>" +
+      "<strong>Examples:</strong> CeraVe Foaming Cleanser, Neutrogena Hydro Boost (fragrance‑free), Paula’s Choice 2% BHA, The Ordinary Niacinamide.";
+  }else if(skin === "combo"){
+    title = "Suggested routine for combination skin";
+    routine = "Morning: gentle cleanser → light lotion → SPF.\nNight: cleanser → BHA on T‑zone → hydrating serum on cheeks → light moisturizer.";
+    products =
+      "<strong>Product types:</strong> gentle gel/lotion cleanser, light lotion, BHA for T‑zone, hydrating serum.<br>" +
+      "<strong>Examples:</strong> CeraVe Hydrating/Foaming Cleanser, CeraVe PM, Paula’s Choice 2% BHA.";
+  }else if(skin === "sensitive"){
+    title = "Suggested routine for sensitive skin";
+    routine = "Morning: very gentle cleanser (or just water) → soothing moisturizer → SPF.\nNight: gentle cleanser → barrier cream.";
+    products =
+      "<strong>Product types:</strong> fragrance‑free cleanser, barrier‑repair cream, simple SPF.<br>" +
+      "<strong>Examples:</strong> La Roche‑Posay Toleriane Cleanser, CeraVe Moisturizing Cream, La Roche‑Posay Cicaplast.";
+  }
+
+  let extra = "";
+  if(target === "hydration"){
+    extra = "Focus on hydrating serums (like hyaluronic acid) and avoid over‑exfoliating.";
+  }else if(target === "acne"){
+    extra = "Introduce BHA or a gentle retinoid slowly, and keep your moisturizer simple and non‑comedogenic.";
+  }else if(target === "glow"){
+    extra = "Consider niacinamide or a gentle vitamin C, plus regular (not daily) exfoliation.";
+  }else if(target === "calm"){
+    extra = "Avoid fragrance and strong actives for a while; focus on ceramides and soothing ingredients.";
+  }
+
+  quizResult.style.display = 'block';
+  quizResult.innerHTML =
+    "<strong>" + title + "</strong><br><br>" +
+    routine.replace(/\n/g,"<br>") + "<br><br>" +
+    products + "<br><br>" +
+    "<em>" + extra + "</em>";
+});
+</script>
 
 </body>
-</html>
+    </html>
