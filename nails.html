@@ -1,66 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Nail Inspiration</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 40px 20px;
-            background: #111;
-            color: #f5f5f5;
-            font-family: system-ui, sans-serif;
-        }
-        h1 {
-            color: #f7e7b8;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            color: #d9b56f;
-            margin-top: 30px;
-        }
-        p, ul {
-            max-width: 750px;
-            line-height: 1.7;
-        }
-        ul {
-            padding-left: 20px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Nail Inspiration</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:linear-gradient(135deg,#b8f1f0,#d8f7ff,#e8faff,#f0ffff);
+  font-family:system-ui,sans-serif;
+  color:#1d2b2b;
+  padding:40px 16px 60px;
+}
+
+/* back arrow */
+.back-arrow{
+  position:absolute;
+  top:20px;
+  left:20px;
+  font-size:2.4rem;
+  cursor:pointer;
+  color:#1d2b2b;
+  text-shadow:0 0 10px rgba(255,255,255,0.7);
+}
+
+/* title */
+h1{
+  font-size:2.4rem;
+  text-align:center;
+  margin-bottom:18px;
+  color:#f7e7b8;
+  text-shadow:0 0 12px rgba(255,255,255,0.6);
+}
+
+/* subtitle */
+.subtitle{
+  text-align:center;
+  font-size:1.05rem;
+  opacity:.85;
+  max-width:700px;
+  margin:0 auto 20px;
+}
+
+/* cards */
+.card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.55),rgba(255,245,220,0.7));
+  border:1px solid rgba(255,255,255,0.8);
+  border-radius:22px;
+  padding:22px 24px;
+  margin:18px auto;
+  max-width:900px;
+  box-shadow:0 0 25px rgba(255,255,255,0.7);
+  backdrop-filter:blur(6px);
+}
+
+.card h2{
+  font-size:1.6rem;
+  color:#d9b56f;
+  margin-bottom:10px;
+}
+
+.card p,
+.card ul{
+  font-size:1.02rem;
+  line-height:1.7;
+}
+
+.card ul{
+  padding-left:20px;
+}
+
+.card li{
+  margin-bottom:6px;
+}
+
+/* image grid */
+.image-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+  margin-top:14px;
+}
+
+.image-grid img{
+  width:100%;
+  border-radius:16px;
+  box-shadow:0 0 14px rgba(255,255,255,0.7);
+  border:1px solid rgba(255,255,255,0.8);
+}
+
+/* accordion */
+.accordion{
+  margin-top:10px;
+}
+
+.accordion-item{
+  border-radius:16px;
+  overflow:hidden;
+  margin-bottom:10px;
+  background:rgba(255,255,255,0.6);
+}
+
+.accordion-header{
+  width:100%;
+  text-align:left;
+  padding:10px 14px;
+  border:none;
+  background:transparent;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:1.02rem;
+}
+
+.accordion-header span.label{
+  font-weight:600;
+}
+
+.accordion-header span.icon{
+  font-size:1.1rem;
+  opacity:.7;
+}
+
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .25s ease;
+  padding:0 14px 0;
+}
+
+.accordion-content-inner{
+  padding-bottom:12px;
+  padding-top:4px;
+}
+
+/* quiz */
+.quiz-group{
+  margin:10px 0 14px;
+}
+
+.quiz-group label{
+  display:block;
+  margin-bottom:4px;
+  font-weight:600;
+}
+
+.quiz-options label{
+  display:block;
+  margin-bottom:4px;
+  cursor:pointer;
+}
+
+.quiz-button{
+  margin-top:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#fdf6d8,#f0e0b0);
+  font-size:.98rem;
+}
+
+.quiz-result{
+  margin-top:12px;
+  background:rgba(255,255,255,0.7);
+  border-radius:14px;
+  padding:10px 12px;
+  font-size:.98rem;
+}
+
+@media(max-width:600px){
+  h1{font-size:2rem;}
+  .card{padding:18px 18px;}
+}
+</style>
 </head>
+
 <body>
 
+<div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
 <h1>Nail Inspiration</h1>
+<div class="subtitle">
+  Metallic turquoise vibes, soft silver glow, and endless nail ideas to match your aesthetic.
+</div>
 
-<p>Explore nail shapes, colors, and trendy designs to match your style and vibe.</p>
+<!-- INTRO -->
+<div class="card">
+  <p>
+    Whether you want soft girl nails, bold statement claws, or clean minimalist vibes, this guide gives you shapes, colors,
+    designs, seasonal ideas, care routines, and a quiz to find your perfect nail aesthetic.
+  </p>
+</div>
 
-<h2>Nail Shapes</h2>
-<ul>
-    <li><strong>Almond:</strong> Elegant and feminine.</li>
-    <li><strong>Coffin:</strong> Trendy and bold.</li>
-    <li><strong>Square:</strong> Clean and classic.</li>
-    <li><strong>Oval:</strong> Soft and natural.</li>
-    <li><strong>Stiletto:</strong> Dramatic and edgy.</li>
-</ul>
+<!-- SHAPES -->
+<div class="card">
+  <h2>Nail Shapes</h2>
+  <p>Each shape gives a different energy. Choose based on your vibe, lifestyle, and nail length.</p>
 
-<h2>Color Ideas</h2>
-<ul>
-    <li><strong>Soft Pink:</strong> Clean girl aesthetic.</li>
+  <ul>
+    <li><strong>Almond:</strong> Elegant, soft, universally flattering.</li>
+    <li><strong>Coffin/Ballerina:</strong> Trendy, bold, perfect for long nails.</li>
+    <li><strong>Square:</strong> Clean, classic, great for short nails.</li>
+    <li><strong>Oval:</strong> Natural, feminine, elongates fingers.</li>
+    <li><strong>Stiletto:</strong> Dramatic, edgy, high‑fashion.</li>
+  </ul>
+
+  <div class="image-grid">
+    <img src="https://i.imgur.com/6uZqYpC.jpeg">
+    <img src="https://i.imgur.com/2qH2Z8E.jpeg">
+    <img src="https://i.imgur.com/1k0mY8P.jpeg">
+    <img src="https://i.imgur.com/3tJYk4E.jpeg">
+  </div>
+</div>
+
+<!-- COLORS -->
+<div class="card">
+  <h2>Color Ideas</h2>
+  <p>Colors set the mood. Here are popular aesthetics:</p>
+
+  <ul>
+    <li><strong>Soft Pink:</strong> Clean girl, subtle, timeless.</li>
     <li><strong>Milky White:</strong> Minimalist luxury.</li>
-    <li><strong>Red:</strong> Classic and confident.</li>
-    <li><strong>Chocolate Brown:</strong> Warm and trendy.</li>
-    <li><strong>Pastels:</strong> Cute and playful.</li>
-</ul>
+    <li><strong>Red:</strong> Confident, bold, classic.</li>
+    <li><strong>Chocolate Brown:</strong> Warm, cozy, trendy.</li>
+    <li><strong>Pastels:</strong> Cute, playful, dreamy.</li>
+    <li><strong>Black:</strong> Chic, edgy, modern.</li>
+    <li><strong>Chrome:</strong> Futuristic, glazed, high‑shine.</li>
+  </ul>
 
-<h2>Trendy Designs</h2>
-<ul>
+  <div class="image-grid">
+    <img src="https://i.imgur.com/5JxqZ8T.jpeg">
+    <img src="https://i.imgur.com/8YbJ8YQ.jpeg">
+    <img src="https://i.imgur.com/0x8Yp9m.jpeg">
+    <img src="https://i.imgur.com/7mJ8ZpF.jpeg">
+  </div>
+</div>
+
+<!-- DESIGNS -->
+<div class="card">
+  <h2>Trendy Designs</h2>
+  <p>These designs are everywhere right now:</p>
+
+  <ul>
     <li>Chrome nails</li>
-    <li>French tips (classic or colored)</li>
+    <li>French tips (classic, colored, or double‑line)</li>
     <li>Glazed donut nails</li>
     <li>Minimalist line art</li>
     <li>Rhinestone accents</li>
-</ul>
+    <li>3D gel designs</li>
+    <li>Aura nails</li>
+    <li>Cat‑eye magnetic nails</li>
+  </ul>
+
+  <div class="image-grid">
+    <img src="https://i.imgur.com/3z8Yp0L.jpeg">
+    <img src="https://i.imgur.com/4kYp8sT.jpeg">
+    <img src="https://i.imgur.com/9mYp8kQ.jpeg">
+    <img src="https://i.imgur.com/2mYp8sF.jpeg">
+  </div>
+</div>
+
+<!-- SEASONAL NAILS -->
+<div class="card">
+  <h2>Seasonal Nail Ideas</h2>
+
+  <div class="accordion">
+
+    <!-- Spring -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">Spring Nails 🌸</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <ul>
+            <li>Pastel pink, lavender, mint</li>
+            <li>Floral designs</li>
+            <li>Soft chrome</li>
+            <li>Butterfly accents</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summer -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">Summer Nails ☀️</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <ul>
+            <li>Bright neon colors</li>
+            <li>Fruit designs</li>
+            <li>Ocean blue chrome</li>
+            <li>Glitter tips</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fall -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">Fall Nails 🍂</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <ul>
+            <li>Chocolate brown</li>
+            <li>Burnt orange</li>
+            <li>Matte finishes</li>
+            <li>Gold foil accents</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Winter -->
+    <div class="accordion-item">
+      <button class="accordion-header">
+        <span class="label">Winter Nails ❄️</span>
+        <span class="icon">+</span>
+      </button>
+      <div class="accordion-content">
+        <div class="accordion-content-inner">
+          <ul>
+            <li>Silver chrome</li>
+            <li>Deep red or navy</li>
+            <li>Snowflake designs</li>
+            <li>Glazed donut white</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NAIL + HAND CARE ROUTINE -->
+<div class="card">
+  <h2>Nail & Hand Care Routine</h2>
+  <p>Healthy nails = beautiful nails. Here’s a simple routine:</p>
+
+  <ul>
+    <li><strong>Daily:</strong> Apply hand cream + cuticle oil.</li>
+    <li><strong>Weekly:</strong> File nails gently in one direction.</li>
+    <li><strong>Every 2 weeks:</strong> Push back cuticles (don’t cut them).</li>
+    <li><strong>Monthly:</strong> Give nails a break from polish.</li>
+    <li><strong>Always:</strong> Wear gloves when cleaning.</li>
+  </ul>
+
+  <p><strong>Cuticle oil ideas:</strong> jojoba oil, almond oil, vitamin E oil.</p>
+</div>
+
+<!-- QUIZ -->
+<div class="card">
+  <h2>Find Your Nail Aesthetic Quiz</h2>
+
+  <div class="quiz-group">
+    <label>1. What vibe do you want?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="q1" value="clean"> Clean, minimal, soft</label>
+      <label><input type="radio" name="q1" value="baddie"> Bold, dramatic, glam</label>
+      <label><input type="radio" name="q1" value="soft"> Cute, pastel, dreamy</label>
+      <label><input type="radio" name="q1" value="luxury"> Elegant, expensive, classy</label>
+    </div>
+  </div>
+
+  <div class="quiz-group">
+    <label>2. Nail length?</label>
+    <div class="quiz-options">
+      <label><input type="radio" name="q2" value="short"> Short</label>
+      <label><input type="radio" name="q2" value="medium"> Medium</label>
+      <label><input type="radio" name="q2" value="long"> Long</label>
+    </div>
+  </div>
+
+  <button class="quiz-button" id="nailQuizBtn">Reveal my aesthetic</button>
+
+  <div class="quiz-result" id="nailQuizResult" style="display:none;"></div>
+</div>
+
+<script>
+/* accordion logic */
+document.querySelectorAll('.accordion-header').forEach(header=>{
+  header.addEventListener('click',()=>{
+    const item = header.parentElement;
+    const content = item.querySelector('.accordion-content');
+    const icon = header.querySelector('.icon');
+    const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+
+    if(isOpen){
+      content.style.maxHeight = '0px';
+      icon.textContent = '+';
+    }else{
+      content.style.maxHeight = content.scrollHeight + 'px';
+      icon.textContent = '−';
+    }
+  });
+});
+
+/* quiz logic */
+document.getElementById("nailQuizBtn").addEventListener("click", ()=>{
+  const vibe = document.querySelector('input[name="q1"]:checked');
+  const length = document.querySelector('input[name="q2"]:checked');
+  const resultBox = document.getElementById("nailQuizResult");
+
+  if(!vibe || !length){
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "Please answer both questions 💅";
+    return;
+  }
+
+  let result = "";
+
+  if(vibe.value === "clean"){
+    result = "✨ Clean Girl Nails: milky white, soft pink, short square or oval.";
+  } else if(vibe.value === "baddie"){
+    result = "🔥 Baddie Nails: long coffin or stiletto, chrome, rhinestones, bold colors.";
+  } else if(vibe.value === "soft"){
+    result = "🌸 Soft Girl Nails: pastel pink, lavender, baby blue, short almond.";
+  } else if(vibe.value === "luxury"){
+    result = "💎 Luxury Nails: neutral tones, gold accents, minimalist French, soft chrome.";
+  }
+
+  resultBox.style.display = "block";
+  resultBox.innerHTML = result;
+});
+</script>
 
 </body>
-</html>
+    </html>
