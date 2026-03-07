@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ultimate Beauty Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body{
+    margin:0;
+    padding:20px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:linear-gradient(180deg, #ffd6e8, #ffb6d9, #ffcfe8);
+    color:#4a2c3a;
+  }
+
+  h1{
+    text-align:center;
+    font-size:40px;
+    color:#b3006b;
+    margin-bottom:30px;
+    text-shadow:0 0 10px rgba(255,255,255,0.8);
+  }
+
+  .menu{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    margin-bottom:30px;
+  }
+
+  .menu button{
+    padding:10px 18px;
+    border:none;
+    border-radius:25px;
+    background:#fff0f7;
+    color:#b3006b;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 10px rgba(255,255,255,0.9), inset 0 0 8px rgba(255,255,255,0.7);
+    border:1px solid rgba(255,255,255,0.8);
+  }
+
+  .section{
+    background:linear-gradient(145deg, #fff, #f7e7f0);
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:
+      0 0 15px rgba(255,255,255,0.9),
+      0 0 30px rgba(255,255,255,0.6),
+      inset 0 0 12px rgba(255,255,255,0.9);
+    border:1px solid rgba(255,255,255,0.7);
+  }
+
+  h2{
+    margin-top:0;
+    color:#b3006b;
+    font-size:28px;
+    text-shadow:0 0 8px rgba(255,255,255,0.7);
+  }
+
+  ul{
+    padding-left:20px;
+    line-height:1.6;
+  }
+
+  .sub{
+    font-weight:bold;
+    color:#8a0052;
+    margin-top:10px;
+  }
+
+  /* Back to menu arrow */
+  .back-arrow{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#fff0f7;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    color:#b3006b;
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(255,255,255,0.9), inset 0 0 10px rgba(255,255,255,0.8);
+    border:1px solid rgba(255,255,255,0.8);
+  }
+
+  .back-arrow:hover{
+    transform:scale(1.1);
+  }
+</style>
+
+<script>
+  function scrollToMenu(){
+    document.getElementById("menu").scrollIntoView({behavior:"smooth"});
+  }
+</script>
+
+</head>
+
+<body>
+
+<h1>✨ Ultimate Beauty Guide ✨</h1>
+
+<div id="menu" class="menu">
+  <button onclick="document.getElementById('skincare').scrollIntoView({behavior:'smooth'})">Skincare</button>
+  <button onclick="document.getElementById('makeup').scrollIntoView({behavior:'smooth'})">Makeup</button>
+  <button onclick="document.getElementById('hair').scrollIntoView({behavior:'smooth'})">Haircare</button>
+  <button onclick="document.getElementById('fragrance').scrollIntoView({behavior:'smooth'})">Fragrance</button>
+  <button onclick="document.getElementById('face').scrollIntoView({behavior:'smooth'})">Face Shapes</button>
+  <button onclick="document.getElementById('undertone').scrollIntoView({behavior:'smooth'})">Undertones</button>
+  <button onclick="document.getElementById('aesthetic').scrollIntoView({behavior:'smooth'})">Aesthetic Styles</button>
+  <button onclick="document.getElementById('glowup').scrollIntoView({behavior:'smooth'})">Glow-Up Tips</button>
+</div>
+
+<!-- SKINCARE -->
+<div id="skincare" class="section">
+  <h2>💖 Skincare Guide</h2>
+
+  <p class="sub">Daily Routine</p>
+  <ul>
+    <li><b>Cleanser</b> — Gel for oily, cream for dry.</li>
+    <li><b>Toner</b> — Hydrating toners > alcohol toners.</li>
+    <li><b>Serum</b> — Vitamin C AM, Retinol PM.</li>
+    <li><b>Moisturizer</b> — Gel for oily, cream for dry.</li>
+    <li><b>Sunscreen</b> — SPF 30+ every day.</li>
+  </ul>
+
+  <p class="sub">Advanced Steps</p>
+  <ul>
+    <li><b>Essence</b> — Adds hydration + glow.</li>
+    <li><b>Exfoliation</b> — AHA for glow, BHA for pores.</li>
+    <li><b>Face Masks</b> — Clay for oily, sheet masks for dry.</li>
+    <li><b>Facial Oils</b> — Rosehip, squalane, argan.</li>
+  </ul>
+
+  <p class="sub">Skin Concerns</p>
+  <ul>
+    <li><b>Acne</b> — Salicylic acid, benzoyl peroxide.</li>
+    <li><b>Hyperpigmentation</b> — Vitamin C, niacinamide.</li>
+    <li><b>Aging</b> — Retinol, peptides, sunscreen.</li>
+    <li><b>Redness</b> — Centella, azelaic acid.</li>
+  </ul>
+</div>
+
+<!-- MAKEUP -->
+<div id="makeup" class="section">
+  <h2>💄 Makeup Guide</h2>
+
+  <p class="sub">Base Makeup</p>
+  <ul>
+    <li><b>Primer</b> — Blurring, hydrating, mattifying.</li>
+    <li><b>Foundation</b> — Dewy, matte, natural finishes.</li>
+    <li><b>Concealer</b> — Brightening vs. full coverage.</li>
+    <li><b>Contour</b> — Cream for natural, powder for defined.</li>
+    <li><b>Blush</b> — Cream = youthful, powder = long‑lasting.</li>
+    <li><b>Highlighter</b> — Champagne for warm, icy for cool.</li>
+  </ul>
+
+  <p class="sub">Eye Makeup</p>
+  <ul>
+    <li><b>Eyeshadow</b> — Matte for depth, shimmer for glam.</li>
+    <li><b>Eyeliner</b> — Wing shapes for each eye type.</li>
+    <li><b>Mascara</b> — Curling, volumizing, lengthening.</li>
+    <li><b>Lashes</b> — Natural, wispy, dramatic, cat‑eye.</li>
+  </ul>
+
+  <p class="sub">Lip Makeup</p>
+  <ul>
+    <li><b>Lip Liner</b> — Overline subtly for fullness.</li>
+    <li><b>Lipstick</b> — Matte, satin, gloss, tint.</li>
+    <li><b>Gloss</b> — Clear, shimmer, plumping.</li>
+  </ul>
+
+  <p class="sub">Popular Makeup Styles</p>
+  <ul>
+    <li><b>Soft Glam</b> — Warm tones, fluffy lashes.</li>
+    <li><b>Clean Girl</b> — Dewy skin, glossy lips.</li>
+    <li><b>Douyin Makeup</b> — Bright under‑eye, glossy blush.</li>
+    <li><b>Latte Makeup</b> — Bronze, warm, creamy tones.</li>
+    <li><b>Old Money</b> — Matte skin, soft neutrals.</li>
+  </ul>
+</div>
+
+<!-- HAIRCARE -->
+<div id="hair" class="section">
+  <h2>💆 Haircare & Styling</h2>
+
+  <p class="sub">Hair Types</p>
+  <ul>
+    <li><b>Straight</b> — Lightweight products.</li>
+    <li><b>Wavy</b> — Curl creams + diffusing.</li>
+    <li><b>Curly</b> — Hydration + leave‑ins.</li>
+    <li><b>Coily</b> — Oils + protective styles.</li>
+  </ul>
+
+  <p class="sub">Hair Health</p>
+  <ul>
+    <li>Use heat protectant.</li>
+    <li>Deep condition weekly.</li>
+    <li>Trim every 8–12 weeks.</li>
+    <li>Silk pillowcases reduce frizz.</li>
+  </ul>
+
+  <p class="sub">Popular Hairstyles</p>
+  <ul>
+    <li>Soft waves.</li>
+    <li>High ponytail.</li>
+    <li>Messy bun.</li>
+    <li>Layered butterfly cut.</li>
+    <li>Glass hair (super sleek).</li>
+  </ul>
+</div>
+
+<!-- FRAGRANCE -->
+<div id="fragrance" class="section">
+  <h2>🌺 Fragrance Guide</h2>
+
+  <p class="sub">Fragrance Families</p>
+  <ul>
+    <li><b>Floral</b> — Rose, jasmine, peony.</li>
+    <li><b>Fresh</b> — Citrus, aquatic, clean.</li>
+    <li><b>Sweet</b> — Vanilla, caramel.</li>
+    <li><b>Woody</b> — Sandalwood, cedar.</li>
+    <li><b>Spicy</b> — Amber, cinnamon.</li>
+  </ul>
+
+  <p class="sub">How to Apply</p>
+  <ul>
+    <li>Pulse points: wrists, neck, behind ears.</li>
+    <li>Do not rub wrists together.</li>
+    <li>Layer lotion + perfume for longevity.</li>
+  </ul>
+</div>
+
+<!-- FACE SHAPES -->
+<div id="face" class="section">
+  <h2>🌸 Beauty by Face Shape</h2>
+  <ul>
+    <li><b>Round</b> — Angular contour, lifted blush.</li>
+    <li><b>Oval</b> — Most styles suit this shape.</li>
+    <li><b>Square</b> — Soft curls, rounded brows.</li>
+    <li><b>Heart</b> — Soft lips, balanced eyes.</li>
+    <li><b>Diamond</b> — Highlight forehead + chin.</li>
+  </ul>
+</div>
+
+<!-- UNDERTONES -->
+<div id="undertone" class="section">
+  <h2>🎨 Undertones & Color Matching</h2>
+
+  <p class="sub">Undertone Types</p>
+  <ul>
+    <li><b>Cool</b> — Pink, blue, red.</li>
+    <li><b>Warm</b> — Yellow, golden, peach.</li>
+    <li><b>Neutral</b> — Mix of both.</li>
+  </ul>
+
+  <p class="sub">How to Check</p>
+  <ul>
+    <li>Vein test: blue = cool, green = warm.</li>
+    <li>Jewelry test: silver = cool, gold = warm.</li>
+    <li>White shirt test: white = cool, cream = warm.</li>
+  </ul>
+</div>
+
+<!-- AESTHETICS -->
+<div id="aesthetic" class="section">
+  <h2>🌷 Aesthetic Beauty Styles</h2>
+
+  <ul>
+    <li><b>Soft Girl</b> — Pink blush, glossy lips, fluttery lashes.</li>
+    <li><b>Clean Girl</b> — Slick bun, dewy skin, minimal makeup.</li>
+    <li><b>Coquette</b> — Ribbons, soft curls, rosy cheeks.</li>
+    <li><b>Old Money</b> — Matte neutrals, elegant hair.</li>
+    <li><b>Douyin</b> — Bright under‑eye, glossy blush, sparkles.</li>
+    <li><b>Y2K</b> — Frosted lips, thin brows, shimmer.</li>
+    <li><b>Latte</b> — Warm browns, bronzed skin.</li>
+  </ul>
+</div>
+
+<!-- GLOW UP -->
+<div id="glowup" class="section">
+  <h2>✨ Glow-Up Tips</h2>
+  <ul>
+    <li>Drink water consistently.</li>
+    <li>Sleep 7–9 hours.</li>
+    <li>Use SPF daily.</li>
+    <li>Exfoliate weekly.</li>
+    <li>Keep brows shaped.</li>
+    <li>Use lip balm often.</li>
+    <li>Maintain a routine.</li>
+  </ul>
+</div>
+
+<!-- BACK TO MENU BUTTON -->
+<div class="back-arrow" onclick="scrollToMenu()">⬆</div>
+
+</body>
+</html>
