@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Guide</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            background: radial-gradient(circle at top left, #ffe6ff, #f7d0ff, #f8c0e5, #f3b4ff);
+            font-family: "Poppins", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 32px 10px 60px;
+            color: #2b1b2f;
+        }
+
+        .back-arrow {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            font-size: 2.1rem;
+            cursor: pointer;
+            color: #f5d487;
+            text-shadow: 0 0 12px rgba(255,255,255,0.9), 0 0 18px rgba(245,212,135,0.8);
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: "Playfair Display", serif;
+            font-size: 2.2rem;
+            margin-bottom: 18px;
+            color: #fdf4ff;
+            text-shadow: 0 0 14px rgba(255,255,255,0.9), 0 0 22px rgba(210,150,255,0.9);
+        }
+
+        .form-container {
+            width: 95%;
+            max-width: 780px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .input-field {
+            background: radial-gradient(circle at top left, #ffffff, #fbefff, #f6e2ff);
+            border: 1px solid rgba(255,255,255,0.9);
+            border-radius: 18px;
+            padding: 8px 12px;
+            color: #3b233f;
+            font-size: 0.95rem;
+            box-shadow:
+                0 0 12px rgba(255,255,255,0.9),
+                0 0 22px rgba(255,220,255,0.8),
+                inset 0 0 10px rgba(255,255,255,0.9);
+        }
+
+        .input-field select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #3b233f;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .upload-box {
+            background: radial-gradient(circle at top left, #ffffff, #fbefff, #f6e2ff);
+            border: 1px solid rgba(255,255,255,0.9);
+            border-radius: 18px;
+            padding: 10px 12px;
+            text-align: center;
+            color: #3b233f;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s ease;
+            box-shadow:
+                0 0 12px rgba(255,255,255,0.9),
+                0 0 22px rgba(255,220,255,0.8),
+                inset 0 0 10px rgba(255,255,255,0.9);
+        }
+
+        .upload-box:hover {
+            box-shadow:
+                0 0 18px rgba(255,255,255,1),
+                0 0 30px rgba(245,212,135,0.9);
+            transform: scale(1.02);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .analyze-btn {
+            margin-top: 6px;
+            background: linear-gradient(135deg, #f5d487, #f7b5ff);
+            color: #2b1b2f;
+            padding: 10px 16px;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s ease;
+            box-shadow:
+                0 0 12px rgba(255,255,255,0.9),
+                0 0 22px rgba(245,212,135,0.9);
+            align-self: center;
+        }
+
+        .analyze-btn:hover {
+            transform: scale(1.05);
+            box-shadow:
+                0 0 20px rgba(255,255,255,1),
+                0 0 30px rgba(245,212,135,1);
+        }
+
+        .results {
+            margin-top: 22px;
+            width: 98%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+        }
+
+        .result-card {
+            background: radial-gradient(circle at top left, #ffffff, #fbefff, #f6e2ff);
+            border: 1px solid rgba(255,255,255,0.9);
+            border-radius: 18px;
+            padding: 12px 14px;
+            color: #3b233f;
+            font-size: 0.9rem;
+            box-shadow:
+                0 0 16px rgba(255,255,255,0.95),
+                0 0 30px rgba(245,212,135,0.8),
+                inset 0 0 10px rgba(255,255,255,0.9);
+        }
+
+        .result-card h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+            color: #c27bff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.9);
+        }
+
+        .section-title {
+            font-size: 0.95rem;
+            margin-top: 8px;
+            margin-bottom: 3px;
+            color: #5a345f;
+            font-weight: 600;
+        }
+
+        .bullet {
+            margin-left: 14px;
+            margin-bottom: 3px;
+            font-size: 0.86rem;
+        }
+
+        .tag-row {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.9);
+            padding: 3px 9px;
+            font-size: 0.78rem;
+            opacity: 0.95;
+            background: radial-gradient(circle at top left, #ffffff, #fbefff);
+        }
+
+        /* Beauty Encyclopedia */
+
+        .encyclopedia {
+            margin-top: 32px;
+            width: 98%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .ency-section {
+            background: radial-gradient(circle at top left, #ffffff, #fbefff, #f6e2ff);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.9);
+            padding: 16px 18px;
+            box-shadow:
+                0 0 18px rgba(255,255,255,0.95),
+                0 0 32px rgba(245,212,135,0.8),
+                inset 0 0 10px rgba(255,255,255,0.9);
+        }
+
+        .ency-section h2 {
+            font-family: "Playfair Display", serif;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: #c27bff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.9);
+        }
+
+        .ency-section h3 {
+            font-size: 1rem;
+            margin-top: 8px;
+            margin-bottom: 4px;
+            color: #5a345f;
+        }
+
+        .ency-section ul {
+            padding-left: 18px;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .ency-section li {
+            margin-bottom: 3px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            .back-arrow {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="back-arrow" onclick="window.location.href='menu.html'">←</div>
+
+    <h1>Beauty Guide</h1>
+
+    <div class="form-container">
+
+        <div class="input-field">
+            <select id="skinType">
+                <option disabled selected>Skin Type</option>
+                <option>Dry</option>
+                <option>Oily</option>
+                <option>Combination</option>
+                <option>Normal</option>
+                <option>Sensitive</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="skinTone">
+                <option disabled selected>Skin Tone</option>
+                <option>Fair</option>
+                <option>Light</option>
+                <option>Medium</option>
+                <option>Tan</option>
+                <option>Deep</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="undertone">
+                <option disabled selected>Undertone</option>
+                <option>Cool</option>
+                <option>Neutral</option>
+                <option>Warm</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="hairColor">
+                <option disabled selected>Hair Color</option>
+                <option>Blonde</option>
+                <option>Brown</option>
+                <option>Black</option>
+                <option>Red</option>
+                <option>Dyed / Fashion Color</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="eyeColor">
+                <option disabled selected>Eye Color</option>
+                <option>Blue</option>
+                <option>Green</option>
+                <option>Brown</option>
+                <option>Hazel</option>
+                <option>Grey</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="faceShape">
+                <option disabled selected>Face Shape</option>
+                <option>Oval</option>
+                <option>Round</option>
+                <option>Square</option>
+                <option>Heart</option>
+                <option>Diamond</option>
+                <option>Long</option>
+            </select>
+        </div>
+
+        <div class="input-field">
+            <select id="aesthetic">
+                <option disabled selected>Preferred Aesthetic</option>
+                <option>Clean girl</option>
+                <option>Soft girl</option>
+                <option>Coquette</option>
+                <option>Classy</option>
+                <option>Glam</option>
+                <option>Minimalist</option>
+                <option>Y2K</option>
+                <option>Baddie</option>
+            </select>
+        </div>
+
+        <label class="upload-box">
+            Upload your photo (optional)
+            <input type="file" id="photoInput" accept="image/*">
+        </label>
+
+        <button class="analyze-btn" onclick="showResults()">Show my beauty profile</button>
+    </div>
+
+    <div id="resultsWrapper" class="results">
+        <div class="result-card" id="makeupCard"></div>
+        <div class="result-card" id="colorsCard"></div>
+        <div class="result-card" id="hairCard"></div>
+        <div class="result-card" id="jewelryCard"></div>
+        <div class="result-card" id="skincareCard"></div>
+        <div class="result-card" id="aestheticCard"></div>
+        <div class="result-card" id="photoCard"></div>
+    </div>
+
+    <!-- BEAUTY ENCYCLOPEDIA -->
+    <div class="encyclopedia">
+        <div class="ency-section">
+            <h2>Makeup Placement Guide</h2>
+            <h3>Blush Placement by Face Shape</h3>
+            <ul>
+                <li><b>Round:</b> Higher on the cheekbones, angled slightly up toward the temples to lift.</li>
+                <li><b>Oval:</b> Center of the cheeks, blended outward for a soft, natural flush.</li>
+                <li><b>Square:</b> Focus on the apples and blend in circular motions to soften angles.</li>
+                <li><b>Heart:</b> Slightly lower on the cheeks to balance a wider forehead.</li>
+                <li><b>Diamond:</b> On the tops of the cheeks, blended outward to soften sharpness.</li>
+                <li><b>Long:</b> More horizontal placement across the cheeks to visually shorten the face.</li>
+            </ul>
+
+            <h3>Highlighter Placement</h3>
+            <ul>
+                <li>Top of cheekbones, bridge of nose (lightly), cupid’s bow, inner corners of eyes.</li>
+                <li>Avoid heavy highlight on textured areas to keep skin looking smooth.</li>
+            </ul>
+
+            <h3>Contour Basics</h3>
+            <ul>
+                <li>Under cheekbones, sides of nose, jawline, and temples (lightly).</li>
+                <li>Cream contour = more natural; powder contour = more defined.</li>
+            </ul>
+        </div>
+
+        <div class="ency-section">
+            <h2>Eyeshadow & Eye Shape</h2>
+            <h3>General Tips</h3>
+            <ul>
+                <li>Light shades on the lid, medium in the crease, dark on the outer corner.</li>
+                <li>Shimmer on the center of the lid or inner corner for brightness.</li>
+            </ul>
+            <h3>By Eye Shape</h3>
+            <ul>
+                <li><b>Hooded:</b> Blend shadow slightly above the natural crease so it shows when eyes are open.</li>
+                <li><b>Almond:</b> Most looks work; emphasize outer V for depth.</li>
+                <li><b>Round:</b> Focus on elongating with outer corner depth and soft wings.</li>
+                <li><b>Downturned:</b> Lift outer corners with upward-blended shadow and liner.</li>
+                <li><b>Monolid:</b> Gradient washes of color and shimmer across the lid look stunning.</li>
+            </ul>
+        </div>
+
+        <div class="ency-section">
+            <h2>Lip Shapes & Enhancing Tips</h2>
+            <ul>
+                <li><b>Thin Lips:</b> Overline slightly with a lip liner close to your natural shade, gloss in the center.</li>
+                <li><b>Full Lips:</b> Use deeper liners and matte or satin finishes for definition.</li>
+                <li><b>Uneven Lips:</b> Balance by slightly overlining the thinner side.</li>
+                <li><b>Downturned Corners:</b> Avoid dark shades only on the outer corners; highlight the center.</li>
+            </ul>
+        </div>
+
+        <div class="ency-section">
+            <h2>Color Theory & Undertones</h2>
+            <h3>Cool Undertones</h3>
+            <ul>
+                <li>Best in blue-based reds, pinks, plums, cool browns, silver jewelry.</li>
+                <li>Eyeshadow: taupe, mauve, cool greys, soft plum.</li>
+            </ul>
+            <h3>Warm Undertones</h3>
+            <ul>
+                <li>Best in corals, peaches, warm reds, gold jewelry.</li>
+                <li>Eyeshadow: bronze, copper, warm browns, olive.</li>
+            </ul>
+            <h3>Neutral Undertones</h3>
+            <ul>
+                <li>Can wear both cool and warm tones; neutral browns and rose shades are especially flattering.</li>
+            </ul>
+        </div>
+
+        <div class="ency-section">
+            <h2>Haircut & Styling Theory</h2>
+            <h3>By Face Shape</h3>
+            <ul>
+                <li><b>Round:</b> Long layers, volume at the crown, avoid heavy width at the cheeks.</li>
+                <li><b>Square:</b> Soft waves, side parts, curtain bangs to soften angles.</li>
+                <li><b>Heart:</b> Chin-length layers, side-swept bangs to balance forehead and chin.</li>
+                <li><b>Long:</b> Layers and waves to add width, avoid too much length without shape.</li>
+            </ul>
+            <h3>By Hair Texture</h3>
+            <ul>
+                <li><b>Straight:</b> Blunt cuts, glass hair, or soft layers for movement.</li>
+                <li><b>Wavy:</b> Long layers, shag cuts, and curtain bangs enhance natural texture.</li>
+                <li><b>Curly/Coily:</b> Layered cuts, shape-focused cuts, and moisture-heavy routines.</li>
+            </ul>
+        </div>
+
+        <div class="ency-section">
+            <h2>Skincare Ingredient Dictionary</h2>
+            <ul>
+                <li><b>Hyaluronic Acid:</b> Hydration, plumps the skin.</li>
+                <li><b>Niacinamide:</b> Reduces redness, regulates oil, refines pores.</li>
+                <li><b>Vitamin C:</b> Brightening, antioxidant, helps with dark spots.</li>
+                <li><b>Retinol:</b> Anti-aging, texture, acne (use at night, slowly introduce).</li>
+                <li><b>AHA (Glycolic/Lactic):</b> Exfoliates surface, brightens dull skin.</li>
+                <li><b>BHA (Salicylic):</b> Unclogs pores, great for acne-prone skin.</li>
+                <li><b>Ceramides:</b> Strengthen skin barrier, great for dryness and sensitivity.</li>
+                <li><b>Centella/ Cica:</b> Soothing, calming for sensitive or irritated skin.</li>
+            </ul>
+        </div>
+
+        <div class="ency-section">
+            <h2>Nails & Aesthetic Vibes</h2>
+            <ul>
+                <li><b>Clean girl:</b> Short, rounded, milky or sheer pink nails.</li>
+                <li><b>Soft girl:</b> Pastel colors, tiny hearts, soft gradients.</li>
+                <li><b>Coquette:</b> Bows, lace patterns, soft pinks and whites.</li>
+                <li><b>Classy:</b> French tips, nudes, deep reds.</li>
+                <li><b>Glam:</b> Chrome, glitter, rhinestones, long shapes.</li>
+                <li><b>Y2K:</b> Bright colors, stickers, funky French tips.</li>
+                <li><b>Baddie:</b> Long acrylics, sharp shapes, bold colors.</li>
+            </ul>
+        </div>
+
+        <div class="ency-section">
+            <h2>Fragrance Families & Mood</h2>
+            <ul>
+                <li><b>Floral:</b> Romantic, soft, feminine (rose, jasmine, peony).</li>
+                <li><b>Fresh:</b> Clean, energizing (citrus, aquatic, green notes).</li>
+                <li><b>Sweet/Gourmand:</b> Cozy, playful (vanilla, caramel, tonka bean).</li>
+                <li><b>Woody:</b> Grounded, sophisticated (sandalwood, cedar, vetiver).</li>
+                <li><b>Spicy/Oriental:</b> Warm, sensual (amber, spices, incense).</li>
+            </ul>
+        </div>
+
+        <div class="ency-section">
+            <h2>Glow-Up Routine Ideas</h2>
+            <ul>
+                <li>Consistent skincare routine (AM + PM) for at least 4–6 weeks.</li>
+                <li>Hydration: water, herbal teas, hydrating foods.</li>
+                <li>Sleep: aim for 7–9 hours with a calming night routine.</li>
+                <li>Movement: light exercise or stretching to boost circulation.</li>
+                <li>Grooming: brows, nails, hair trims, lip care.</li>
+                <li>Style: build a small capsule wardrobe that fits your aesthetic.</li>
+            </ul>
+        </div>
+    </div>
+
+<script>
+function showResults() {
+
+    const skinType = document.getElementById("skinType").value;
+    const skinTone = document.getElementById("skinTone").value;
+    const undertone = document.getElementById("undertone").value;
+    const hairColor = document.getElementById("hairColor").value;
+    const eyeColor = document.getElementById("eyeColor").value;
+    const faceShape = document.getElementById("faceShape").value;
+    const aesthetic = document.getElementById("aesthetic").value;
+
+    /* ---------------- MAKEUP ---------------- */
+
+    const makeupBase = {
+        Fair: [
+            "Light coverage or skin tint for a natural look",
+            "Soft pink or baby peach blush",
+            "Subtle champagne highlighter",
+            "Translucent powder only where needed"
+        ],
+        Light: [
+            "Natural finish foundation",
+            "Peach or soft coral blush",
+            "Champagne or rose gold highlighter",
+            "Light bronzer to warm up the perimeter"
+        ],
+        Medium: [
+            "Medium coverage foundation",
+            "Warm bronzer + mauve or rose blush",
+            "Golden highlighter on cheekbones",
+            "Soft contour under cheekbones"
+        ],
+        Tan: [
+            "Warm-toned foundation with golden undertones",
+            "Terracotta or burnt peach blush",
+            "Rich gold highlighter",
+            "Bronzer along forehead and cheeks"
+        ],
+        Deep: [
+            "Rich coverage foundation matching undertone",
+            "Berry, brick, or deep rose blush",
+            "Deep gold or bronze highlighter",
+            "Contour with deeper neutral tones"
+        ]
+    };
+
+    const undertoneEyeshadow = {
+        Cool: ["Taupe", "Mauve", "Soft plum", "Cool browns", "Dusty rose"],
+        Neutral: ["Champagne", "Rose gold", "Neutral browns", "Soft bronze"],
+        Warm: ["Bronze", "Gold", "Copper", "Warm browns", "Terracotta"]
+    };
+
+    const eyelinerShape = {
+        Oval: "Classic wing or soft flick",
+        Round: "Elongated wing to stretch the eye",
+        Sq
