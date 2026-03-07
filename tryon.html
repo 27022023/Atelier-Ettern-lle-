@@ -51,6 +51,7 @@
       flex-wrap:wrap;
       gap:10px;
       justify-content:center;
+      max-width:420px;
     }
 
     button{
@@ -79,6 +80,18 @@
     <button onclick="setFilter('cool')">Cool Tone</button>
     <button onclick="setFilter('smooth')">Smooth Skin</button>
     <button onclick="setFilter('dramatic')">Dramatic</button>
+
+    <!-- New Filters -->
+    <button onclick="setFilter('peach')">Peach Glow</button>
+    <button onclick="setFilter('noir')">Noir Film</button>
+    <button onclick="setFilter('dream')">Dream Blur</button>
+    <button onclick="setFilter('pop')">Vibrant Pop</button>
+    <button onclick="setFilter('ice')">Ice Blue</button>
+    <button onclick="setFilter('sunset')">Sunset</button>
+    <button onclick="setFilter('porcelain')">Porcelain Skin</button>
+    <button onclick="setFilter('cinematic')">Cinematic</button>
+    <button onclick="setFilter('fairy')">Fairy Glow</button>
+    <button onclick="setFilter('bronze')">Golden Bronze</button>
   </div>
 
   <script>
@@ -111,6 +124,29 @@
         filter = "contrast(1.4) saturate(1.2)";
       }
 
+      // NEW FILTERS
+      else if(name === "peach"){
+        filter = "brightness(1.12) contrast(1.05) saturate(1.2) sepia(0.15)";
+      }else if(name === "noir"){
+        filter = "grayscale(1) contrast(1.4) brightness(1.1)";
+      }else if(name === "dream"){
+        filter = "blur(2px) brightness(1.1) saturate(1.1)";
+      }else if(name === "pop"){
+        filter = "contrast(1.25) saturate(1.5) brightness(1.05)";
+      }else if(name === "ice"){
+        filter = "hue-rotate(180deg) saturate(1.2) brightness(1.1)";
+      }else if(name === "sunset"){
+        filter = "sepia(0.35) saturate(1.3) hue-rotate(-20deg) brightness(1.1)";
+      }else if(name === "porcelain"){
+        filter = "brightness(1.2) contrast(0.9) blur(1.2px)";
+      }else if(name === "cinematic"){
+        filter = "contrast(1.35) brightness(0.95) saturate(1.15)";
+      }else if(name === "fairy"){
+        filter = "brightness(1.15) saturate(1.25) hue-rotate(15deg) blur(0.7px)";
+      }else if(name === "bronze"){
+        filter = "sepia(0.4) contrast(1.1) brightness(1.05)";
+      }
+
       video.style.setProperty("--video-filter", filter);
     }
 
@@ -118,4 +154,4 @@
   </script>
 </body>
 </html>
-        
+      
