@@ -39,6 +39,7 @@ h1{
   margin-bottom:10px;
   color:#f7e7c9;
   text-shadow:0 0 12px rgba(247,231,201,0.6);
+  text-align:center;
 }
 
 /* section card */
@@ -102,14 +103,16 @@ textarea{
   position:relative;
 }
 
-.delete-icon{
+.delete-icon,.edit-icon{
   position:absolute;
   top:12px;
-  right:12px;
   font-size:1.3rem;
   cursor:pointer;
   color:#f5d487;
 }
+
+.delete-icon{right:12px;}
+.edit-icon{right:40px;}
 
 .progress-bar{
   width:100%;
@@ -134,6 +137,7 @@ textarea{
   align-items:center;
   padding:10px 0;
   border-bottom:1px solid #f7e7c9;
+  gap:10px;
 }
 
 .todo-complete{
@@ -141,7 +145,12 @@ textarea{
   opacity:0.6;
 }
 
-.todo-delete{
+.todo-actions{
+  display:flex;
+  gap:8px;
+}
+
+.todo-delete,.todo-edit{
   cursor:pointer;
   color:#f5d487;
   font-size:1.3rem;
@@ -178,6 +187,26 @@ textarea{
 
 .calendar-day:hover{
   background:#5a2230;
+}
+
+.calendar-day.selected{
+  background:#f5d487;
+  color:#1a0a0f;
+}
+
+/* history */
+.history-entry{
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #f7e7c9;
+  background:#2a1017;
+  font-size:0.95rem;
+}
+.history-entry-title{
+  font-weight:600;
+  margin-bottom:6px;
+  color:#f5d487;
 }
 </style>
 </head>
@@ -263,10 +292,44 @@ textarea{
 
   <div id="calendarGrid" class="calendar-grid"></div>
 
-  <textarea id="calendarNote" style="width:100%;height:100px;margin-top:15px;" placeholder="Click a date to add a note..."></textarea>
+  <textarea id="calendarNote" style="width:100%;height:80px;margin-top:15px;" placeholder="Write a note for the selected date..."></textarea>
+  <button class="btn" style="margin-top:10px;" onclick="addCalendarNote()">Add Note to Day</button>
+
+  <div id="calendarNotesList" style="margin-top:15px;font-size:0.95rem;"></div>
+</div>
+
+<!-- HISTORY -->
+<div class="card">
+  <div class="card-title">Daily History</div>
+  <div id="historyContainer"></div>
 </div>
 
 <script>
+/* --------- DATE & GLOBAL STATE --------- */
+const todayStr=new Date().toDateString();
+
+let dailyHistory=JSON.parse(localStorage.getItem("dailyHistory"))||[];
+let moodByDate=JSON.parse(localStorage.getItem("moodByDate"))||{};
+let progressHistory=JSON.parse(localStorage.getItem("progressHistory"))||{};
+let sleepData=JSON.parse(localStorage.getItem("sleepData"))||{};
+let lastDate=localStorage.getItem("lastDate");
+
+/* --------- DAILY RESET & HISTORY SNAPSHOT --------- */
+if(lastDate && lastDate!==todayStr){
+  const snapshot={
+    date:lastDate,
+    mood:moodByDate[lastDate]||"",
+    sleep:sleepData[lastDate]||null,
+    habits:progressHistory[lastDate]||null
+  };
+  dailyHistory.push(snapshot);
+  localStorage.setItem("dailyHistory",JSON.stringify(dailyHistory));
+
+  // reset trackers for new day
+  localStorage.setItem("progress",JSON.stringify({}));
+}
+localStorage.setItem("lastDate",todayStr);
+
 /* ---------------- HABITS ---------------- */
 
 const defaultHabits=[
@@ -290,6 +353,7 @@ function renderHabits(){
 
     container.innerHTML+=`
       <div class="habit-card">
+        <div class="edit-icon" onclick="editHabit('${h.id}')">✏️</div>
         <div class="delete-icon" onclick="deleteHabit('${h.id}')">🗑️</div>
         <div style="font-size:1.3rem;margin-bottom:5px;">${h.title}</div>
         <div class="progress-bar"><div id="${h.id}Fill" class="progress-fill" style="width:${value}%"></div></div>
@@ -304,6 +368,9 @@ function increase(id){
   if(progress[id]>100) progress[id]=100;
   document.getElementById(id+"Fill").style.width=progress[id]+"%";
   localStorage.setItem("progress",JSON.stringify(progress));
+
+  progressHistory[todayStr]=progress;
+  localStorage.setItem("progressHistory",JSON.stringify(progressHistory));
 }
 
 function deleteHabit(id){
@@ -312,6 +379,17 @@ function deleteHabit(id){
   localStorage.setItem("habits",JSON.stringify(habits));
   localStorage.setItem("progress",JSON.stringify(progress));
   renderHabits();
+}
+
+function editHabit(id){
+  const habit=habits.find(h=>h.id===id);
+  if(!habit) return;
+  const newTitle=prompt("Edit habit name:",habit.title.replace(/^✨ /,""));
+  if(newTitle && newTitle.trim()){
+    habit.title="✨ "+newTitle.trim();
+    localStorage.setItem("habits",JSON.stringify(habits));
+    renderHabits();
+  }
 }
 
 function addCustomHabit(){
@@ -339,7 +417,10 @@ function renderTodos(){
     list.innerHTML+=`
       <div class="todo-item">
         <span class="${t.done?'todo-complete':''}" onclick="toggleTodo(${i})">${t.text}</span>
-        <span class="todo-delete" onclick="deleteTodo(${i})">🗑️</span>
+        <div class="todo-actions">
+          <span class="todo-edit" onclick="editTodo(${i})">✏️</span>
+          <span class="todo-delete" onclick="deleteTodo(${i})">🗑️</span>
+        </div>
       </div>
     `;
   });
@@ -369,11 +450,21 @@ function deleteTodo(i){
   renderTodos();
 }
 
+function editTodo(i){
+  const current=todos[i].text;
+  const updated=prompt("Edit task:",current);
+  if(updated && updated.trim()){
+    todos[i].text=updated.trim();
+    localStorage.setItem("todos",JSON.stringify(todos));
+    renderTodos();
+  }
+}
+
 /* ---------------- JOURNAL ---------------- */
 
 let journal=JSON.parse(localStorage.getItem("journal"))||{};
 const journalBox=document.getElementById("journalBox");
-const journalDate=new Date().toDateString();
+const journalDate=todayStr;
 
 journalBox.value=journal[journalDate]||"";
 
@@ -384,26 +475,27 @@ journalBox.addEventListener("input",()=>{
 
 /* ---------------- SLEEP TRACKER ---------------- */
 
-let sleepData=JSON.parse(localStorage.getItem("sleepData"))||{};
-const today=new Date().toDateString();
+const sleepHoursInput=document.getElementById("sleepHours");
+const sleepQualitySelect=document.getElementById("sleepQuality");
+const sleepNotesInput=document.getElementById("sleepNotes");
 
-if(sleepData[today]){
-  document.getElementById("sleepHours").value=sleepData[today].hours||"";
-  document.getElementById("sleepQuality").value=sleepData[today].quality||"";
-  document.getElementById("sleepNotes").value=sleepData[today].notes||"";
+if(sleepData[todayStr]){
+  sleepHoursInput.value=sleepData[todayStr].hours||"";
+  sleepQualitySelect.value=sleepData[todayStr].quality||"";
+  sleepNotesInput.value=sleepData[todayStr].notes||"";
 }
 
 function saveSleep(){
-  const hours=parseFloat(document.getElementById("sleepHours").value);
-  const quality=document.getElementById("sleepQuality").value;
-  const notes=document.getElementById("sleepNotes").value;
+  const hours=parseFloat(sleepHoursInput.value);
+  const quality=sleepQualitySelect.value;
+  const notes=sleepNotesInput.value;
 
   if(!hours||!quality){
     alert("Please fill in hours and quality.");
     return;
   }
 
-  sleepData[today]={hours,quality,notes};
+  sleepData[todayStr]={hours,quality,notes};
   localStorage.setItem("sleepData",JSON.stringify(sleepData));
 
   updateSleepSummary();
@@ -419,7 +511,7 @@ function updateSleepSummary(){
   }
 
   const avg=(entries.reduce((a,b)=>a+b.hours,0)/entries.length).toFixed(1);
-  const best=entries.sort((a,b)=>b.hours-a.hours)[0];
+  const best=[...entries].sort((a,b)=>b.hours-a.hours)[0];
 
   box.innerHTML=`
     <div>Average hours: ${avg} hrs</div>
@@ -432,7 +524,7 @@ updateSleepSummary();
 
 /* ---------------- MOOD TRACKER ---------------- */
 
-let mood=localStorage.getItem("mood")||"";
+let mood=moodByDate[todayStr]||"";
 const moodDisplay=document.getElementById("moodDisplay");
 
 if(mood){
@@ -441,7 +533,8 @@ if(mood){
 
 function setMood(m){
   mood=m;
-  localStorage.setItem("mood",m);
+  moodByDate[todayStr]=m;
+  localStorage.setItem("moodByDate",JSON.stringify(moodByDate));
   moodDisplay.textContent="Today's mood: "+m;
 }
 
@@ -450,6 +543,7 @@ function setMood(m){
 let calendarNotes=JSON.parse(localStorage.getItem("calendarNotes"))||{};
 const calendarGrid=document.getElementById("calendarGrid");
 const noteBox=document.getElementById("calendarNote");
+const notesList=document.getElementById("calendarNotesList");
 let selectedDate=null;
 
 function renderCalendar(){
@@ -467,30 +561,94 @@ function renderCalendar(){
   }
 
   for(let d=1;d<=days;d++){
+    const dateKey=`${year}-${month+1}-${d}`;
     calendarGrid.innerHTML+=`
-      <div class="calendar-day" onclick="selectDate(${d})">${d}</div>
+      <div class="calendar-day" id="day-${dateKey}" onclick="selectDate('${dateKey}')">${d}</div>
     `;
   }
 }
 
-function selectDate(day){
-  const now=new Date();
-  selectedDate=`${now.getFullYear()}-${now.getMonth()+1}-${day}`;
-  noteBox.value=calendarNotes[selectedDate]||"";
+function selectDate(dateKey){
+  selectedDate=dateKey;
+  document.querySelectorAll(".calendar-day").forEach(el=>el.classList.remove("selected"));
+  const el=document.getElementById("day-"+dateKey);
+  if(el) el.classList.add("selected");
+  noteBox.value="";
+  renderCalendarNotes();
 }
 
-noteBox.addEventListener("input",()=>{
-  if(selectedDate){
-    calendarNotes[selectedDate]=noteBox.value;
-    localStorage.setItem("calendarNotes",JSON.stringify(calendarNotes));
+function addCalendarNote(){
+  if(!selectedDate){
+    alert("Please select a date first.");
+    return;
   }
-});
+  const text=noteBox.value.trim();
+  if(!text) return;
+
+  if(!Array.isArray(calendarNotes[selectedDate])){
+    calendarNotes[selectedDate]=[];
+  }
+  calendarNotes[selectedDate].push(text);
+  localStorage.setItem("calendarNotes",JSON.stringify(calendarNotes));
+  noteBox.value="";
+  renderCalendarNotes();
+}
+
+function renderCalendarNotes(){
+  notesList.innerHTML="";
+  if(!selectedDate) return;
+
+  const notes=calendarNotes[selectedDate]||[];
+  if(notes.length===0){
+    notesList.innerHTML="<div>No notes for this day yet.</div>";
+    return;
+  }
+
+  notes.forEach((n,i)=>{
+    notesList.innerHTML+=`<div>• ${n}</div>`;
+  });
+}
+
+/* ---------------- HISTORY RENDER ---------------- */
+
+function renderHistory(){
+  const container=document.getElementById("historyContainer");
+  container.innerHTML="";
+
+  if(dailyHistory.length===0){
+    container.innerHTML="<div>No history yet. It will appear here as days pass.</div>";
+    return;
+  }
+
+  [...dailyHistory].reverse().forEach(entry=>{
+    const habitsText=entry.habits
+      ? Object.entries(entry.habits).map(([k,v])=>`${k}: ${v}%`).join(", ")
+      : "No habit data";
+
+    const sleepText=entry.sleep
+      ? `${entry.sleep.hours} hrs (${entry.sleep.quality})`
+      : "No sleep data";
+
+    const notes=`
+      <div class="history-entry">
+        <div class="history-entry-title">${entry.date}</div>
+        <div>Mood: ${entry.mood || "No mood logged"}</div>
+        <div>Sleep: ${sleepText}</div>
+        <div>Habits: ${habitsText}</div>
+      </div>
+    `;
+    container.innerHTML+=notes;
+  });
+}
 
 /* INIT */
 renderHabits();
 renderTodos();
 renderCalendar();
+renderHistory();
 </script>
 
 </body>
 </html>
+
+  
