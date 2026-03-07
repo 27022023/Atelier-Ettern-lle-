@@ -314,4 +314,83 @@ const eventStyles = {
         ]
     }
 };
-        
+ /* ------------------ SEASONS ------------------ */
+const seasons = ["Spring", "Summer", "Autumn", "Winter"];
+
+/* ------------------ UI POPULATION ------------------ */
+const eventGrid = document.getElementById("eventGrid");
+const seasonGrid = document.getElementById("seasonGrid");
+const tabs = document.getElementById("tabs");
+const contentArea = document.getElementById("contentArea");
+
+let selectedEvent = null;
+let selectedSeason = null;
+let selectedCategory = null;
+
+/* Populate Events */
+events.forEach(ev => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.textContent = ev;
+    card.onclick = () => {
+        selectedEvent = ev;
+        updateTabs();
+        updateContent();
+    };
+    eventGrid.appendChild(card);
+});
+
+/* Populate Seasons */
+seasons.forEach(season => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.textContent = season;
+    card.onclick = () => {
+        selectedSeason = season;
+        updateTabs();
+        updateContent();
+    };
+    seasonGrid.appendChild(card);
+});
+
+/* Populate Tabs */
+function updateTabs() {
+    tabs.innerHTML = "";
+    categories.forEach(cat => {
+        const tab = document.createElement("div");
+        tab.className = "tab";
+        tab.textContent = cat;
+
+        if (selectedCategory === cat) {
+            tab.classList.add("active");
+        }
+
+        tab.onclick = () => {
+            selectedCategory = cat;
+            updateTabs();
+            updateContent();
+        };
+
+        tabs.appendChild(tab);
+    });
+}
+
+/* Update Content */
+function updateContent() {
+    if (!selectedEvent || !selectedSeason || !selectedCategory) {
+        contentArea.innerHTML = `
+            <h2>Select a category</h2>
+            <p class="bullet">Pick an event, a season, and a category tab.</p>
+        `;
+        return;
+    }
+
+    const eventData = eventStyles[selectedEvent] || eventStyles["default"];
+    const categoryData = eventData[selectedCategory] || ["No data available."];
+
+    contentArea.innerHTML = `
+        <h2>${selectedCategory}</h2>
+        ${categoryData.map(item => `<p class="bullet">• ${item}</p>`).join("")}
+    `;
+}
+    
