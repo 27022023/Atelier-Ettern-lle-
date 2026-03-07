@@ -183,217 +183,196 @@ const categories = [
     "Perfume","Colors","Fabrics","Layering","Weather Tips","Aesthetic Vibe","Avoid"
 ];
 
-/* ------------------ BASE STYLE DATA ------------------ */
+/* ------------------ BASIC STYLE DATA (expand later) ------------------ */
 const eventStyles = {
     "School": {
-        "Hair": [
-            "Soft ponytail that stays neat through the school day",
-            "Half-up style with a simple clip to keep hair out of your face",
-            "Loose waves with a middle part for a relaxed but put-together look"
-        ],
-        "Outfits": [
-            "Comfortable jeans with a soft knit sweater for an easy everyday outfit",
-            "Graphic tee tucked into straight-leg pants for a casual school look",
-            "Hoodie layered over leggings for a cozy, practical day"
-        ],
-        "Shoes": [
-            "Neutral sneakers that stay comfortable walking between classes",
-            "Flat ankle boots that add a bit of structure without feeling too formal"
-        ],
-        "Bags": [
-            "Mini backpack that fits your essentials without feeling bulky",
-            "Simple tote bag that carries notebooks and a water bottle easily"
-        ],
-        "Accessories": [
-            "Soft scrunchie on your wrist or in your hair for a gentle touch",
-            "Small stud earrings that stay comfortable all day"
-        ],
-        "Jewelry": [
-            "Small gold or silver hoops that add subtle shine",
-            "Delicate necklace that doesn’t distract from your outfit"
-        ],
-        "Makeup": [
-            "Light base with concealer where needed for a fresh look",
-            "Soft mascara and a bit of blush to brighten your face",
-            "Hydrating lip balm or a soft pink gloss for everyday wear"
-        ],
-        "Nails": [
-            "Clear gloss for a clean, low-maintenance look",
-            "Soft pink or nude polish that goes with any outfit"
-        ],
-        "Perfume": [
-            "Light floral mist that feels fresh but not overpowering",
-            "Soft vanilla or clean cotton scent for a gentle everyday vibe"
-        ],
-        "Colors": [
-            "Warm beige and cream tones for a soft school aesthetic",
-            "Brown and taupe shades that feel calm and easy to style"
-        ],
-        "Fabrics": [
-            "Cotton pieces that stay breathable and comfortable all day",
-            "Soft knits that feel cozy without being too heavy"
-        ],
-        "Layering": [
-            "Light cardigan layered over a tee for changing classroom temperatures",
-            "Zip-up hoodie you can easily take on and off between classes"
-        ],
-        "Weather Tips": [
-            "Bring a light layer in case classrooms feel colder than outside",
-            "Choose breathable fabrics so you stay comfortable all day"
-        ],
-        "Aesthetic Vibe": [
-            "Soft, casual, and quietly feminine with a practical school focus",
-            "Comfort-first with gentle details that still feel put-together"
-        ],
-        "Avoid": [
-            "Very high heels that are hard to walk in between classes",
-            "Heavy makeup that feels uncomfortable for a long school day"
-        ]
+        Hair: ["Soft ponytail","Half-up clip","Loose waves"],
+        Outfits: ["Jeans + sweater","Graphic tee + pants","Hoodie + leggings"],
+        Shoes: ["Sneakers","Flat boots"],
+        Bags: ["Mini backpack","Tote bag"],
+        Accessories: ["Studs","Scrunchie"],
+        Jewelry: ["Small hoops","Simple necklace"],
+        Makeup: ["Natural base","Mascara","Lip balm"],
+        Nails: ["Clear gloss","Soft pink"],
+        Perfume: ["Light floral"],
+        Colors: ["Beige","Brown","Cream"],
+        Fabrics: ["Cotton","Knit"],
+        Layering: ["Light cardigan"],
+        Weather: ["Check temperature"],
+        Vibe: ["Soft academia"],
+        Avoid: ["Heavy glam","Heels"]
     },
-
     "default": {
-        "Hair": [
-            "Soft waves with a gentle finish that stay manageable throughout the day",
-            "Low ponytail with a loose front piece for a soft frame around the face"
-        ],
-        "Outfits": [
-            "Simple jeans paired with a fitted top for a balanced silhouette",
-            "Flowy skirt with a tucked-in tee for a soft, feminine look"
-        ],
-        "Shoes": [
-            "Neutral sneakers that keep the outfit clean and comfortable",
-            "Soft ballet flats for a gentle, feminine touch"
-        ],
-        "Bags": [
-            "Small crossbody bag that keeps essentials close and hands free",
-            "Structured mini bag that adds a polished detail"
-        ],
-        "Accessories": [
-            "Delicate hair clip or barrette for a subtle accent",
-            "Light scarf or shawl to soften the overall look"
-        ],
-        "Jewelry": [
-            "Thin gold or silver hoops that add quiet shine",
-            "Simple rings that feel elegant but not overwhelming"
-        ],
-        "Makeup": [
-            "Soft base with a natural finish and a hint of blush",
-            "Mascara and a neutral lip color for a polished everyday look"
-        ],
-        "Nails": [
-            "Clear gloss for a clean everyday look",
-            "Soft nude or pale pink for a gentle, feminine finish"
-        ],
-        "Perfume": [
-            "Light floral mist for a soft daytime feel",
-            "Warm vanilla or gentle musk for a cozy touch"
-        ],
-        "Colors": [
-            "Soft beige, cream, and warm neutrals that pair easily",
-            "Muted pinks and browns for a gentle, feminine palette"
-        ],
-        "Fabrics": [
-            "Cotton and linen for breathable comfort",
-            "Soft knits for a cozy, approachable vibe"
-        ],
-        "Layering": [
-            "Light cardigan or denim jacket for easy layering",
-            "Soft scarf for a gentle, feminine touch"
-        ],
-        "Weather Tips": [
-            "Bring a light layer for shifting indoor/outdoor temperatures",
-            "Choose breathable fabrics for all‑day comfort"
-        ],
-        "Aesthetic Vibe": [
-            "Soft, feminine, and approachable with gentle details",
-            "Balanced between comfort and quiet elegance"
-        ],
-        "Avoid": [
-            "Overly bold patterns that clash with a soft aesthetic",
-            "Heavy or stiff fabrics that feel restrictive"
-        ]
+        Hair: ["Soft waves"],
+        Outfits: ["Jeans + cute top"],
+        Shoes: ["Sneakers"],
+        Bags: ["Crossbody"],
+        Accessories: ["Hoops"],
+        Jewelry: ["Rings"],
+        Makeup: ["Natural"],
+        Nails: ["Gloss"],
+        Perfume: ["Fresh"],
+        Colors: ["Neutral"],
+        Fabrics: ["Cotton"],
+        Layering: ["Light jacket"],
+        Weather: ["Check temperature"],
+        Vibe: ["Casual cute"],
+        Avoid: ["Too formal"]
     }
 };
- /* ------------------ SEASONS ------------------ */
-const seasons = ["Spring", "Summer", "Autumn", "Winter"];
 
-/* ------------------ UI POPULATION ------------------ */
-const eventGrid = document.getElementById("eventGrid");
-const seasonGrid = document.getElementById("seasonGrid");
-const tabs = document.getElementById("tabs");
-const contentArea = document.getElementById("contentArea");
+/* ------------------ SEASONS ------------------ */
+const seasons = ["Spring","Summer","Fall","Winter"];
 
+const seasonStyles = {
+    "Summer": {
+        Hair: ["High pony","Beach waves","Claw clip"],
+        Outfits: ["Baby tee + shorts","Sundress","Tank top"],
+        Shoes: ["Sandals","Sneakers"],
+        Bags: ["Mini bag","Canvas tote"],
+        Accessories: ["Sunglasses","Anklets"],
+        Jewelry: ["Gold hoops"],
+        Makeup: ["Bronzed skin","Gloss"],
+        Nails: ["Peach","White"],
+        Perfume: ["Citrus"],
+        Colors: ["White","Beige","Pastels"],
+        Fabrics: ["Linen","Cotton"],
+        Layering: ["Light shirt"],
+        Weather: ["Stay cool"],
+        Vibe: ["Light & cute"],
+        Avoid: ["Sweaters","Heavy jackets"]
+    },
+    "default": {
+        Hair: ["Soft waves"],
+        Outfits: ["Seasonal outfit"],
+        Shoes: ["Seasonal shoes"],
+        Bags: ["Crossbody"],
+        Accessories: ["Simple jewelry"],
+        Jewelry: ["Rings"],
+        Makeup: ["Natural"],
+        Nails: ["Neutral"],
+        Perfume: ["Fresh"],
+        Colors: ["Neutral"],
+        Fabrics: ["Cotton"],
+        Layering: ["Light jacket"],
+        Weather: ["Check temperature"],
+        Vibe: ["Cute"],
+        Avoid: ["Weather-inappropriate items"]
+    }
+};
+
+/* ------------------ STATE ------------------ */
 let selectedEvent = null;
 let selectedSeason = null;
 let selectedCategory = null;
 
-/* Populate Events */
-events.forEach(ev => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.textContent = ev;
-    card.onclick = () => {
-        selectedEvent = ev;
-        updateTabs();
-        updateContent();
-    };
-    eventGrid.appendChild(card);
-});
+/* ------------------ HELPERS ------------------ */
+function getEventData(ev) {
+    return eventStyles[ev] || eventStyles["default"];
+}
 
-/* Populate Seasons */
-seasons.forEach(season => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.textContent = season;
-    card.onclick = () => {
-        selectedSeason = season;
-        updateTabs();
-        updateContent();
-    };
-    seasonGrid.appendChild(card);
-});
+function getSeasonData(season) {
+    return seasonStyles[season] || seasonStyles["default"];
+}
 
-/* Populate Tabs */
-function updateTabs() {
-    tabs.innerHTML = "";
-    categories.forEach(cat => {
-        const tab = document.createElement("div");
-        tab.className = "tab";
-        tab.textContent = cat;
+function blend(eventList, seasonList) {
+    return [...new Set([...eventList, ...seasonList])];
+}
 
-        if (selectedCategory === cat) {
-            tab.classList.add("active");
-        }
+/* ------------------ BUILD EVENT GRID ------------------ */
+function loadEventGrid() {
+    const grid = document.getElementById("eventGrid");
+    grid.innerHTML = "";
 
-        tab.onclick = () => {
-            selectedCategory = cat;
-            updateTabs();
+    events.forEach(ev => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.textContent = ev;
+
+        card.onclick = () => {
+            selectedEvent = ev;
+            document.querySelectorAll("#eventGrid .card").forEach(c => {
+                c.style.borderColor = "#d8b46a";
+                c.style.boxShadow = "none";
+            });
+            card.style.borderColor = "#f7f2e9";
+            card.style.boxShadow = "0 0 14px rgba(216,180,106,0.9)";
             updateContent();
         };
 
-        tabs.appendChild(tab);
+        grid.appendChild(card);
     });
 }
 
-/* Update Content */
+function loadSeasonGrid() {
+    const grid = document.getElementById("seasonGrid");
+    grid.innerHTML = "";
+
+    seasons.forEach(season => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.textContent = season;
+
+        card.onclick = () => {
+            selectedSeason = season;
+            document.querySelectorAll("#seasonGrid .card").forEach(c => {
+                c.style.borderColor = "#d8b46a";
+                c.style.boxShadow = "none";
+            });
+            card.style.borderColor = "#f7f2e9";
+            card.style.boxShadow = "0 0 14px rgba(216,180,106,0.9)";
+            updateContent();
+        };
+
+        grid.appendChild(card);
+    });
+}
+
+loadEventGrid();
+loadSeasonGrid();
+
+/* ------------------ BUILD TABS ------------------ */
+function loadTabs() {
+    const tabContainer = document.getElementById("tabs");
+    tabContainer.innerHTML = "";
+
+    categories.forEach(cat => {
+        const tab = document.createElement("div");
+        tab.classList.add("tab");
+        tab.textContent = cat;
+
+        tab.onclick = () => {
+            selectedCategory = cat;
+            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            updateContent();
+        };
+
+        tabContainer.appendChild(tab);
+    });
+}
+
+loadTabs();
+
+/* ------------------ UPDATE CONTENT ------------------ */
 function updateContent() {
+    const content = document.getElementById("contentArea");
+
     if (!selectedEvent || !selectedSeason || !selectedCategory) {
-        contentArea.innerHTML = `
-            <h2>Select a category</h2>
-            <p class="bullet">Pick an event, a season, and a category tab.</p>
-        `;
+        content.innerHTML = `<h2>Select a category</h2><p class="bullet">Pick an event, a season, and a category tab.</p>`;
         return;
     }
 
-    const eventData = eventStyles[selectedEvent] || eventStyles["default"];
-    const categoryData = eventData[selectedCategory] || ["No data available."];
+    const evData = getEventData(selectedEvent)[selectedCategory] || [];
+    const seasonData = getSeasonData(selectedSeason)[selectedCategory] || [];
 
-    contentArea.innerHTML = `
+    const finalList = blend(evData, seasonData);
+
+    content.innerHTML = `
         <h2>${selectedCategory}</h2>
-        ${categoryData.map(item => `<p class="bullet">• ${item}</p>`).join("")}
+        ${finalList.map(i => `<div class="bullet">• ${i}</div>`).join("")}
     `;
 }
-/* ------------------ END OF SCRIPT ------------------ */
 </script>
 
 </body>
